@@ -8,7 +8,7 @@
     "baseUrl": ".",
     "forceConsistentCasingInFileNames": true,
     "strict": true,
-    "jsx": "react-jsx",  // Or "react" if you're not using React 17+
-    "lib": ["ES6", "DOM"],
+    "jsx": "react-jsx", // Or "react" if you're not using React 17+
+    "lib": ["ES6", "DOM"]
   }
 }
