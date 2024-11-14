@@ -8,6 +8,7 @@ const App: React.FC = () => {
         <Header />
         <Routes>
           <Route path="/" element={<h1>Welcome to EcoVoz Frontend</h1>} />
+          <Route path="/about" element={<h1>About EcoVoz</h1>} />
         </Routes>
       </div>
     </Router>
