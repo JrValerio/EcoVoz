@@ -1,50 +1,68 @@
-# React + TypeScript + Vite
+# EcoVoz Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Sobre o Projeto
 
-Currently, two official plugins are available:
+**EcoVoz** é uma aplicação desenvolvida para auxiliar na acessibilidade e comunicação de pessoas com deficiência. O projeto faz parte do Hackathon Autismo Tech 2024 e visa criar uma solução inclusiva e eficiente.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Regras de Commits
 
-## Expanding the ESLint configuration
+Para mantermos o histórico do projeto organizado e consistente, vamos utilizar **commits semânticos em inglês**. Seguindo essas diretrizes, todos no grupo poderão entender rapidamente o que cada commit altera ou adiciona ao projeto.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Estrutura do Commit
 
-- Configure the top-level `parserOptions` property like this:
+Cada mensagem de commit deve seguir o seguinte formato:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-});
+```
+<type>(<scope>): <description>
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+- **`<type>`**: Define o tipo de alteração feita.
+- **`<scope>`**: Indica a área ou componente afetado (ex.: `frontend`, `backend`, `redux`, `styles`, `auth`).
+- **`<description>`**: Uma breve descrição da mudança, em inglês, começando com letra minúscula.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react';
+### Tipos de Commit
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-});
-```
+Aqui estão os tipos de commit que iremos utilizar:
+
+- **feat**: Adiciona uma nova funcionalidade ao projeto.
+  - Exemplo: `feat(frontend): add login button`
+- **fix**: Corrige um bug.
+  - Exemplo: `fix(backend): correct API route for user login`
+- **chore**: Mudanças de configuração, como instalação de pacotes ou setup de ferramentas.
+  - Exemplo: `chore: install eslint and prettier`
+- **docs**: Alterações na documentação (ex.: README, comentários).
+  - Exemplo: `docs: update README with commit rules`
+- **style**: Mudanças de formatação que não afetam o código (espaços, ponto e vírgula, etc.).
+  - Exemplo: `style(frontend): apply consistent spacing in App.tsx`
+- **refactor**: Refatoração de código, como melhoria de legibilidade ou desempenho, sem alterar a funcionalidade.
+  - Exemplo: `refactor(redux): simplify user reducer logic`
+- **test**: Adição ou modificação de testes.
+  - Exemplo: `test(frontend): add tests for login component`
+- **perf**: Alterações que melhoram o desempenho.
+  - Exemplo: `perf(backend): optimize database queries`
+- **build**: Alterações que afetam o sistema de build ou dependências externas.
+  - Exemplo: `build: update npm scripts for deployment`
+
+### Exemplos de Commits
+
+Aqui estão alguns exemplos de commits seguindo o padrão semântico:
+
+- `feat(backend): add status route to check API health`
+- `fix(frontend): correct conditional rendering in Header component`
+- `docs: add contribution guidelines to README`
+- `style(components): format Header component with prettier`
+- `refactor(auth): simplify login logic`
+- `chore: configure husky pre-commit hooks`
+- `test(redux): add tests for user slice actions`
+
+### Boas Práticas para Commit
+
+1. **Commits Frequentes**: Faça commits frequentemente para salvar o progresso e facilitar o controle de versão.
+2. **Commits Pequenos**: Tente dividir grandes alterações em commits menores e focados.
+3. **Clareza**: Escreva descrições claras para que todos no grupo compreendam rapidamente a mudança.
+
+### Fluxo de Trabalho
+
+1. **Antes de Commits**: Certifique-se de que o código está formatado e de que não há erros de linting.
+2. **Pre-commit Hooks**: O projeto está configurado para executar `lint-staged` e `husky` antes dos commits, o que ajudará a manter o código padronizado.
+
