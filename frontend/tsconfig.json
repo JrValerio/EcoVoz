@@ -1,7 +1,8 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "compilerOptions": {
+    "lib": ["ES6", "DOM"],
+    "jsx": "react-jsx", // or "react" for older React versions
+    "forceConsistentCasingInFileNames": true,
+    "strict": true
+  }
 }
