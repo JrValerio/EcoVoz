@@ -2,32 +2,33 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User';
+import { validationResult } from 'express-validator';
 
 const UserController = {
   // Método para criar um novo usuário
-  async createUser(req: Request, res: Response) {
+  async createUser(req: Request, res: Response): Promise<void> {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      res.status(400).json({ errors: errors.array() });
+      return;
+    }
+
     try {
       const { username, email, password } = req.body;
-
-      // Verifica se o e-mail já está em uso
       const existingUser = await User.findOne({ email });
+
       if (existingUser) {
-        return res.status(400).json({ error: 'E-mail já está em uso' });
+        res.status(400).json({ error: 'E-mail já está em uso' });
+        return;
       }
 
-      // Criptografa a senha antes de salvar
       const hashedPassword = await bcrypt.hash(password, 10);
-
-      const newUser = new User({
-        username,
-        email,
-        password: hashedPassword,
-      });
-
+      const newUser = new User({ username, email, password: hashedPassword });
       await newUser.save();
 
       res.status(201).json({ message: 'Usuário criado com sucesso' });
-    } catch {
+    } catch (error) {
+      console.error('Erro ao criar usuário:', error);
       res.status(500).json({ error: 'Erro ao criar usuário' });
     }
   },
@@ -44,6 +45,7 @@ const UserController = {
 
       res.json(user);
     } catch (error) {
+      console.error('Erro ao buscar usuário:', error);
       res.status(500).json({ error: 'Erro ao buscar usuário' });
     }
   },
@@ -54,7 +56,6 @@ const UserController = {
       const { id } = req.params;
       const { username, email, password } = req.body;
 
-      // Verifica se o usuário existe
       const user = await User.findById(id);
       if (!user) {
         return res.status(404).json({ error: 'Usuário não encontrado' });
@@ -68,7 +69,8 @@ const UserController = {
       await user.save();
 
       res.json({ message: 'Usuário atualizado com sucesso' });
-    } catch {
+    } catch (error) {
+      console.error('Erro ao atualizar usuário:', error);
       res.status(500).json({ error: 'Erro ao atualizar usuário' });
     }
   },
@@ -85,39 +87,43 @@ const UserController = {
       }
 
       res.json({ message: 'Usuário excluído com sucesso' });
-    } catch {
+    } catch (error) {
+      console.error('Erro ao excluir usuário:', error);
       res.status(500).json({ error: 'Erro ao excluir usuário' });
     }
   },
 
   // Método para login e geração de token JWT
   async login(req: Request, res: Response) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
     try {
       const { email, password } = req.body;
 
-      // Verifica se o e-mail existe
       const user = await User.findOne({ email });
       if (!user) {
         return res.status(400).json({ error: 'Credenciais inválidas' });
       }
 
-      // Verifica a senha
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
         return res.status(400).json({ error: 'Credenciais inválidas' });
       }
 
-      // Gera o token JWT
       const token = jwt.sign(
         { userId: user._id },
         process.env.JWT_SECRET || 'default_secret',
         {
-          expiresIn: '1h', // O token expira em 1 hora
+          expiresIn: '1h', // Token expira em 1 hora
         }
       );
 
       res.json({ message: 'Login bem-sucedido', token });
-    } catch {
+    } catch (error) {
+      console.error('Erro ao fazer login:', error);
       res.status(500).json({ error: 'Erro ao fazer login' });
     }
   },
