@@ -11,8 +11,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'), // Alias para facilitar imports
-      '@shared': path.resolve(__dirname, '../shared'), // Alias para código compartilhado
+      '@': path.resolve(__dirname, './src'), 
+      '@shared': path.resolve(__dirname, '../shared'), 
     },
   },
   server: {

@@ -6,14 +6,14 @@ import Button from './Button';
 import Navigation from './Navigation';
 import { setUser, clearUser } from '../redux/slices/userSlice';
 import { RootState } from '../redux/store';
-import './styles/Header.css';
+import '../assets/styles/Header.css';
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
 
   const handleLogin = () => {
-    dispatch(setUser({ name: 'John Doe', email: '0VtZP@example.com' }));
+    dispatch(setUser({ name: 'Amaro junior', email: 'amarovsjr81@gmail.com' }));
   };
 
   const handleLogout = () => {
@@ -30,7 +30,7 @@ const Header: React.FC = () => {
         {user.name ? (
           <div>
             <p>
-              {t('welcome')}, <strong>{user.name}</strong>!
+              {t('Welcome')}, <strong>{user.name}</strong>!
             </p>
             <Button
               onClick={handleLogout}
