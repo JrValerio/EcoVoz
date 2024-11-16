@@ -1,0 +1,3 @@
+@tailwind base; /* Reseta estilos básicos */
+@tailwind components; /* Estilos de componentes */
+@tailwind utilities; /* Classes utilitárias */

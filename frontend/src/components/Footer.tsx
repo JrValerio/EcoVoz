@@ -1,10 +1,9 @@
 import React from 'react';
-import './styles/Footer.css';
 
 const Footer: React.FC = () => {
   return (
-    <footer className="footer">
-      <p>&copy; {new Date().getFullYear()} EcoVoz. All rights reserved.</p>
+    <footer className="bg-gray-800 text-white text-center py-4">
+      <p>&copy; 2024 EcoVoz. All rights reserved.</p>
     </footer>
   );
 };

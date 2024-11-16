@@ -1,2 +1,14 @@
-. "$(dirname "$0")/_/husky.sh"
-npx lint-staged
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running lint-staged..."
+npx lint-staged || {
+  echo "❌ Lint-staged failed. Fix the errors before committing."
+  exit 1
+}
+echo "🔍 Running ESLint..."
+npx eslint --fix . || {
+  echo "❌ ESLint failed. Fix the errors before committing."
+  exit 1
+}
+echo "✅ Pre-commit checks passed. Proceeding with the commit."

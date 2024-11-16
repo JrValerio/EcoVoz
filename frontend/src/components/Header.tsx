@@ -6,14 +6,13 @@ import Button from './Button';
 import Navigation from './Navigation';
 import { setUser, clearUser } from '../redux/slices/userSlice';
 import { RootState } from '../redux/store';
-import './styles/Header.css';
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
 
   const handleLogin = () => {
-    dispatch(setUser({ name: 'John Doe', email: '0VtZP@example.com' }));
+    dispatch(setUser({ name: 'Amaro Junior', email: 'amarovsjr81@gmail.com' }));
   };
 
   const handleLogout = () => {
@@ -23,25 +22,25 @@ const Header: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <header className="header">
-      <h1>{t('appName')}</h1>
+    <header className="bg-blue-600 text-white flex justify-between items-center px-6 py-4 shadow-md">
+      <h1 className="text-2xl font-bold">{t('appName')}</h1>
       <Navigation />
       <nav>
         {user.name ? (
-          <div>
+          <div className="flex items-center space-x-4">
             <p>
-              {t('welcome')}, <strong>{user.name}</strong>!
+              {t('Welcome')}, <strong>{user.name}</strong>!
             </p>
             <Button
               onClick={handleLogout}
-              className="logout-btn"
               variant="secondary"
+              className="bg-red-500 hover:bg-red-600"
             >
               {t('logout')}
             </Button>
           </div>
         ) : (
-          <Button onClick={handleLogin} className="login-btn" variant="primary">
+          <Button onClick={handleLogin} variant="primary">
             {t('login')}
           </Button>
         )}

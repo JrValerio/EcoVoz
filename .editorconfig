@@ -1,6 +1,7 @@
 root = true
 
 [*]
+end_of_line = lf                # Define o final de linha como LF (compatível com Unix)
 indent_style = space            # Usa espaços para indentação
 indent_size = 2                 # Define o tamanho da indentação como 2 espaços
 end_of_line = lf                # Define o final de linha como LF (compatível com Unix)

@@ -4,28 +4,78 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+      # Passo 1: Checkout do código
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
+      # Passo 2: Configurar Node.js
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: 18
 
-      - name: Install dependencies
+      # Passo 3: Cache de dependências Node.js
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # Passo 4: Instalar dependências do backend
+      - name: Install Backend Dependencies
+        working-directory: backend
         run: npm install
 
-      - name: Run Lint
+      # Passo 5: Instalar dependências do frontend
+      - name: Install Frontend Dependencies
+        working-directory: frontend
+        run: npm install
+
+      # Passo 6: Lint no backend
+      - name: Lint Backend
+        working-directory: backend
         run: npm run lint
 
-      - name: Run Tests
+      # Passo 7: Lint no frontend
+      - name: Lint Frontend
+        working-directory: frontend
+        run: npm run lint
+
+      # Passo 8: Testes no backend
+      - name: Test Backend
+        working-directory: backend
         run: npm run test
 
-      - name: Build Projects
+      # Passo 9: Testes no frontend
+      - name: Test Frontend
+        working-directory: frontend
+        run: npm run test
+
+      # Passo 10: Build do backend
+      - name: Build Backend
+        working-directory: backend
         run: npm run build
+
+      # Passo 11: Build do frontend
+      - name: Build Frontend
+        working-directory: frontend
+        run: npm run build
+
+      # Passo 12: Verificar saída do build
+      - name: Verify Build Output
+        run: |
+          echo "Backend Build Output:"
+          ls backend/dist
+          echo "Frontend Build Output:"
+          ls frontend/dist

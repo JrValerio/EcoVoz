@@ -1,29 +1,40 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ESNext",
-    "moduleResolution": "Node",
-    "jsx": "react-jsx",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "baseUrl": "./",
+    "target": "ESNext", // Suporte ao JavaScript moderno
+    "module": "ESNext", // Usando ES Modules
+    "moduleResolution": "Node", // Resolve módulos como o Node.js
+    "jsx": "react-jsx", // Suporte a React com JSX moderno
+    "strict": true, // Ativa todas as verificações estritas
+    "esModuleInterop": true, // Suporte para importar CommonJS
+    "skipLibCheck": true, // Ignora verificações em arquivos de definição
+    "baseUrl": "./", // Base para paths relativos
     "paths": {
-      "@/*": ["frontend/src/*"],
-      "@/backend/*": ["backend/src/*"]
+      "@/*": ["frontend/src/*"], // Alias para frontend
+      "@/backend/*": ["backend/src/*"] // Alias para backend
     },
-    "forceConsistentCasingInFileNames": true,
-    "types": ["node", "jest", "@testing-library/jest-dom"],
-    "isolatedModules": true,
-    "typeRoots": ["node_modules/@types"]
+    "forceConsistentCasingInFileNames": true, // Garante consistência em nomes de arquivos
+    "types": ["node", "jest", "@testing-library/jest-dom"], // Tipos adicionais
+    "isolatedModules": true, // Melhora compatibilidade com transpilers
+    "typeRoots": ["node_modules/@types"], // Diretórios de tipos
+    "resolveJsonModule": true, // Permite importar JSON
+    "allowSyntheticDefaultImports": true, // Suporte a imports default sintéticos
+    "noEmit": true // Não emite arquivos JavaScript ao compilar
   },
   "include": [
-    "frontend/src/**/*",
-    "backend/src/**/*",
-    "*.js",
-    "eslint.config.js",
-    "frontend/src/tests/**/*",
-    "backend/src/tests/**/*"
+    "frontend/**/*", // Inclui todos os arquivos no frontend
+    "backend/**/*", // Inclui todos os arquivos no backend
+    "vite.config.ts", // Inclui configuração do Vite
+    "backend/src/@types/**/*.d.ts", // Tipos globais customizados do backend
+    "*.js", // Inclui arquivos JavaScript
+    "*.ts", // Inclui arquivos TypeScript
+    "*.tsx" // Inclui arquivos TypeScript com JSX
   ],
-  "exclude": ["node_modules", "dist"]
+  "exclude": [
+    "node_modules", // Exclui dependências
+    "dist", // Exclui diretórios de build
+    "frontend/dist", // Exclui build do frontend
+    "backend/dist", // Exclui build do backend
+    "frontend/node_modules", // Exclui dependências duplicadas no frontend
+    "backend/node_modules" // Exclui dependências duplicadas no backend
+  ]
 }

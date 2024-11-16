@@ -1,36 +1,19 @@
 import { Router } from 'express';
-import { body } from 'express-validator';
-
+import { validateRegister, validateLogin } from '../validators/userValidators';
 import UserController from '../controllers/UserController';
 import authMiddleware from '../middlewares/authMiddleware';
 
 const router = Router();
 
-router.post(
-  '/register',
-  [
-    body('username')
-      .isString()
-      .isLength({ min: 3 })
-      .withMessage('Username must be at least 3 characters'),
-    body('email').isEmail().withMessage('Invalid email format'),
-    body('password')
-      .isLength({ min: 6 })
-      .withMessage('Password must be at least 6 characters'),
-  ],
-  UserController.createUser.bind(UserController),
-);
+// Rotas abertas
+router.post('/register', validateRegister, UserController.createUser);
+router.post('/login', validateLogin, UserController.login);
 
-router.post('/login', UserController.login.bind(UserController));
+// Rotas protegidas
+router.use(authMiddleware);
 
-router.get('/users/:id', authMiddleware, (req, res, next) => {
-  UserController.getUser(req, res).catch(next);
-});
-router.put('/users/:id', authMiddleware, (req, res, next) => {
-  UserController.updateUser(req, res).catch(next);
-});
-router.delete('/users/:id', authMiddleware, (req, res, next) => {
-  UserController.deleteUser(req, res).catch(next);
-});
+router.get('/users/:id', UserController.getUser);
+router.put('/users/:id', UserController.updateUser);
+router.delete('/users/:id', UserController.deleteUser);
 
 export default router;

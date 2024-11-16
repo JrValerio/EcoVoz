@@ -1,10 +1,29 @@
 {
-  "extends": "../tsconfig.base.json",
   "compilerOptions": {
-    "baseUrl": "./src",
-    "types": ["node", "jest"],
-    "typeRoots": ["node_modules/@types"]
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "jsx": "react-jsx",
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@backend/*": ["backend/src/*"],
+      "@frontend/*": ["frontend/src/*"]
+    },
+    "resolveJsonModule": true,
+    "experimentalDecorators": true,
+    "typeRoots": ["./node_modules/@types", "./backend/src/@types"]
   },
-  "include": ["src/**/*", "src/tests/**/*"],
+  "include": [
+    "src/**/*",
+    "*.js",
+    "eslint.config.js",
+    "jest.config.js",
+    "jest.setup.ts",
+    "backend/src/@types/**/*.d.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }

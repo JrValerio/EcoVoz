@@ -15,7 +15,6 @@ const useAuth = () => {
     }
     dispatch(setUser(userData));
   };
-  
 
   const logout = () => {
     dispatch(clearUser());
