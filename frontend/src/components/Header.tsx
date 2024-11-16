@@ -1,7 +1,12 @@
-import * as React from 'react';
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+
+import Button from './Button';
+import Navigation from './Navigation';
 import { setUser, clearUser } from '../redux/slices/userSlice';
+import { RootState } from '../redux/store';
+import './styles/Header.css';
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
@@ -15,17 +20,32 @@ const Header: React.FC = () => {
     dispatch(clearUser());
   };
 
+  const { t } = useTranslation();
+
   return (
-    <header>
-      <h1>EcoVoz</h1>
-      {user.name ? (
-        <div>
-          <p>Welcome, {user.name}!</p>
-          <button onClick={handleLogout}>Logout</button>
-        </div>
-      ) : (
-        <button onClick={handleLogin}>Login</button>
-      )}
+    <header className="header">
+      <h1>{t('appName')}</h1>
+      <Navigation />
+      <nav>
+        {user.name ? (
+          <div>
+            <p>
+              {t('welcome')}, <strong>{user.name}</strong>!
+            </p>
+            <Button
+              onClick={handleLogout}
+              className="logout-btn"
+              variant="secondary"
+            >
+              {t('logout')}
+            </Button>
+          </div>
+        ) : (
+          <Button onClick={handleLogin} className="login-btn" variant="primary">
+            {t('login')}
+          </Button>
+        )}
+      </nav>
     </header>
   );
 };

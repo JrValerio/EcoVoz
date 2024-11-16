@@ -1,15 +1,28 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+import Footer from './components/Footer';
 import Header from './components/Header';
+import About from './pages/About';
+import Dashboard from './pages/Dashboard';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import NotFound from './pages/NotFound';
 
 const App: React.FC = () => {
   return (
     <Router>
-      <div>
+      <div className="app-container">
         <Header />
-        <Routes>
-          <Route path="/" element={<h1>Welcome to EcoVoz Frontend</h1>} />
-          <Route path="/about" element={<h1>About EcoVoz</h1>} />
-        </Routes>
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </main>
+        <Footer />
       </div>
     </Router>
   );

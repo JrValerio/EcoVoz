@@ -1,0 +1,9 @@
+name: Commit Lint
+on: [push]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Commitlint
+        run: npx commitlint --from=HEAD~10 --to=HEAD

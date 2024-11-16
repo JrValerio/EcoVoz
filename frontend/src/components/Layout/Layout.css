@@ -1,0 +1,35 @@
+.layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.layout-header {
+  flex: 0 0 auto;
+  background-color: var(--primary-color);
+  color: #fff;
+}
+
+.layout-main {
+  flex: 1;
+  padding: 1rem;
+}
+
+.layout-footer {
+  flex: 0 0 auto;
+  background-color: var(--dark-color);
+  color: #fff;
+  text-align: center;
+  padding: 1rem;
+}
+
+.layout-content {
+  flex: 1 0 auto;
+  padding: var(--spacing-medium);
+}

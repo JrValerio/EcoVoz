@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["frontend/src/*"],
+      "@/backend/*": ["backend/src/*"]
+    },
+    "forceConsistentCasingInFileNames": true,
+    "strict": true
+  }
+}

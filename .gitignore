@@ -3,24 +3,54 @@ logs
 *.log
 npm-debug.log*
 yarn-debug.log*
-yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+
+# Build output
 dist
 dist-ssr
-*.local
+build
+coverage
 
-# Editor directories and files
+# Environment files
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# IDEs and editors
 .vscode/*
 !.vscode/extensions.json
 .idea
-.DS_Store.
-.env
-.env.example
+.DS_Store
+
+# OS-specific files
+Thumbs.db
+.DS_Store
+
+# TypeScript
+*.tsbuildinfo
+
+# Frontend-specific
+public/static
+*.cache
+*.out
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+
+# Miscellaneous
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+
+# Lint and formatting
+eslintcache
+.prettiercache

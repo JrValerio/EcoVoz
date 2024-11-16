@@ -1,14 +1,29 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./frontend/tsconfig.app.json" },
-    { "path": "./backend/tsconfig.node.json" }
-  ],
   "compilerOptions": {
-    "baseUrl": ".",
-    "forceConsistentCasingInFileNames": true,
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "jsx": "react-jsx",
     "strict": true,
-    "jsx": "react-jsx", // Or "react" if you're not using React 17+
-    "lib": ["ES6", "DOM"]
-  }
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["frontend/src/*"],
+      "@/backend/*": ["backend/src/*"]
+    },
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "jest", "@testing-library/jest-dom"],
+    "isolatedModules": true,
+    "typeRoots": ["node_modules/@types"]
+  },
+  "include": [
+    "frontend/src/**/*",
+    "backend/src/**/*",
+    "*.js",
+    "eslint.config.js",
+    "frontend/src/tests/**/*",
+    "backend/src/tests/**/*"
+  ],
+  "exclude": ["node_modules", "dist"]
 }

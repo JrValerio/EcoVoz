@@ -1,40 +1,20 @@
-const { FlatCompat } = require('@eslint/eslintrc');
-const compat = new FlatCompat();
-
-module.exports = [
-  {
-    files: ['**/*.ts', '**/*.tsx'],
-    languageOptions: {
-      parser: require('@typescript-eslint/parser'),
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        ecmaFeatures: {
-          jsx: true,
-        },
-      },
-    },
-    plugins: {
-      '@typescript-eslint': require('@typescript-eslint/eslint-plugin'),
-      react: require('eslint-plugin-react'),
-      'react-hooks': require('eslint-plugin-react-hooks'),
-      prettier: require('eslint-plugin-prettier'),
-    },
-    rules: {
-      'prettier/prettier': 'error',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        { argsIgnorePattern: '^_' },
-      ],
-      'react/react-in-jsx-scope': 'off',
-      '@typescript-eslint/explicit-module-boundary-types': 'off',
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
-    },
-    settings: {
-      react: {
-        version: 'detect',
-      },
-    },
+module.exports = {
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module',
+    project: './tsconfig.json',
   },
-];
+  plugins: ['@typescript-eslint', 'prettier', 'react', 'react-hooks', 'import'],
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:react/recommended',
+    'plugin:prettier/recommended',
+  ],
+  rules: {
+    'prettier/prettier': 'warn',
+    'react/react-in-jsx-scope': 'off', // Desnecessário no Next.js
+    '@typescript-eslint/no-unused-vars': ['warn'],
+  },
+};

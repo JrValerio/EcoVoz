@@ -1,8 +1,9 @@
-import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import User from '../models/User';
+import { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
+import jwt from 'jsonwebtoken';
+
+import User from '../models/User';
 
 const UserController = {
   // Método para criar um novo usuário
@@ -94,10 +95,11 @@ const UserController = {
   },
 
   // Método para login e geração de token JWT
-  async login(req: Request, res: Response) {
+  async login(req: Request, res: Response): Promise<void> {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      res.status(400).json({ errors: errors.array() });
+      return;
     }
 
     try {
@@ -105,20 +107,20 @@ const UserController = {
 
       const user = await User.findOne({ email });
       if (!user) {
-        return res.status(400).json({ error: 'Credenciais inválidas' });
+        res.status(400).json({ error: 'Credenciais inválidas' });
+        return;
       }
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
       if (!isPasswordValid) {
-        return res.status(400).json({ error: 'Credenciais inválidas' });
+        res.status(400).json({ error: 'Credenciais inválidas' });
+        return;
       }
 
       const token = jwt.sign(
         { userId: user._id },
         process.env.JWT_SECRET || 'default_secret',
-        {
-          expiresIn: '1h', // Token expira em 1 hora
-        }
+        { expiresIn: '1h' },
       );
 
       res.json({ message: 'Login bem-sucedido', token });

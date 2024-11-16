@@ -1,11 +1,24 @@
-# .editorconfig
-
 root = true
 
 [*]
-indent_style = space
-indent_size = 2
-end_of_line = lf
-charset = utf-8
-trim_trailing_whitespace = true
-insert_final_newline = true
+indent_style = space            # Usa espaços para indentação
+indent_size = 2                 # Define o tamanho da indentação como 2 espaços
+end_of_line = lf                # Define o final de linha como LF (compatível com Unix)
+charset = utf-8                 # Define a codificação padrão como UTF-8
+trim_trailing_whitespace = true # Remove espaços em branco no final das linhas
+insert_final_newline = true     # Adiciona uma nova linha no final de arquivos
+
+[*.md]
+trim_trailing_whitespace = false # Mantém espaços em branco em arquivos Markdown
+
+[*.json]
+indent_size = 2                  # Define indentação de 2 espaços para JSON
+
+[*.yml, *.yaml]
+indent_size = 2                  # Define indentação de 2 espaços para YAML
+
+[*.ts, *.tsx, *.js, *.jsx]
+indent_size = 2                  # Define indentação de 2 espaços para arquivos TypeScript e JavaScript
+
+[*.html, *.css, *.scss]
+indent_size = 2                  # Define indentação de 2 espaços para arquivos de estilo e HTML
