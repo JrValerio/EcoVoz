@@ -6,13 +6,21 @@ import Button from './Button';
 import Navigation from './Navigation';
 import { setUser, clearUser } from '../redux/slices/userSlice';
 import { RootState } from '../redux/store';
+<<<<<<< HEAD
+=======
+import '../assets/styles/Header.css';
+>>>>>>> c5eaf2d2f34e4ab998d3b5749b22a754c50f7ee0
 
 const Header: React.FC = () => {
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
 
   const handleLogin = () => {
+<<<<<<< HEAD
     dispatch(setUser({ name: 'Amaro Junior', email: 'amarovsjr81@gmail.com' }));
+=======
+    dispatch(setUser({ name: 'Amaro junior', email: 'amarovsjr81@gmail.com' }));
+>>>>>>> c5eaf2d2f34e4ab998d3b5749b22a754c50f7ee0
   };
 
   const handleLogout = () => {
