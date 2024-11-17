@@ -14,13 +14,8 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-<<<<<<< HEAD:vite.config.ts
       '@': path.resolve(__dirname, './src'),
       '@shared': path.resolve(__dirname, '../shared'),
-=======
-      '@': path.resolve(__dirname, './src'), 
-      '@shared': path.resolve(__dirname, '../shared'), 
->>>>>>> c5eaf2d2f34e4ab998d3b5749b22a754c50f7ee0:frontend/vite.config.ts
     },
   },
   server: {

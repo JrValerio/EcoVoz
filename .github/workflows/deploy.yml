@@ -67,3 +67,8 @@ jobs:
           ls backend/dist
           echo "Frontend Build Output:"
           ls frontend/dist
+
+      - name: Verify Tailwind CSS Installation
+        working-directory: frontend
+        run: npm list tailwindcss
+            

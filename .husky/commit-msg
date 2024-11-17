@@ -1,6 +1,0 @@
-. "$(dirname "$0")/_/husky.sh"
-
-npx --no -- commitlint --edit "$1" || {
-  echo "❌ Commit message validation failed. Please follow the Conventional Commits format."
-  exit 1
-}
