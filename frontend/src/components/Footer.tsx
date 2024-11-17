@@ -1,8 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
-=======
-import '../assets/styles/Footer.css';
->>>>>>> c5eaf2d2f34e4ab998d3b5749b22a754c50f7ee0
 
 const Footer: React.FC = () => {
   return (
