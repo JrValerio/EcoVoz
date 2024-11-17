@@ -8,10 +8,7 @@ export const formatDate = (date: Date): string => {
 };
 
 // Formatador de números (ex.: moeda)
-export const formatCurrency = (
-  value: number,
-  currency: string = 'USD',
-): string => {
+export const formatCurrency = (value: number, currency = 'USD'): string => {
   return new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency,
