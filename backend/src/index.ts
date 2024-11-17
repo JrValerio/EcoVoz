@@ -1,12 +1,8 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
-<<<<<<< HEAD
 import express, { Request, Response, NextFunction } from 'express';
-import { fileURLToPath } from 'url';
-=======
-import express from 'express';
->>>>>>> c5eaf2d2f34e4ab998d3b5749b22a754c50f7ee0
 import path from 'path';
+import { fileURLToPath } from 'url';
 
 import connectDB from './config/database';
 import statusRoutes from './routes/status';
@@ -25,14 +21,10 @@ connectDB();
 app.use(cors());
 app.use(express.json());
 
+// Rotas da API
 app.use('/api/users', userRoutes);
 app.use('/api/status', statusRoutes);
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('EcoVoz backend is running');
-});
-
-<<<<<<< HEAD
 // Servir arquivos estáticos
 app.use(express.static(path.join(__dirname, 'frontend/dist')));
 
@@ -44,12 +36,6 @@ app.get('*', (req, res) => {
 app.use((req: Request, res: Response, next: NextFunction) => {
   console.log('Middleware executed');
   next();
-=======
-app.use(express.static(path.join(__dirname, "frontend/dist")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "frontend/dist", "index.html"));
->>>>>>> c5eaf2d2f34e4ab998d3b5749b22a754c50f7ee0
 });
 
 app.listen(PORT, () => {
