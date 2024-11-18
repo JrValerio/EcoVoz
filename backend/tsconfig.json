@@ -1,21 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
     "module": "ESNext",
     "moduleResolution": "Node",
+    "target": "ES2020",
     "jsx": "react-jsx",
     "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "strict": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
     "baseUrl": ".",
     "paths": {
       "@backend/*": ["backend/src/*"],
       "@frontend/*": ["frontend/src/*"]
     },
-    "resolveJsonModule": true,
     "experimentalDecorators": true,
-    "typeRoots": ["./node_modules/@types", "./backend/src/@types"]
+    "typeRoots": ["./node_modules/@types", "./backend/src/@types"],
+    "outDir": "dist",
+    "rootDir": "src"
   },
   "include": [
     "src/**/*",
