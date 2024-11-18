@@ -54,5 +54,7 @@ const userSlice = createSlice({
 // Exporta as actions geradas automaticamente pelo Redux Toolkit
 export const { setUser, clearUser, updateRole } = userSlice.actions;
 
+export const loginAsDemoUser = () => setUser({ name: 'Demo User', email: 'demo@example.com' });
+
 // Exporta o reducer para uso na store do Redux
 export default userSlice.reducer;

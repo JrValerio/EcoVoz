@@ -11,7 +11,7 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false, // Desativa verificações de serialização se necessário
     }),
-  devTools: import.meta.env.VITE_APP_ENV !== 'production', // Habilita Redux DevTools em ambientes de desenvolvimento
+  devTools: process.env.NODE_ENV !== 'production', // Habilita Redux DevTools em ambientes de desenvolvimento
 });
 
 // Tipos para o estado global e dispatch
