@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url';
 import connectDB from './config/database';
 import statusRoutes from './routes/status';
 import userRoutes from './routes/userRoutes';
+import authRoutes from './routes/authRoutes';
 
 dotenv.config();
 const app = express();
@@ -22,6 +23,7 @@ app.use(cors());
 app.use(express.json());
 
 // Rotas da API
+app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/status', statusRoutes);
 

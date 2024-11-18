@@ -11,8 +11,8 @@ const useFetch = <T>(url: string) => {
       try {
         const response = await axios.get<T>(url);
         setData(response.data);
-      } catch (err: any) {
-        setError(err.message || 'An error occurred');
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : 'An error occurred');
       } finally {
         setLoading(false);
       }

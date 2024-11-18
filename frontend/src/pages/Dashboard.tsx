@@ -3,15 +3,26 @@ import React, { useState } from 'react';
 const Dashboard: React.FC = () => {
   const [input, setInput] = useState('');
   const [response, setResponse] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const handleSend = () => {
-    // Simular resposta da IA
-    setResponse(`IA respondeu: Você disse "${input}"`);
-    setInput('');
+  const handleSend = async () => {
+    if (!input.trim()) {
+      setResponse('Por favor, digite uma mensagem antes de enviar.');
+      return;
+    }
+
+    setLoading(true);
+    setResponse('');
+    // Simular um tempo de resposta da IA
+    setTimeout(() => {
+      setResponse(`IA respondeu: Você disse "${input}"`);
+      setLoading(false);
+      setInput('');
+    }, 2000); // Simulação de 2 segundos
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
       <h1 className="text-3xl font-bold text-gray-700 mb-6">Dashboard</h1>
       <div className="w-full max-w-md">
         <textarea
@@ -19,16 +30,22 @@ const Dashboard: React.FC = () => {
           onChange={(e) => setInput(e.target.value)}
           className="w-full p-4 border border-gray-300 rounded focus:ring focus:ring-blue-200"
           placeholder="Digite sua mensagem..."
+          rows={4}
+          aria-label="Entrada de mensagem para IA"
         />
         <button
           onClick={handleSend}
-          className="mt-4 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+          className="mt-4 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          disabled={loading}
         >
-          Enviar
+          {loading ? 'Enviando...' : 'Enviar'}
         </button>
       </div>
       {response && (
-        <div className="mt-6 bg-gray-200 p-4 rounded shadow">
+        <div
+          className="mt-6 bg-gray-200 p-4 rounded shadow w-full max-w-md text-center text-gray-700"
+          aria-live="polite"
+        >
           <p>{response}</p>
         </div>
       )}

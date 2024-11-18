@@ -1,30 +1,37 @@
 import React from 'react';
 import useAuth from '../hooks/useAuth';
+import Button from './Button'; // Usa o componente Button para consistência
+import { useTranslation } from 'react-i18next';
 
-const AuthButton = () => {
+const AuthButton: React.FC = () => {
   const { user, isAuthenticated, login, logout } = useAuth();
+  const { t } = useTranslation();
 
   return (
-    <div className="flex items-center justify-center space-y-4 text-center">
+    <div className="flex flex-col items-center justify-center space-y-4 text-center">
       {isAuthenticated ? (
         <div>
-          <p className="text-lg text-gray-700">Bem-vindo, {user.name}!</p>
-          <button
+          <p className="text-lg text-gray-700">
+            {t('Welcome')}, <strong>{user.name}</strong>!
+          </p>
+          <Button
             onClick={logout}
-            className="mt-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 transition"
+            variant="danger"
+            ariaLabel={t('Logout')}
           >
-            Sair
-          </button>
+            {t('Logout')}
+          </Button>
         </div>
       ) : (
-        <button
+        <Button
           onClick={() =>
             login({ name: 'João Silva', email: 'joao@example.com' })
           }
-          className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+          variant="primary"
+          ariaLabel={t('Login')}
         >
-          Entrar
-        </button>
+          {t('Login')}
+        </Button>
       )}
     </div>
   );

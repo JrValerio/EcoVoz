@@ -1,16 +1,17 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 interface AuthenticatedRequest extends Request {
   userId?: string;
 }
 
-const { verify } = jwt;
-
 const authMiddleware = (
   req: AuthenticatedRequest,
   res: Response,
-  next: NextFunction,
+  next: NextFunction
 ): void => {
   const authHeader = req.headers.authorization;
 
@@ -22,12 +23,7 @@ const authMiddleware = (
   const token = authHeader.replace('Bearer ', '');
 
   try {
-    const decoded = verify(
-      token,
-      process.env.JWT_SECRET || 'default_secret',
-    ) as {
-      userId: string;
-    };
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'default_secret') as { userId: string };
     req.userId = decoded.userId;
     next();
   } catch (error) {
@@ -35,5 +31,4 @@ const authMiddleware = (
     res.status(401).json({ error: 'Token inválido.' });
   }
 };
-
 export default authMiddleware;

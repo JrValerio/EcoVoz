@@ -1,4 +1,5 @@
 import React from 'react';
+import clsx from 'clsx';
 
 type ButtonProps = {
   children: React.ReactNode;
@@ -6,7 +7,8 @@ type ButtonProps = {
   variant?: 'primary' | 'secondary' | 'danger' | 'link';
   disabled?: boolean;
   className?: string;
-  type?: 'submit' | 'button';
+  type?: 'submit' | 'button' | 'reset';
+  ariaLabel?: string; // Adicionado para acessibilidade
 };
 
 const Button: React.FC<ButtonProps> = ({
@@ -15,6 +17,8 @@ const Button: React.FC<ButtonProps> = ({
   variant = 'primary',
   disabled = false,
   className = '',
+  type = 'button', // Permitir especificar o tipo do botão
+  ariaLabel,
 }) => {
   const baseStyles =
     'px-4 py-2 rounded transition font-medium focus:outline-none focus:ring-2 focus:ring-offset-2';
@@ -26,14 +30,26 @@ const Button: React.FC<ButtonProps> = ({
     link: 'text-blue-500 hover:text-blue-700 underline',
   };
 
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (disabled) {
+      e.preventDefault();
+      return;
+    }
+    onClick?.();
+  };
+
   return (
     <button
-      onClick={onClick}
+      type={type}
+      onClick={handleClick}
+      aria-label={ariaLabel || 'button'}
       disabled={disabled}
-      type="button"
-      className={`${baseStyles} ${variants[variant]} ${className} ${
-        disabled ? 'opacity-50 cursor-not-allowed' : ''
-      }`}
+      className={clsx(
+        baseStyles,
+        variants[variant],
+        disabled && 'opacity-50 cursor-not-allowed',
+        className
+      )}
     >
       {children}
     </button>

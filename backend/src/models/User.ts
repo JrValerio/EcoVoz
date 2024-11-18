@@ -10,13 +10,14 @@ interface IUser extends Document {
   comparePassword(candidatePassword: string): Promise<boolean>; // Método para comparar senhas
 }
 
+// backend/src/models/User.ts
 const UserSchema: Schema<IUser> = new Schema(
   {
     username: {
       type: String,
       required: true,
       unique: true,
-      trim: true, // Remove espaços em branco antes/depois
+      trim: true,
     },
     email: {
       type: String,
@@ -25,24 +26,24 @@ const UserSchema: Schema<IUser> = new Schema(
       trim: true,
       validate: {
         validator: (value: string) =>
-          /^([\w-.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(value), // Regex para validar email
+          /^([\w-.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(value),
         message: 'Por favor, insira um email válido',
       },
     },
     password: {
       type: String,
       required: true,
-      minlength: 6, // Define o tamanho mínimo da senha
+      minlength: 6,
     },
   },
   {
-    timestamps: true, // Adiciona automaticamente createdAt e updatedAt
-  },
+    timestamps: true,
+  }
 );
 
-// Hook (middleware) para hashear a senha antes de salvar
+// Hook para hashear senha
 UserSchema.pre<IUser>('save', async function (next) {
-  if (!this.isModified('password')) return next(); // Apenas hashea se a senha for modificada
+  if (!this.isModified('password')) return next();
 
   try {
     const salt = await bcrypt.genSalt(10);
@@ -53,9 +54,9 @@ UserSchema.pre<IUser>('save', async function (next) {
   }
 });
 
-// Método para comparar senhas
+// Método de comparação de senha
 UserSchema.methods.comparePassword = async function (
-  candidatePassword: string,
+  candidatePassword: string
 ): Promise<boolean> {
   return bcrypt.compare(candidatePassword, this.password);
 };

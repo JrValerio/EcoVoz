@@ -1,15 +1,14 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL, // Base URL da API definida no .env
+  baseURL: process.env.VITE_API_URL, // Base URL da API definida no .env
 });
-
-export const fetchData = async (endpoint: string): Promise<any> => {
+export const fetchData = async (endpoint: string): Promise<unknown> => {
   const response = await api.get(endpoint);
   return response.data;
 };
 
-export const postData = async (endpoint: string, data: any): Promise<any> => {
+export const postData = async (endpoint: string, data: unknown): Promise<unknown> => {
   const response = await api.post(endpoint, data);
   return response.data;
 };

@@ -1,13 +1,14 @@
-import { Request } from 'express';
-
 declare global {
   namespace Express {
     interface Request<
-      Body = Record<string, any>, // Tipagem genérica para o body
-      Params = Record<string, any>, // Tipagem genérica para os params
+      Body = Record<string, unknown>,
+      Params = Record<string, unknown>,
+      Query = Record<string, string | number | boolean>
     > {
       body: Body;
       params: Params;
+      query: Query;
     }
   }
 }
+
