@@ -23,7 +23,7 @@
   "include": [
     "frontend/**/*", // Inclui todos os arquivos no frontend
     "backend/**/*", // Inclui todos os arquivos no backend
-    "vite.config.ts", // Inclui configuração do Vite
+    "frontend/vite.config.ts", // Inclui configuração do Vite
     "backend/src/@types/**/*.d.ts", // Tipos globais customizados do backend
     "*.js", // Inclui arquivos JavaScript
     "*.ts", // Inclui arquivos TypeScript
