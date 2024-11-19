@@ -9,6 +9,9 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 // Configuração do Vite
 export default defineConfig({
   plugins: [react()],
+  define: {
+    'process.env': {}, 
+  },
   css: {
     
   },

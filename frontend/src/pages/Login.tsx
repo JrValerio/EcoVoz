@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import Alert from '../components/Alert';
+import { login } from '../services/authService';
 
 const Login: React.FC = () => {
   const [email, setEmail] = useState('');
@@ -23,24 +24,22 @@ const Login: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('/api/auth/login', { email, password });
+      const { token } = await login(email, password);
       setMessage('Login realizado com sucesso!');
       setEmail('');
       setPassword('');
 
       // Salva o token no localStorage ou contexto global
-      localStorage.setItem('authToken', response.data.token);
+      localStorage.setItem('authToken', token);
 
       // Redireciona para o Dashboard
-      navigate('/dashboard');
+      setTimeout(() => navigate('/dashboard'), 1000);
     } catch (err: unknown) {
-      if (axios.isAxiosError(err) && err.response) {
-        setError(err.response.data.message || 'Erro ao realizar login.');
+      if (err instanceof Error) {
+        setError(err.message);
       } else {
-        setError('Erro ao realizar login.');
+        setError('Erro desconhecido');
       }
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -51,16 +50,10 @@ const Login: React.FC = () => {
         className="bg-white p-8 shadow-lg rounded w-full max-w-md"
       >
         <h1 className="text-2xl font-bold text-gray-700 mb-4">Login</h1>
-        {message && (
-          <div className="bg-green-100 text-green-800 p-4 mb-4 rounded shadow">
-            {message}
-          </div>
-        )}
-        {error && (
-          <div className="bg-red-100 text-red-800 p-4 mb-4 rounded shadow">
-            {error}
-          </div>
-        )}
+
+        {message && <Alert type="success" message={message} />}
+        {error && <Alert type="error" message={error} />}
+
         <div className="mb-4">
           <label
             htmlFor="email"
@@ -77,6 +70,7 @@ const Login: React.FC = () => {
             required
           />
         </div>
+
         <div className="mb-4">
           <label
             htmlFor="password"
@@ -93,6 +87,7 @@ const Login: React.FC = () => {
             required
           />
         </div>
+
         <button
           type="submit"
           disabled={isLoading}
@@ -100,6 +95,7 @@ const Login: React.FC = () => {
         >
           {isLoading ? 'Entrando...' : 'Login'}
         </button>
+
         <p className="text-sm text-gray-600 mt-4 text-center">
           Não tem uma conta?{' '}
           <Link to="/register" className="text-blue-600 hover:underline">

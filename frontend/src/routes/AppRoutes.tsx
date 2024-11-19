@@ -1,32 +1,46 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import PrivateRoute from './PrivateRoute';
+import { allRoutes, notFoundRoute } from './RouteConfig';
 
-import AuthWrapper from '../features/auth/AuthWrapper';
-import About from '../pages/About';
-import Contact from '../pages/Contact';
-import Dashboard from '../pages/Dashboard';
-import Home from '../pages/Home';
-import Login from '../pages/Login';
-import NotFound from '../pages/NotFound';
+type AppRoutesProps = {
+  fallback?: React.ReactNode; // Permite personalizar o fallback
+};
 
-const AppRoutes: React.FC = () => {
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/login" element={<Login />} />
+const AppRoutes: React.FC<AppRoutesProps> = ({
+  fallback = <div aria-live="polite">Carregando...</div>, // Fallback padrão acessível
+}) => {
+  // Função para renderizar rotas dinamicamente
+  const renderRoutes = () =>
+    allRoutes.map(({ path, element: Element, private: isPrivate }, index) => {
+      if (!path || !Element) return null; // Proteção contra erros
+
+      return (
         <Route
-          path="/dashboard"
+          key={index}
+          path={path}
           element={
-            <AuthWrapper>
-              <Dashboard />
-            </AuthWrapper>
+            isPrivate ? (
+              <PrivateRoute>
+                <Element />
+              </PrivateRoute>
+            ) : (
+              <Element />
+            )
           }
         />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
+      );
+    });
+
+  return (
+    <BrowserRouter>
+      <Suspense fallback={fallback}>
+        <Routes>
+          {renderRoutes()}
+          {/* Rota para páginas não encontradas */}
+          <Route path={notFoundRoute.path} element={<notFoundRoute.element />} />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 };

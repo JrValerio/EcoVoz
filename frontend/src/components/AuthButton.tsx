@@ -25,7 +25,7 @@ const AuthButton: React.FC = () => {
       ) : (
         <Button
           onClick={() =>
-            login({ name: 'João Silva', email: 'joao@example.com' })
+            login('João Silva', 'joao@example.com')
           }
           variant="primary"
           ariaLabel={t('Login')}

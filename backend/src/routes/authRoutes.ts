@@ -67,7 +67,36 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
     res.status(500).json({ message: 'Erro ao fazer login.', error });
   }
 });
-// Protected route
+
+router.post('/auth/validate', async (req: Request, res: Response): Promise<void> => {
+  const token = req.body.token;
+  const jwtSecret = process.env.JWT_SECRET;
+
+  if (!token) {
+    res.status(401).json({ message: 'Token não fornecido.' });
+    return;
+  }
+
+  if (!jwtSecret) {
+    res.status(500).json({ message: 'JWT_SECRET não está definido.' });
+    return;
+  }
+
+  try {
+    const decoded = jwt.verify(token, jwtSecret);
+    const userId = (decoded as { userId: string }).userId;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      res.status(404).json({ message: 'Usuário não encontrado.' });
+      return;
+    }
+    res.status(200).json({ user });
+  } catch (error: unknown) {
+    console.error('Error verifying token:', error);
+    res.status(401).json({ message: 'Token inválido.' });
+  }
+});// Protected route
 router.get('/protected', authMiddleware, (req: Request, res: Response): void => {
   const authenticatedReq = req as AuthenticatedRequest;
   res.status(200).json({ message: 'Acesso concedido.', userId: authenticatedReq.userId });

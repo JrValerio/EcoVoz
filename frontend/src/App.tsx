@@ -1,32 +1,25 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
-import Footer from './components/Footer';
+import React from 'react';
+import { Suspense } from 'react';
+import './i18n/i18n';
+import AppRoutes from './routes/AppRoutes';
 import Header from './components/Header';
-import About from './pages/About';
-import Dashboard from './pages/Dashboard';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import NotFound from './pages/NotFound';
-import Contact from './pages/Contact';
+import Footer from './components/Footer';
+import Loading from './components/Loading';
+import { ThemeProvider } from './context/ThemeContext';
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <div className="app-container">
-        <Header />
-        <main>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+    <Suspense fallback={<Loading />}>
+      <ThemeProvider>
+        <div className="app-container">
+          <Header />
+          <main id="main-content" className="flex-grow" role="main">
+            <AppRoutes />
+          </main>
+          <Footer />
+        </div>
+      </ThemeProvider>
+    </Suspense>
   );
 };
 
