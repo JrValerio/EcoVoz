@@ -25,7 +25,7 @@ export default defineConfig({
     port: 3000,
     open: true,
     proxy: {
-      '/api': {
+      '/api/auth': {
         target: 'http://localhost:4000',
         changeOrigin: true,
         secure: false,
@@ -37,6 +37,7 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
+      external: ['core-js', 'react-speech-recognition'],
       output: {
         manualChunks: {
           react: ['react', 'react-dom'],

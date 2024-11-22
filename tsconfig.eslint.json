@@ -1,4 +1,18 @@
 {
   "extends": "./tsconfig.json",
-  "include": ["vite.config.ts", "jest.setup.ts"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "*.eslint.config.js",
+    "tailwind.config.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "frontend/dist",
+    "backend/dist",
+    "coverage"
+  ]
 }

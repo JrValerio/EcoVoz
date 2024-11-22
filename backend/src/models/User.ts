@@ -1,64 +1,44 @@
-import mongoose, { Schema, Document } from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 
-interface IUser extends Document {
+// Interface do documento do usuário
+export interface IUser extends Document {
+  updatedAt: any;
+  createdAt: any;
   username: string;
   email: string;
-  password: string;
-  createdAt: Date;
-  updatedAt: Date;
-  comparePassword(candidatePassword: string): Promise<boolean>; // Método para comparar senhas
+  password: string | null; // Permite null para usuários com login via Google
+  googleId?: string; // ID único do usuário no Google
+  picture?: string; // URL da imagem de perfil do Google
+  comparePassword(password: string): Promise<boolean>;
 }
 
-// backend/src/models/User.ts
-const UserSchema: Schema<IUser> = new Schema(
+// Esquema do usuário
+const UserSchema = new Schema<IUser>(
   {
-    username: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-    },
-    email: {
-      type: String,
-      required: true,
-      unique: true,
-      trim: true,
-      validate: {
-        validator: (value: string) =>
-          /^([\w-.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(value),
-        message: 'Por favor, insira um email válido',
-      },
-    },
-    password: {
-      type: String,
-      required: true,
-      minlength: 6,
-    },
+    username: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: false }, // Não obrigatório para usuários do Google
+    googleId: { type: String, required: false }, // Adiciona suporte ao Google ID
+    picture: { type: String, required: false }, // Adiciona suporte para imagem de perfil
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
-// Hook para hashear senha
-UserSchema.pre<IUser>('save', async function (next) {
-  if (!this.isModified('password')) return next();
-
-  try {
+// Middleware para hash de senha antes de salvar
+UserSchema.pre('save', async function (next) {
+  if (this.isModified('password') && this.password) {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-    next();
-  } catch (error) {
-    next(error as Error);
   }
+  next();
 });
 
 // Método de comparação de senha
-UserSchema.methods.comparePassword = async function (
-  candidatePassword: string
-): Promise<boolean> {
-  return bcrypt.compare(candidatePassword, this.password);
+UserSchema.methods.comparePassword = function (password: string): Promise<boolean> {
+  if (!this.password) return Promise.resolve(false); // Senha inexistente retorna falso
+  return bcrypt.compare(password, this.password);
 };
 
-export default mongoose.model<IUser>('User', UserSchema, 'users');
+const User = mongoose.model<IUser>('User', UserSchema);
+export default User;

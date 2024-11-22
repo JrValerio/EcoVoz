@@ -1,14 +1,16 @@
 {
   "compilerOptions": {
-    "target": "es2016",
-    "module": "commonjs",
-    "strict": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-    "skipLibCheck": true,
-    "baseUrl": "./",
+    "target": "ES2020", // Suporte a funcionalidades modernas
+    "module": "ESNext", // Para módulos modernos
+    "strict": true, // Ativa verificações rigorosas
+    "esModuleInterop": true, // Compatibilidade com CommonJS
+    "forceConsistentCasingInFileNames": true, // Evita problemas em sistemas case-sensitive
+    "skipLibCheck": true, // Ignora verificações em bibliotecas externas
+    "baseUrl": "./", // Base para resolução de caminhos
     "paths": {
-      "@shared/*": ["shared/*"]
-    }
+      "@shared/*": ["shared/*"] // Alias para a pasta "shared"
+    },
+    "resolveJsonModule": true, // Permite importar JSON
+    "allowSyntheticDefaultImports": true // Facilita imports padrão
   }
 }

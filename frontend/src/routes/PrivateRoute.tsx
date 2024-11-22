@@ -1,37 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Navigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
 type PrivateRouteProps = {
   children: React.ReactNode;
-  redirectTo?: string; // Permite personalizar o redirecionamento
-  fallback?: React.ReactNode; // Permite personalizar o fallback visual
+  redirectTo?: string;
+  fallback?: React.ReactNode;
 };
+
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({
   children,
   redirectTo = '/login',
   fallback = <div className="loading-spinner" aria-live="polite">Verificando autenticação...</div>,
 }) => {
-  const { isAuthenticated, initializeAuth } = useAuth();
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        await initializeAuth(); // Restaura o estado do usuário
-      } catch (error) {
-        console.error('Erro ao verificar autenticação:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, [initializeAuth]);
-
-  // Renderiza o fallback enquanto verifica a autenticação
+  const { isAuthenticated, isLoading } = useAuth(); // useAuth agora retorna `isLoading`
+  
+  // Renderiza fallback enquanto verifica autenticação
   if (isLoading) {
+    
     return <>{fallback}</>;
   }
 

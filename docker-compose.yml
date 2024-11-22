@@ -1,28 +1,75 @@
-version: '3.8'
 services:
   backend:
-    build: ./backend
-    dockerfile: ./backend/Dockerfile
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: ["npm", "run", "start"]
     ports:
       - '4000:4000'
+    env_file:
+      - .env
     environment:
-      - MONGO_URI=mongodb://mongo:27017/ecovoz
-      - NODE_ENV=production
+      - MONGO_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/ecovoz?authSource=admin
+      - JWT_SECRET=${JWT_SECRET}
+      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
+      - REACT_APP_API_URL=http://backend:4000
     depends_on:
       - mongo
+    networks:
+      - ecovoz_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
   frontend:
-    build: ./frontend
-    dockerfile: ./frontend/Dockerfile
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    command: ["npm", "run", "start"]
     ports:
       - '3000:3000'
+    env_file:
+      - .env
     environment:
       - NODE_ENV=production
+      - REACT_APP_API_URL=http://localhost:4000
+    depends_on:
+      - backend
+    networks:
+      - ecovoz_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health.html"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
   mongo:
   image: mongo
   container_name: ecovoz_mongo
   ports:
     - '27017:27017'
+  env_file:
+    - .env
+  environment:
+    - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+    - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
   volumes:
     - mongo_data:/data/db
+    - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+  networks:
+    - ecovoz_network
+  healthcheck:
+    test: ["CMD", "mongo", "--eval", "db.stats()"]
+    interval: 30s
+    timeout: 10s
+    retries: 5
+
+
 volumes:
   mongo_data:
+
+networks:
+  ecovoz_network:
+    driver: bridge

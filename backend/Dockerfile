@@ -1,20 +1,22 @@
-# Usar a imagem do Node.js
-FROM node:18
+# Use a imagem Node.js
+FROM node:18-slim
 
-# Definir diretório de trabalho
+# Defina o diretório de trabalho
 WORKDIR /app
 
-# Copiar apenas os arquivos de configuração necessários
-COPY ./backend/package*.json ./
+# Copiar apenas os arquivos necessários inicialmente
+COPY package*.json ./
 
-# Instalar dependências
+# Instale as dependências
 RUN npm install
 
-# Copiar o restante do código
-COPY ./backend ./
+# Copie o restante do backend
+COPY ./src ./src 
+# Construa o backend
+RUN npm run build
 
-# Expor a porta usada pela aplicação
+# Exponha a porta
 EXPOSE 4000
 
-# Comando para rodar o backend em desenvolvimento
-CMD ["npm", "run", "dev"]
+# Comando de inicialização
+CMD ["npm", "run", "build:backend"]

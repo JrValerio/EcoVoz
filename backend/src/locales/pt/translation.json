@@ -1,5 +1,50 @@
 {
-    "welcome": "Bem-vindo à nossa API!",
-    "goodbye": "Tchau e até breve!"
-  }
-  
+  "about": {
+  "title": "Sobre o EcoVoz",
+  "description": "O EcoVoz é uma iniciativa inovadora criada pela equipe 12 durante o Hackathon Autismo Tech 2024. Nosso objetivo é oferecer uma solução tecnológica que possibilite às pessoas com deficiência de fala ou linguagem se comunicarem de maneira eficaz e inclusiva, utilizando inteligência artificial e tecnologia assistiva.",
+  "features": "Principais funcionalidades do EcoVoz incluem:",
+  "feature1": "Reconhecimento de voz avançado para pessoas com deficiência de fala.",
+  "feature2": "Tradução em tempo real para mais de 100 idiomas.",
+  "feature3": "Integração com dispositivos assistivos para comunicação alternativa.",
+  "feature4": "Aplicativo móvel para acessibilidade em qualquer lugar.",
+  "feature5": "Banco de dados de vozes para treinamento e melhoria contínua.",
+  "mission": "Nossa missão é promover a inclusão, aumentar a independência e melhorar a qualidade de vida das pessoas com deficiência de fala, utilizando tecnologia de ponta e parcerias estratégicas com organizações, empresas e instituições de saúde.",
+  "team": "Este projeto foi desenvolvido com paixão e dedicação pela equipe 12 no Hackathon Autismo Tech 2024, um evento que celebra a criatividade e o impacto positivo da tecnologia na inclusão social.",
+  "imageAlt": "Ilustração sobre o EcoVoz"
+},
+      "AuthButton": {
+    "Welcome": "Bem-vindo",
+    "Login": "Entrar",
+    "Logout": "Sair"
+  },
+  "Navigation": {
+    "Home": "Home",
+    "About": "Sobre",
+    "Contact": "Contato",
+    "Login": "Entrar",
+    "Dashboard": "Painel"
+  },
+  "voiceInput": {
+  "browserNotSupported": "O seu navegador não suporta reconhecimento de voz.",
+  "start": "Falar",
+  "stop": "Parar de falar",
+  "youSaid": "Você disse",
+  "noSpeechDetected": "Nenhuma fala detectada.",
+  "clear": "Limpar Transcrição"
+},
+  "Header": {
+    "ecoVoz": "EcoVoz",
+"ecoVozLogo": "Logotipo da EcoVoz",
+"welcome": "Bem-vindo",
+"login": "Entrar",
+"logout": "Sair"
+},
+"home": {
+"welcomeBack": "Bem-vindo de volta",
+"goToDashboard": "Ir para o Painel",
+"login": "Acesse sua conta",
+"learnMore": "Saiba Mais Sobre Nós",
+"voiceNavigation": "Procurando ajuda? Use o botão de voz para navegar pela plataforma."
+}
+
+}

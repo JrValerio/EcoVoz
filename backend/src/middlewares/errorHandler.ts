@@ -9,6 +9,6 @@ const errorMiddleware = (err: unknown, req: Request, res: Response, next: NextFu
     message: (err as Error).message || 'Erro interno no servidor',
   });
 
-  next(); // Adicione essa linha para chamar o próximo middleware
+  next(); 
 };
 export default errorMiddleware;

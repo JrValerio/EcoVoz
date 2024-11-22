@@ -1,19 +1,22 @@
 import React, { Suspense } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import PrivateRoute from './PrivateRoute';
+import { Routes, Route } from 'react-router-dom';
+import AuthWrapper from '../features/auth/AuthWrapper';
 import { allRoutes, notFoundRoute } from './RouteConfig';
 
 type AppRoutesProps = {
-  fallback?: React.ReactNode; // Permite personalizar o fallback
+  fallback?: React.ReactNode;
 };
 
 const AppRoutes: React.FC<AppRoutesProps> = ({
-  fallback = <div aria-live="polite">Carregando...</div>, // Fallback padrão acessível
+  fallback = (
+    <div className="flex items-center justify-center min-h-screen">
+      <span className="loader" aria-live="polite">Carregando...</span>
+    </div>
+  ),
 }) => {
-  // Função para renderizar rotas dinamicamente
   const renderRoutes = () =>
     allRoutes.map(({ path, element: Element, private: isPrivate }, index) => {
-      if (!path || !Element) return null; // Proteção contra erros
+      if (!path || !Element) return null;
 
       return (
         <Route
@@ -21,9 +24,10 @@ const AppRoutes: React.FC<AppRoutesProps> = ({
           path={path}
           element={
             isPrivate ? (
-              <PrivateRoute>
+              // Protege rotas privadas com o componente PrivateRoute
+              <AuthWrapper>
                 <Element />
-              </PrivateRoute>
+              </AuthWrapper>
             ) : (
               <Element />
             )
@@ -33,15 +37,12 @@ const AppRoutes: React.FC<AppRoutesProps> = ({
     });
 
   return (
-    <BrowserRouter>
-      <Suspense fallback={fallback}>
-        <Routes>
-          {renderRoutes()}
-          {/* Rota para páginas não encontradas */}
-          <Route path={notFoundRoute.path} element={<notFoundRoute.element />} />
-        </Routes>
-      </Suspense>
-    </BrowserRouter>
+    <Suspense fallback={fallback}>
+      <Routes>
+        {renderRoutes()}
+        <Route path={notFoundRoute.path} element={<notFoundRoute.element />} />
+      </Routes>
+    </Suspense>
   );
 };
 

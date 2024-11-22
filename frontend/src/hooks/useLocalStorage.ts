@@ -17,7 +17,7 @@ const useLocalStorage = <T>(key: string, initialValue: T) => {
       const item = localStorage.getItem(key);
       return item ? JSON.parse(item) : initialValue;
     } catch (error) {
-      console.error("Erro ao acessar o localStorage:", error);
+      console.error('Erro ao acessar o localStorage:', error);
       return initialValue;
     }
   });
@@ -53,8 +53,4 @@ const useLocalStorage = <T>(key: string, initialValue: T) => {
   return [storedValue, setValue, removeValue] as const;
 };
 
-// Example usage of the useLocalStorage hook
-const [username, setUsername, removeUsername] = useLocalStorage('username', '');
-console.log(`Username: ${username}`);
-setUsername('NovoUsuario');
-removeUsername();
+export default useLocalStorage;

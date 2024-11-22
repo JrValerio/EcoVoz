@@ -1,5 +1,4 @@
 import { configureStore } from '@reduxjs/toolkit';
-
 import userReducer from './slices/userSlice';
 
 // Configuração do store Redux
@@ -9,12 +8,15 @@ const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
-      serializableCheck: false, // Desativa verificações de serialização se necessário
+      serializableCheck: {
+        ignoredActions: ['user/loginSuccess'], // Exemplo de ações ignoradas
+        ignoredPaths: ['user.token'], // Ignorar caminhos específicos no estado
+      },
     }),
-  devTools: process.env.NODE_ENV !== 'production', // Habilita Redux DevTools em ambientes de desenvolvimento
+  devTools: process.env.NODE_ENV !== 'production', // Ativar Redux DevTools em desenvolvimento
 });
 
-// Tipos para o estado global e dispatch
+// Tipos globais do Redux
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 

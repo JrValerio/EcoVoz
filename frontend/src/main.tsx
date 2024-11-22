@@ -2,65 +2,70 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
-import './i18n/i18n'; 
+
 import './input.css';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
+import './i18n/i18n';
 import App from './App';
 import store from './redux/store';
+import { initializeApp } from './config/init';
+import { ThemeProvider } from './context/ThemeContext'; 
+import GoogleAuthProvider from './providers/GoogleAuthProvider';
 
-// Verifica se o elemento root existe
+// Componentes de Feedback Visual
+const LoadingScreen: React.FC = () => (
+  <div className="flex items-center justify-center min-h-screen bg-gray-100 text-gray-600 text-xl">
+    Carregando aplicação...
+  </div>
+);
+
+const ErrorScreen: React.FC<{ message?: string }> = ({ message }) => (
+  <div className="flex flex-col items-center justify-center min-h-screen bg-red-50 text-red-600 text-center">
+    <h1 className="text-2xl font-bold text-red-800 mb-4">
+      Erro ao carregar a aplicação
+    </h1>
+    <p className="text-lg">
+      {message || 'Por favor, tente novamente mais tarde.'}
+    </p>
+  </div>
+);
+
+// Inicialização da Aplicação
 const rootElement = document.getElementById('root');
+
 if (!rootElement) {
   throw new Error("Elemento 'root' não encontrado no DOM.");
 }
 
-// Simula carregamento de configurações
-async function loadAppSettings() {
-  console.log('Carregando configurações da aplicação...');
-  return new Promise((resolve) => setTimeout(resolve, 1000));
-}
+const root = ReactDOM.createRoot(rootElement);
 
-// Simula inicialização de autenticação
-async function initializeAuth() {
-  console.log('Verificando autenticação...');
-  return new Promise((resolve) => setTimeout(resolve, 1000));
-}
-
-// Inicializa a aplicação
-async function initializeApp() {
-  const loadingScreen = document.createElement('div');
-  loadingScreen.className = 'loading-screen';
-  loadingScreen.innerText = 'Carregando aplicação...';
-  document.body.appendChild(loadingScreen);
+async function runApp() {
+  root.render(<LoadingScreen />); // Tela de carregamento
 
   try {
-    console.log('Inicializando aplicação...');
-    await Promise.all([loadAppSettings(), initializeAuth()]);
-    console.log('Inicialização concluída!');
+    console.log('Iniciando configuração da aplicação...');
+    await initializeApp(); // Configurações iniciais
+    console.log('Aplicação inicializada com sucesso.');
 
-    if (rootElement) {
-      ReactDOM.createRoot(rootElement).render(
-        <React.StrictMode>
-          <Provider store={store}>
+    root.render(
+      <React.StrictMode>
+        <Provider store={store}>
+          <ThemeProvider> {/* Contexto do tema aplicado globalmente */}
             <BrowserRouter>
-              <App />
+              <GoogleAuthProvider>
+                <App />
+              </GoogleAuthProvider>
             </BrowserRouter>
-          </Provider>
-        </React.StrictMode>
-      );
-    } else {
-      throw new Error("Elemento 'root' não encontrado no DOM.");
-    }
+          </ThemeProvider>
+        </Provider>
+      </React.StrictMode>
+    );
   } catch (error) {
-    console.error('Erro ao inicializar a aplicação:', error);
-    const errorMessage = document.createElement('div');
-    errorMessage.innerText = 'Erro ao carregar a aplicação. Por favor, tente novamente.';
-    document.body.appendChild(errorMessage);
-  } finally {
-    document.body.removeChild(loadingScreen);
+    console.error('Erro durante a inicialização:', error);
+    root.render(<ErrorScreen message={(error as Error)?.message} />);
   }
+
 }
-// Chama a inicialização
-initializeApp();
+runApp();

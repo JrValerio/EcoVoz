@@ -1,19 +1,20 @@
 import { Router } from 'express';
 import { validateRegister, validateLogin } from '../validators/userValidators';
-import UserController from '../controllers/UserController';
+import AuthController from '../controllers/AuthController';
 import authMiddleware from '../middlewares/authMiddleware';
+import validateObjectId from '../middlewares/validateObjectId';
 
 const router = Router();
 
 // Rotas abertas
-router.post('/register', validateRegister, UserController.createUser);
-router.post('/login', validateLogin, UserController.login);
+router.post('/register', validateRegister, AuthController.createUser);
+router.post('/login', validateLogin, AuthController.login);
+router.post('/google', AuthController.googleLogin);
 
 // Rotas protegidas
 router.use(authMiddleware);
 
-router.get('/users/:id', UserController.getUser);
-router.put('/users/:id', UserController.updateUser);
-router.delete('/users/:id', UserController.deleteUser);
+router.get('/users/:id', validateObjectId, AuthController.getUser);
+router.put('/users/:id', validateObjectId, AuthController.updateUser);
 
 export default router;

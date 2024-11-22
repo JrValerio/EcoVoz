@@ -1,18 +1,20 @@
 {
   
     "about": {
-      "title": "About EcoVoz",
-      "description": "EcoVoz is an innovative initiative created by Team 12 during the Hackathon Autism Tech 2024. Our goal is to provide a technological solution that enables people with speech or language disabilities to communicate effectively and inclusively, using artificial intelligence and assistive technology.",
-      "features": "The main features of EcoVoz include:",
-      "feature1": "Advanced voice recognition for people with speech disabilities.",
-      "feature2": "Real-time translation into over 100 languages.",
-      "feature3": "Integration with assistive devices for alternative communication.",
-      "feature4": "Mobile app for accessibility anywhere.",
-      "feature5": "Voice database for training and continuous improvement.",
-      "mission": "Our mission is to promote inclusion, increase independence, and improve the quality of life for people with speech disabilities by leveraging cutting-edge technology and strategic partnerships with organizations, companies, and health institutions.",
-      "team": "This project was developed with passion and dedication by Team 12 at the Hackathon Autism Tech 2024, an event that celebrates creativity and the positive impact of technology on social inclusion.",
-      "imageAlt": "Illustration about EcoVoz"
-    },
+    "title": "About EcoVoz",
+    "description": "EcoVoz is an innovative initiative created by Team 12 during the Hackathon Autism Tech 2024. Our goal is to provide a technological solution that enables people with speech or language disabilities to communicate effectively and inclusively, using artificial intelligence and assistive technology.",
+    "features": "Key Features",
+    "feature1": "Advanced voice recognition for people with speech disabilities.",
+    "feature2": "Real-time translation into over 100 languages.",
+    "feature3": "Integration with assistive devices for alternative communication.",
+    "feature4": "Mobile app for accessibility anywhere.",
+    "feature5": "Voice database for training and continuous improvement.",
+    "missionTitle": "Our Mission",
+    "mission": "Our mission is to promote inclusion, increase independence, and improve the quality of life for people with speech disabilities by leveraging cutting-edge technology and strategic partnerships with organizations, companies, and health institutions.",
+    "teamTitle": "Team",
+    "team": "This project was developed with passion and dedication by Team 12 at the Hackathon Autism Tech 2024, an event that celebrates creativity and the positive impact of technology on social inclusion.",
+    "imageAlt": "Illustration about EcoVoz"
+  },
     "home": {
     "welcome": "Welcome to EcoVoz",
     "description": "Your platform for accessibility and communication. Empowering individuals to connect and thrive with innovative tools designed for inclusivity.",
@@ -27,20 +29,21 @@
       "Login": "Login",
       "Logout": "Logout"
     },
-    "Navigation": {
-      "Home": "Home",
-      "About": "About",
-      "Contact": "Contact",
-      "Login": "Login",
-      "Dashboard": "Dashboard"
-    },
+    "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact"
+  },
     "voiceInput": {
-    "browserNotSupported": "Your browser does not support speech recognition.",
     "start": "Start Speaking",
     "stop": "Stop Speaking",
     "youSaid": "You said",
     "noSpeechDetected": "No speech detected.",
-    "clear": "Clear Transcript"
+    "clear": "Clear",
+    "loading": "Loading...",
+    "browserNotSupported": "Your browser does not support speech recognition.",
+    "manualResponsePlaceholder": "Type your response here...",
+    "manualResponseLabel": "Manual response"
   },
     "Header": {
       "ecoVoz": "EcoVoz",
@@ -48,6 +51,82 @@
   "welcome": "Welcome",
   "login": "Login",
   "logout": "Logout"
+    },
+    "contact": {
+    "title": "Contact Us",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "subject": "Subject",
+    "subjectPlaceholder": "Enter the subject (optional)",
+    "message": "Message",
+    "messagePlaceholder": "Enter your message here...",
+    "submitButton": "Send",
+    "sendingButton": "Sending...",
+    "emailInvalid": "Please enter a valid email.",
+    "successMessage": "Message sent successfully!",
+    "errorMessage": "Error sending the message.",
+    "unknownError": "Unknown error. Please try again later."
+  },
+  "register": {
+    "title": "Register",
+    "username": "Username",
+    "usernamePlaceholder": "Enter your username",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "phone": "Contact (Phone)",
+    "phonePlaceholder": "Enter your phone number (optional)",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "confirmPassword": "Confirm Password",
+    "confirmPasswordPlaceholder": "Re-enter your password",
+    "submit": "Register",
+    "sending": "Registering...",
+    "allFieldsRequired": "All fields are required.",
+    "emailInvalid": "Please enter a valid email.",
+    "passwordMismatch": "Passwords do not match.",
+    "successMessage": "Registration successful!",
+    "errorMessage": "Error during registration.",
+    "unknownError": "Unknown error. Please try again later."
+  }, 
+  "login": {
+    "title": "Log in to your account",
+    "email": "Email",
+    "emailPlaceholder": "Enter your email",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "submit": "Login",
+    "loading": "Loading...",
+    "requiredFields": "Please fill in all required fields.",
+    "invalidEmail": "The email provided is invalid.",
+    "success": "Login successful!",
+    "unknownError": "An error occurred. Please try again later.",
+    "noAccount": "Don't have an account?",
+    "registerLink": "Sign up here",
+    "googleLogin": "Login with Google"
+  },
+    "header": {
+      "ecoVoz": "EcoVoz",
+      "welcome": "Welcome",
+      "login": "Login",
+      "logout": "Logout",
+      "profile": "Profile",
+      "help": "Help",
+      "darkMode": "Dark Mode",
+      "lightMode": "Light Mode"
+    },
+    "help": {
+      "title": "Help and Support",
+      "faq": "Frequently Asked Questions (FAQ)",
+      "contact": "Contact Us",
+      "resources": "Useful Resources",
+      "emailSupport": "Email Support",
+      "phoneSupport": "Phone Support",
+      "docs": "Application Documentation",
+      "tutorials": "Tutorials and Guides"
     }
   }
+  
+  
   

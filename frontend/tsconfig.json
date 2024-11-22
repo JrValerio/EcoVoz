@@ -1,20 +1,27 @@
 {
-  "extends": "../tsconfig.base.json",
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "module": "esnext", // Allows using `import.meta`
-    "target": "esnext", // Ensures modern JavaScript syntax
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "react-jsx",
     "strict": true,
     "esModuleInterop": true,
     "moduleResolution": "node",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "baseUrl": "./src",
+    "baseUrl": "./",
     "paths": {
-      "@frontend/*": ["*"]
-    },
-    "jsx": "react-jsx",
-    "typeRoots": ["node_modules/@types"]
+      "@frontend/*": ["*"],
+      "@/*": ["src/*"]
+    }
   },
-  "include": ["src/**/*", "src/tests/**/*"],
+  "include": [
+  "src/**/*",
+  "*.js",
+  "*.ts",
+  "*.tsx",
+  "*.eslint.config.js",
+  "src/@types/react-speech-recognition.d.ts"
+],
   "exclude": ["node_modules", "dist"]
 }

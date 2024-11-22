@@ -1,21 +1,31 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
-import User from '../models/User';
+import User, { IUser } from '../models/User';
 
 class UserService {
-  // Criação de novo usuário
-  async createUser(username: string, email: string, password: string) {
+  // Criação de usuário (inclui suporte ao Google)
+  async createUser(
+    username: string,
+    email: string,
+    password: string | null,
+    additionalFields?: Partial<{ googleId: string; picture: string }>
+  ): Promise<IUser> {
     const session = await mongoose.startSession();
     session.startTransaction();
 
     try {
       const existingUser = await User.findOne({ email }).session(session);
       if (existingUser) {
-        throw new Error('E-mail já está em uso');
+        throw new Error('E-mail já está em uso.');
       }
 
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = new User({ username, email, password: hashedPassword });
+      const userData: Partial<IUser> = {
+        username,
+        email,
+        password,
+        ...additionalFields, // Adiciona os campos adicionais (googleId, picture)
+      };
+
+      const newUser = new User(userData);
       await newUser.save({ session });
 
       await session.commitTransaction();
@@ -29,48 +39,24 @@ class UserService {
   }
 
   // Busca um usuário pelo e-mail
-  async getUserByEmail(email: string) {
-    const user = await User.findOne({ email });
-    if (!user) {
-      throw new Error('Usuário não encontrado');
-    }
-    return user;
+  async getUserByEmail(email: string): Promise<IUser | null> {
+    return User.findOne({ email });
   }
 
   // Buscar usuário por ID
-  async getUserById(id: string) {
-    const user = await User.findById(id).select('-password');
-    if (!user) {
-      throw new Error('Usuário não encontrado');
-    }
-    return user;
+  async getUserById(id: string): Promise<IUser | null> {
+    return User.findById(id).select('-password');
   }
 
   // Atualizar usuário
-  async updateUser(
-    id: string,
-    updates: Partial<{ username: string; email: string; password: string }>,
-  ) {
+  async updateUser(id: string, updates: Partial<IUser>): Promise<IUser | null> {
     const user = await User.findById(id);
     if (!user) {
-      throw new Error('Usuário não encontrado');
+      throw new Error('Usuário não encontrado.');
     }
 
-    if (updates.username) user.username = updates.username;
-    if (updates.email) user.email = updates.email;
-    if (updates.password)
-      user.password = await bcrypt.hash(updates.password, 10);
-
+    Object.assign(user, updates);
     await user.save();
-    return user;
-  }
-
-  // Excluir usuário
-  async deleteUser(id: string) {
-    const user = await User.findByIdAndDelete(id);
-    if (!user) {
-      throw new Error('Usuário não encontrado');
-    }
     return user;
   }
 }

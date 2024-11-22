@@ -9,6 +9,7 @@ i18n
     backend: {
       loadPath: './src/locales/{{lng}}/translation.json', // Caminho para os arquivos de tradução
     },
+    supportedLngs: ['en', 'pt'], // Idiomas suportados
     fallbackLng: 'en', // Idioma padrão
     preload: ['en', 'pt'], // Pré-carrega os idiomas disponíveis
     debug: true, // Logs de debug

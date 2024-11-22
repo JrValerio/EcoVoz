@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 
 const Dashboard: React.FC = () => {
   const [input, setInput] = useState('');
@@ -13,12 +14,17 @@ const Dashboard: React.FC = () => {
 
     setLoading(true);
     setResponse('');
-    // Simular um tempo de resposta da IA
-    setTimeout(() => {
-      setResponse(`IA respondeu: Você disse "${input}"`);
+
+    try {
+      const { data } = await axios.post('/api/ai', { message: input }); // Faz a chamada para a API
+      setResponse(data.response || 'A IA não enviou uma resposta.');
+    } catch (error: unknown) {
+      setResponse('Erro ao conectar com a IA. Tente novamente.');
+      console.error('Error in handleSend:', error);
+    } finally {
       setLoading(false);
       setInput('');
-    }, 2000); // Simulação de 2 segundos
+    }
   };
 
   return (
@@ -35,7 +41,11 @@ const Dashboard: React.FC = () => {
         />
         <button
           onClick={handleSend}
-          className="mt-4 w-full bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          className={`mt-4 w-full px-4 py-2 rounded shadow ${
+            loading
+              ? 'bg-blue-400 cursor-wait'
+              : 'bg-blue-600 hover:bg-blue-700 text-white'
+          } disabled:opacity-50 disabled:cursor-not-allowed`}
           disabled={loading}
         >
           {loading ? 'Enviando...' : 'Enviar'}
