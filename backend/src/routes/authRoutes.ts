@@ -76,15 +76,21 @@ router.post('/login', async (req: Request, res: Response): Promise<void> => {
       expiresIn: '1h',
     });
 
+    // Configuração do cookie HttpOnly com o token JWT
+    res.cookie('authToken', token, { 
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production', 
+      maxAge: 3600 * 1000, // 1 hora
+    });
+
     res.status(200).json({
       message: 'Login realizado com sucesso.',
-      token,
       user: {
         id: user._id,
         username: user.username,
         email: user.email,
       },
-    });
+    }); // Remove o token da resposta JSON
   } catch (error) {
     console.error('[ERROR] Erro ao fazer login:', error);
     res.status(500).json({ message: 'Erro interno no servidor.' });

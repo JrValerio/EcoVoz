@@ -1,5 +1,9 @@
 import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig, CancelTokenSource } from 'axios';
+import { getAuthHeader } from '../utils/auth';
 
+/**
+ * Cria uma instância do Axios com configurações padrão para a aplicação.
+ */
 const api: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000',
   headers: {
@@ -8,7 +12,15 @@ const api: AxiosInstance = axios.create({
   timeout: Number(import.meta.env.VITE_API_TIMEOUT) || 10000,
 });
 
-// Centraliza mensagens de erro
+/**
+ * Intercepta as requisições para incluir o token de autenticação no cabeçalho.
+ */
+api.interceptors.request.use((config) => {
+  config.headers = Object.assign({}, axios.defaults.headers.common, config.headers, getAuthHeader());
+  return config;
+});
+
+// Mensagens de erro centralizadas
 const errorMessages = {
   401: 'Token inválido ou expirado. Redirecionando para login.',
   403: 'Acesso negado. Você não tem permissão para esta ação.',
@@ -17,7 +29,11 @@ const errorMessages = {
   default: 'Ocorreu um erro inesperado. Por favor, tente novamente.',
 };
 
-// Função para adicionar o token de autenticação ao cabeçalho
+/**
+ * Adiciona o token de autenticação ao cabeçalho da requisição, se disponível.
+ * @param config A configuração da requisição.
+ * @returns A configuração da requisição com o token de autenticação, se disponível.
+ */
 const addAuthToken = (config: AxiosRequestConfig): AxiosRequestConfig => {
   const token = localStorage.getItem('authToken');
   if (token && config.headers) {
@@ -26,7 +42,13 @@ const addAuthToken = (config: AxiosRequestConfig): AxiosRequestConfig => {
   return config;
 };
 
-// Função para realizar retry da requisição
+/**
+ * Tenta realizar a requisição novamente em caso de falha, 
+ * com um número máximo de tentativas.
+ * @param config A configuração da requisição.
+ * @param retries O número de tentativas restantes.
+ * @returns A resposta da requisição, se bem-sucedida.
+ */
 const retryRequest = async (config: AxiosRequestConfig, retries = 3): Promise<any> => {
   try {
     return await api(addAuthToken(config));
@@ -40,10 +62,17 @@ const retryRequest = async (config: AxiosRequestConfig, retries = 3): Promise<an
   }
 };
 
-// Função para tratar erros da API
+/**
+ * Trata erros da API, exibindo mensagens de erro apropriadas e 
+ * realizando ações como redirecionamento em caso de erro de autenticação.
+ * @param error O erro da API.
+ * @returns Uma Promise rejeitada com a mensagem de erro.
+ */
 const handleApiResponseError = (error: any) => {
   const status = error.response?.status;
-  const message = (error.response?.data as { message?: string })?.message || (errorMessages as { [key: number]: string })[status] || errorMessages.default;
+  const message = (error.response?.data as { message?: string })?.message 
+    || (errorMessages as { [key: number]: string })[status] 
+    || errorMessages.default;
 
   if (error.code === 'ECONNABORTED') {
     console.error('A requisição excedeu o tempo limite.');
@@ -67,7 +96,12 @@ const handleApiResponseError = (error: any) => {
   return Promise.reject({ status, message });
 };
 
-// Função para realizar requisições GET com loading, retry e cancelamento
+/**
+ * Realiza uma requisição GET com suporte a loading, retry e cancelamento.
+ * @param url A URL da requisição.
+ * @param options Opções da requisição Axios.
+ * @returns Uma Promise que resolve com os dados da resposta ou rejeita com um erro.
+ */
 export const get = async <T>(url: string, options?: AxiosRequestConfig): Promise<T> => {
   const source: CancelTokenSource = axios.CancelToken.source();
   const config: AxiosRequestConfig = {
@@ -89,7 +123,13 @@ export const get = async <T>(url: string, options?: AxiosRequestConfig): Promise
   }
 };
 
-// Função para realizar requisições POST com loading, retry e cancelamento
+/**
+ * Realiza uma requisição POST com suporte a loading, retry e cancelamento.
+ * @param url A URL da requisição.
+ * @param data Os dados a serem enviados na requisição.
+ * @param options Opções da requisição Axios.
+ * @returns Uma Promise que resolve com os dados da resposta ou rejeita com um erro.
+ */
 export const post = async <T>(url: string, data?: any, options?: AxiosRequestConfig): Promise<T> => {
   const source: CancelTokenSource = axios.CancelToken.source();
   const config: AxiosRequestConfig = {
