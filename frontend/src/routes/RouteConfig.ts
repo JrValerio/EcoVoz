@@ -1,39 +1,71 @@
-import React from 'react';
-import Home from '../pages/Home';
-import About from '../pages/About';
-import Contact from '../pages/Contact';
-import Login from '../pages/Login';
-import Register from '../pages/Register'; 
-import Dashboard from '../pages/Dashboard';
-import NotFound from '../pages/NotFound';
-import Profile from '../pages/Profile';
-import Help from '../pages/Help';
+// RouteConfig.ts
+
+import React, { lazy } from 'react';
 
 // Interface para configuração de rotas
 export interface RouteConfig {
-  path: string; // Caminho da rota
-  element: React.ComponentType; // Componente associado à rota
-  private: boolean; // Define se a rota é protegida
+  path: string;
+  element: React.LazyExoticComponent<React.ComponentType>;
+  private: boolean;
+  children?: RouteConfig[];
 }
 
 // Configuração de rotas públicas
 export const publicRoutes: RouteConfig[] = [
-  { path: '/', element: Home, private: false },
-  { path: '/about', element: About, private: false },
-  { path: '/contact', element: Contact, private: false },
-  { path: '/login', element: Login, private: false },
-  { path: '/register', element: Register, private: false }, 
-  { path: '/help', element: Help, private: false },
+  {
+    path: '/',
+    element: lazy(() => import('../pages/Home')),
+    private: false,
+  },
+  {
+    path: '/about',
+    element: lazy(() => import('../pages/About')),
+    private: false,
+  },
+  {
+    path: '/contact',
+    element: lazy(() => import('../pages/Contact')),
+    private: false,
+  },
+  {
+    path: '/login',
+    element: lazy(() => import('../pages/Login')),
+    private: false,
+  },
+  {
+    path: '/register',
+    element: lazy(() => import('../pages/Register')),
+    private: false,
+  },
+  {
+    path: '/help',
+    element: lazy(() => import('../pages/Help')),
+    private: false,
+  },
 ];
 
-// Configuração de rotas privadas
+// Configuração de rotas privadas com aninhamento
 export const privateRoutes: RouteConfig[] = [
-  { path: '/dashboard', element: Dashboard, private: true },
-  { path: '/profile', element: Profile, private: true },
+  {
+    path: '/dashboard',
+    element: lazy(() => import('../pages/Dashboard')),
+    private: true,
+    children: [
+      {
+        path: 'profile',
+        element: lazy(() => import('../pages/Profile')),
+        private: true,
+      },
+    ],
+  },
 ];
 
 // Exporta todas as rotas combinadas
 export const allRoutes: RouteConfig[] = [...publicRoutes, ...privateRoutes];
 
 // Rota para páginas não encontradas
-export const notFoundRoute: RouteConfig = { path: '*', element: NotFound, private: false };
+export const notFoundRoute: RouteConfig = {
+  path: '*',
+  element: lazy(() => import('../pages/NotFound')),
+  private: false,
+};

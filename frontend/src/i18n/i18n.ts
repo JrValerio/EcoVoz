@@ -3,31 +3,36 @@ import { initReactI18next } from 'react-i18next';
 import LanguageDetector from 'i18next-browser-languagedetector';
 import HttpBackend from 'i18next-http-backend';
 
-// Configuração do i18next
+/**
+ * Configuração da biblioteca de internacionalização i18next.
+ * Carrega as traduções, detecta o idioma do usuário e integra com o React.
+ */
 i18n
-  .use(HttpBackend) // Carrega arquivos de tradução remotamente via HTTP
-  .use(LanguageDetector) // Detecta automaticamente o idioma do navegador
-  .use(initReactI18next) // Integração com React
+  .use(HttpBackend)
+  .use(LanguageDetector)
+  .use(initReactI18next)
   .init({
-    // Idiomas
-    fallbackLng: 'en', // Idioma padrão caso o detectado não esteja disponível
-    supportedLngs: ['en', 'pt'], // Lista de idiomas suportados
-    debug: process.env.NODE_ENV === 'development', // Debug ativado apenas em ambiente de desenvolvimento
+    // Define o idioma padrão e os idiomas suportados
+    fallbackLng: 'en',
+    supportedLngs: ['en', 'pt'],
 
-    // Configuração do backend
+    // Habilita logs de debug em ambiente de desenvolvimento
+    debug: process.env.NODE_ENV === 'development',
+
+    // Configuração do backend para carregar as traduções
     backend: {
-      loadPath: '/locales/{{lng}}/translation.json', // Caminho para os arquivos de tradução
+      loadPath: '/locales/{{lng}}/translation.json',
     },
 
-    // Configuração da interpolação
+    // Desativa o escape de valores, pois o React já faz a sanitização
     interpolation: {
-      escapeValue: false, // React já faz a sanitização automaticamente
+      escapeValue: false,
     },
 
-    // Configuração de detecção de idioma
+    // Define a ordem de detecção de idioma e onde armazenar o idioma detectado
     detection: {
-      order: ['querystring', 'localStorage', 'navigator'], // Ordem de detecção
-      caches: ['localStorage'], // Onde armazenar o idioma detectado
+      order: ['querystring', 'localStorage', 'navigator'],
+      caches: ['localStorage'],
     },
   });
 

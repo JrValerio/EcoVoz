@@ -2,28 +2,18 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import useAuth from '../hooks/useAuth';
 
-type PrivateRouteProps = {
+interface PrivateRouteProps {
   children: React.ReactNode;
-  redirectTo?: string;
-  fallback?: React.ReactNode;
-};
+}
 
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
+  const { isAuthenticated, isLoading } = useAuth();
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({
-  children,
-  redirectTo = '/login',
-  fallback = <div className="loading-spinner" aria-live="polite">Verificando autenticação...</div>,
-}) => {
-  const { isAuthenticated, isLoading } = useAuth(); // useAuth agora retorna `isLoading`
-  
-  // Renderiza fallback enquanto verifica autenticação
   if (isLoading) {
-    
-    return <>{fallback}</>;
+    return <div>Verificando autenticação...</div>;
   }
 
-  // Redireciona se não estiver autenticado
-  return isAuthenticated ? <>{children}</> : <Navigate to={redirectTo} replace />;
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
 export default PrivateRoute;

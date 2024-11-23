@@ -1,15 +1,34 @@
-// Salva um item no localStorage
+/**
+ * Salva um item no localStorage.
+ */
 export const saveToLocalStorage = (key: string, value: unknown): void => {
-  localStorage.setItem(key, JSON.stringify(value));
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (error) {
+    console.error(`[ERROR] Erro ao salvar item '${key}' no localStorage:`, error);
+  }
 };
 
-// Recupera um item do localStorage
+/**
+ * Recupera um item do localStorage.
+ */
 export const getFromLocalStorage = (key: string): unknown | null => {
-  const item = localStorage.getItem(key);
-  return item ? JSON.parse(item) : null;
+  try {
+    const item = localStorage.getItem(key);
+    return item ? JSON.parse(item) : null;
+  } catch (error) {
+    console.error(`[ERROR] Erro ao recuperar item '${key}' do localStorage:`, error);
+    return null;
+  }
 };
 
-// Remove um item do localStorage
+/**
+ * Remove um item do localStorage.
+ */
 export const removeFromLocalStorage = (key: string): void => {
-  localStorage.removeItem(key);
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    console.error(`[ERROR] Erro ao remover item '${key}' do localStorage:`, error);
+  }
 };

@@ -1,26 +1,32 @@
 import mongoose from 'mongoose';
 import { config } from './config';
 
+/**
+ * Função para conectar ao banco de dados MongoDB.
+ */
 const connectDB = async (): Promise<void> => {
   try {
+    // Verifica se a URI do MongoDB está configurada
     if (!config.mongoUri) {
       throw new Error(
-        `❌ A variável de ambiente MONGO_URI não está configurada ou é inválida. Valor atual: ${process.env.MONGO_URI || 'não definido'}`,
+        `❌ A variável de ambiente MONGO_URI não está configurada ou é inválida. Valor atual: ${config.mongoUri}`,
       );
     }
 
+    // Tenta conectar ao MongoDB com a URI especificada
     await mongoose.connect(config.mongoUri, {
-      autoIndex: true, // Cria índices automaticamente
+      autoIndex: true, // Cria índices automaticamente para melhorar a performance das consultas
     });
 
-    console.log('✅ MongoDB conectado com sucesso');
-  } catch (error: unknown) {
-    console.error('❌ Erro ao conectar ao MongoDB:', (error as Error).message);
+    console.log('✅ MongoDB conectado com sucesso!');
+  } catch (error) {
+    // Em caso de erro, exibe mensagens de erro no console e encerra a aplicação
+    console.error('❌ Erro ao conectar ao MongoDB:', error);
     console.error('🔍 Verifique se a URI do MongoDB está correta:', config.mongoUri);
-    process.exit(1); // Encerra a aplicação em caso de erro crítico
+    process.exit(1); 
   }
 
-  // Event handlers para monitorar a conexão
+  // Define event listeners para monitorar o estado da conexão com o MongoDB
   mongoose.connection.on('connected', () => {
     console.log('ℹ️ Conexão com o MongoDB estabelecida.');
   });
@@ -34,7 +40,7 @@ const connectDB = async (): Promise<void> => {
   });
 
   mongoose.connection.on('error', (err) => {
-    console.error('❌ Erro na conexão com o MongoDB:', err.message);
+    console.error('❌ Erro na conexão com o MongoDB:', err);
   });
 };
 

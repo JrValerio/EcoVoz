@@ -1,70 +1,117 @@
-import axios, { AxiosInstance, AxiosResponse, InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig, CancelTokenSource } from 'axios';
 
-// Cria uma instância do Axios
 const api: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000', // Define a URL base da API
+  baseURL: import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000',
   headers: {
-    'Content-Type': 'application/json', // Define o tipo de conteúdo padrão
+    'Content-Type': 'application/json',
   },
-  timeout: Number(import.meta.env.VITE_API_TIMEOUT) || 10000, // Define o tempo limite da requisição (10s padrão)
+  timeout: Number(import.meta.env.VITE_API_TIMEOUT) || 10000,
 });
 
-// Interceptor de requisição: Adiciona o token de autenticação ao cabeçalho
-api.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem('authToken'); // Recupera o token do localStorage
-    if (token && config.headers) {
-      config.headers.Authorization = `Bearer ${token}`; // Adiciona o token ao cabeçalho Authorization
-    }
-    return config; // Retorna a configuração da requisição
-  },
-  (error) => {
-    console.error('Erro na configuração da requisição:', error);
-    return Promise.reject(error); // Rejeita a promessa para tratar o erro
+// Centraliza mensagens de erro
+const errorMessages = {
+  401: 'Token inválido ou expirado. Redirecionando para login.',
+  403: 'Acesso negado. Você não tem permissão para esta ação.',
+  408: 'Tempo limite da requisição excedido.',
+  500: 'Erro interno do servidor.',
+  default: 'Ocorreu um erro inesperado. Por favor, tente novamente.',
+};
+
+// Função para adicionar o token de autenticação ao cabeçalho
+const addAuthToken = (config: AxiosRequestConfig): AxiosRequestConfig => {
+  const token = localStorage.getItem('authToken');
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
   }
-);
+  return config;
+};
 
-// Interceptor de resposta: Trata erros e respostas
-api.interceptors.response.use(
-  (response: AxiosResponse) => {
-    // Log opcional para depuração de respostas bem-sucedidas
-    console.debug('Resposta da API:', response);
-    return response; // Retorna a resposta diretamente se estiver tudo OK
-  },
-  (error) => {
-    // Captura o status e a mensagem do erro
-    const status = error.response?.status;
-    const message =
-      (error.response?.data as { message?: string })?.message ||
-      'Ocorreu um erro inesperado. Por favor, tente novamente.';
-
-    console.error('Erro na resposta da API:', { status, message });
-
-    // Tratamento para erros de autenticação (401)
-    if (status === 401) {
-      console.warn('Token inválido ou expirado. Redirecionando para login.');
-      localStorage.removeItem('authToken'); // Remove o token inválido do localStorage
-      window.location.href = '/login'; // Redireciona o usuário para a página de login
+// Função para realizar retry da requisição
+const retryRequest = async (config: AxiosRequestConfig, retries = 3): Promise<any> => {
+  try {
+    return await api(addAuthToken(config));
+  } catch (error: any) {
+    if (retries > 0 && (error.code === 'ECONNABORTED' || error.message.includes('Network Error'))) {
+      console.warn(`Tentativa ${4 - retries} de ${3} falhou. Tentando novamente em 2 segundos...`);
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      return retryRequest(config, retries - 1);
     }
-
-    // Tratamento para erros de autorização (403)
-    if (status === 403) {
-      console.warn('Acesso negado. Você não tem permissão para esta ação.');
-    }
-
-    // Tratamento para erros de cliente (400-499)
-    if (status && status >= 400 && status < 500) {
-      console.warn(`Erro de cliente (${status}): ${message}`);
-    }
-
-    // Tratamento para erros de servidor (500+)
-    if (!status || status >= 500) {
-      console.error('Erro interno do servidor ou falha na conexão.');
-    }
-
-    // Rejeita a promessa com os detalhes do erro
-    return Promise.reject({ status, message });
+    throw error;
   }
-);
+};
+
+// Função para tratar erros da API
+const handleApiResponseError = (error: any) => {
+  const status = error.response?.status;
+  const message = (error.response?.data as { message?: string })?.message || (errorMessages as { [key: number]: string })[status] || errorMessages.default;
+
+  if (error.code === 'ECONNABORTED') {
+    console.error('A requisição excedeu o tempo limite.');
+    return Promise.reject({ status: 408, message: errorMessages[408] });
+  }
+
+  console.error('Erro na resposta da API:', error);
+
+  if (status === 401) {
+    console.warn(errorMessages[401]);
+    localStorage.removeItem('authToken');
+    window.location.href = '/login';
+  } else if (status === 403) {
+    console.warn(errorMessages[403]);
+  } else if (status && status >= 400 && status < 500) {
+    console.warn(`Erro de cliente (${status}): ${message}`);
+  } else if (!status || status >= 500) {
+    console.error(errorMessages[500]);
+  }
+
+  return Promise.reject({ status, message });
+};
+
+// Função para realizar requisições GET com loading, retry e cancelamento
+export const get = async <T>(url: string, options?: AxiosRequestConfig): Promise<T> => {
+  const source: CancelTokenSource = axios.CancelToken.source();
+  const config: AxiosRequestConfig = {
+    ...options,
+    method: 'GET',
+    url,
+    cancelToken: source.token,
+  };
+
+  try {
+    // Exibir loading aqui (ex: setIsLoading(true))
+    const response = await retryRequest(config);
+    // Esconder loading aqui (ex: setIsLoading(false))
+    return response as T;
+  } catch (error) {
+    return handleApiResponseError(error);
+  } finally {
+    // Esconder loading aqui (ex: setIsLoading(false))
+  }
+};
+
+// Função para realizar requisições POST com loading, retry e cancelamento
+export const post = async <T>(url: string, data?: any, options?: AxiosRequestConfig): Promise<T> => {
+  const source: CancelTokenSource = axios.CancelToken.source();
+  const config: AxiosRequestConfig = {
+    ...options,
+    method: 'POST',
+    url,
+    data,
+    cancelToken: source.token,
+  };
+
+  try {
+    // Exibir loading aqui (ex: setIsLoading(true))
+    const response = await retryRequest(config);
+    // Esconder loading aqui (ex: setIsLoading(false))
+    return response as T;
+  } catch (error) {
+    return handleApiResponseError(error);
+  } finally {
+    // Esconder loading aqui (ex: setIsLoading(false))
+  }
+};
+
+// ... outras funções para PUT, DELETE, etc.
 
 export default api;

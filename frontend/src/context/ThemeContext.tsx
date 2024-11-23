@@ -10,17 +10,24 @@ interface ThemeContextProps {
   toggleTheme: () => void;
 }
 
-// Cria o contexto com valores padrão
+// Cria o contexto do tema
 const ThemeContext = createContext<ThemeContextProps | undefined>(undefined);
 
-// Provedor do Tema
+/**
+ * Provedor do tema para a aplicação.
+ * Gerencia o estado do tema e atualiza a classe do elemento body.
+ * @param children Os componentes filhos que serão envolvidos pelo provedor.
+ * @returns O componente ThemeContext.Provider com o valor do tema e a função para alternar o tema.
+ */
 export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  // Inicializa o estado com o tema salvo no localStorage (ou padrão: 'light')
+  // Inicializa o estado do tema com o valor do localStorage ou o tema claro como padrão
   const [theme, setTheme] = useState<string>(() => {
     return localStorage.getItem('theme') || LIGHT_THEME;
   });
 
-  // Alterna o tema e salva no localStorage
+  /**
+   * Alterna o tema entre claro e escuro e salva no localStorage.
+   */
   const toggleTheme = () => {
     setTheme((prev) => {
       const newTheme = prev === LIGHT_THEME ? DARK_THEME : LIGHT_THEME;
@@ -29,19 +36,15 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     });
   };
 
-  // Atualiza a classe do tema no elemento <body>
+  // Atualiza a classe do tema no elemento body quando o tema muda
   useEffect(() => {
     const rootElement = document.documentElement;
     rootElement.classList.remove(LIGHT_THEME, DARK_THEME);
-    rootElement.classList.add(theme); // Adiciona a classe 'light' ou 'dark'
-  
-    // Atualiza também o estilo do body para refletir o fundo corretamente
+    rootElement.classList.add(theme);
+
+    // Atualiza o estilo do body para refletir o fundo corretamente
     document.body.className = theme === DARK_THEME ? 'dark:bg-gray-900' : 'bg-gray-100';
   }, [theme]);
-  
-  
-  
-  
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
@@ -50,7 +53,11 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
   );
 };
 
-// Hook para usar o contexto do tema
+/**
+ * Hook para acessar o contexto do tema.
+ * @returns O contexto do tema, contendo o tema atual e a função para alternar o tema.
+ * @throws Erro se o hook for usado fora de um ThemeProvider.
+ */
 export const useTheme = (): ThemeContextProps => {
   const context = useContext(ThemeContext);
 

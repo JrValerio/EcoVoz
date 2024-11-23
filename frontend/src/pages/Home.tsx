@@ -3,13 +3,22 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import { useTranslation } from 'react-i18next';
+
 import VoiceInput from '../components/VoiceInput';
 
+/**
+ * Componente que renderiza a página inicial da aplicação.
+ * Exibe uma mensagem de boas-vindas e opções de login ou acesso ao dashboard,
+ * dependendo se o usuário está autenticado.
+ */
 const Home: React.FC = () => {
   const navigate = useNavigate();
   const user = useSelector((state: RootState) => state.user);
   const { t } = useTranslation();
 
+  /**
+   * Redireciona o usuário para o dashboard se estiver autenticado.
+   */
   const handleRedirect = () => {
     if (user.name) {
       navigate('/dashboard');
@@ -21,7 +30,7 @@ const Home: React.FC = () => {
       className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-800 text-center overflow-hidden"
       role="main"
     >
-      {/* Título da página */}
+      {/* Seção com o título e a descrição da página */}
       <section className="w-full max-w-xl p-4">
         <h1 className="text-4xl font-bold text-blue-600 dark:text-blue-400">
           {t('home.welcome')}
@@ -31,9 +40,10 @@ const Home: React.FC = () => {
         </p>
       </section>
 
-      {/* Área condicional com base no estado do usuário */}
+      {/* Seção com conteúdo condicional com base no estado de autenticação do usuário */}
       <section className="mt-6 w-full max-w-md">
         {user.name ? (
+          // Se o usuário estiver autenticado, exibe a mensagem de boas-vindas e o botão para ir ao dashboard
           <div className="space-y-4">
             <p className="text-lg text-gray-700 dark:text-gray-300">
               {t('home.welcomeBack')}, <strong>{user.name}</strong>!
@@ -47,6 +57,7 @@ const Home: React.FC = () => {
             </button>
           </div>
         ) : (
+          // Se o usuário não estiver autenticado, exibe os links para login e sobre
           <div className="space-y-4">
             <Link
               to="/login"
@@ -66,12 +77,12 @@ const Home: React.FC = () => {
         )}
       </section>
 
-      {/* Componente de Reconhecimento de Voz */}
+      {/* Seção com o componente de reconhecimento de voz */}
       <section className="mt-10 w-full max-w-md">
         <VoiceInput />
       </section>
 
-      {/* Acesso rápido */}
+      {/* Seção com instruções para acesso rápido */}
       <section className="mt-10 text-gray-600 dark:text-gray-400">
         <p>{t('home.voiceNavigation')}</p>
       </section>

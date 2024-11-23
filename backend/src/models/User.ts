@@ -1,44 +1,76 @@
 import mongoose, { Document, Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 
-// Interface do documento do usuário
+/**
+ * Interface que define as propriedades do documento do usuário.
+ */
 export interface IUser extends Document {
-  updatedAt: any;
-  createdAt: any;
+  /** Nome de usuário. */
   username: string;
+  /** Endereço de email do usuário. */
   email: string;
-  password: string | null; // Permite null para usuários com login via Google
-  googleId?: string; // ID único do usuário no Google
-  picture?: string; // URL da imagem de perfil do Google
+  /** Senha do usuário (opcional para login com Google). */
+  password?: string;
+  /** ID do Google para login com Google (opcional). */
+  googleId?: string;
+  /** URL da imagem de perfil do Google (opcional). */
+  picture?: string;
+  /** Data e hora da última atualização do documento. */
+  updatedAt: Date;
+  /** Data e hora da criação do documento. */
+  createdAt: Date;
+  /**
+   * Método para comparar uma senha fornecida com a senha armazenada no banco de dados.
+   * @param password A senha a ser comparada.
+   * @returns Promise que resolve com true se as senhas corresponderem, false caso contrário.
+   */
   comparePassword(password: string): Promise<boolean>;
 }
 
-// Esquema do usuário
-const UserSchema = new Schema<IUser>(
+/**
+ * Esquema do Mongoose para o usuário.
+ */
+const UserSchema: Schema = new Schema<IUser>(
   {
     username: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: false }, // Não obrigatório para usuários do Google
-    googleId: { type: String, required: false }, // Adiciona suporte ao Google ID
-    picture: { type: String, required: false }, // Adiciona suporte para imagem de perfil
+    password: { type: String },
+    googleId: { type: String },
+    picture: { type: String },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-// Middleware para hash de senha antes de salvar
+/**
+ * Middleware que realiza o hash da senha antes de salvar o usuário no banco de dados.
+ */
+/**
+ * Middleware que realiza o hash da senha antes de salvar o usuário no banco de dados.
+ */
 UserSchema.pre('save', async function (next) {
-  if (this.isModified('password') && this.password) {
+  // Afirmação de tipo para this.password como string dentro do middleware
+  const password = this.password as string; 
+
+  if (this.isModified('password') && password) {
     const salt = await bcrypt.genSalt(10);
-    this.password = await bcrypt.hash(this.password, salt);
+    this.password = await bcrypt.hash(password, salt);
   }
   next();
 });
 
-// Método de comparação de senha
-UserSchema.methods.comparePassword = function (password: string): Promise<boolean> {
-  if (!this.password) return Promise.resolve(false); // Senha inexistente retorna falso
-  return bcrypt.compare(password, this.password);
+/**
+ * Método para comparar uma senha fornecida com a senha armazenada no banco de dados.
+ */
+UserSchema.methods.comparePassword = async function (password: string): Promise<boolean> {
+  // Afirmação de tipo para this.password como string dentro do método
+  const hashedPassword = this.password as string; 
+
+  if (!hashedPassword) return false;
+  return bcrypt.compare(password, hashedPassword);
 };
 
+/**
+ * Modelo do Mongoose para o usuário.
+ */
 const User = mongoose.model<IUser>('User', UserSchema);
 export default User;

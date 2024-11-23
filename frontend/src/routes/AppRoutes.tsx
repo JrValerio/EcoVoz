@@ -1,48 +1,43 @@
+// AppRoutes.tsx
+
 import React, { Suspense } from 'react';
-import { Routes, Route } from 'react-router-dom';
-import AuthWrapper from '../features/auth/AuthWrapper';
-import { allRoutes, notFoundRoute } from './RouteConfig';
+import { Routes, Route, Outlet, NavLink } from 'react-router-dom';
+import { allRoutes, notFoundRoute, RouteConfig } from './RouteConfig';
+import PrivateRoute from './PrivateRoute';
 
-type AppRoutesProps = {
-  fallback?: React.ReactNode;
-};
-
-const AppRoutes: React.FC<AppRoutesProps> = ({
-  fallback = (
-    <div className="flex items-center justify-center min-h-screen">
-      <span className="loader" aria-live="polite">Carregando...</span>
-    </div>
-  ),
-}) => {
+const AppRoutes = () => {
   const renderRoutes = () =>
-    allRoutes.map(({ path, element: Element, private: isPrivate }, index) => {
-      if (!path || !Element) return null;
+    allRoutes.map((route, index) => (
+      <Route key={index} path={route.path} element={renderRouteElement(route)}>
+        {route.children && route.children.map((childRoute, childIndex) => (
+          <Route
+            key={childIndex}
+            path={childRoute.path}
+            element={renderRouteElement(childRoute)}
+          />
+        ))}
+      </Route>
+    ));
 
-      return (
-        <Route
-          key={index}
-          path={path}
-          element={
-            isPrivate ? (
-              // Protege rotas privadas com o componente PrivateRoute
-              <AuthWrapper>
-                <Element />
-              </AuthWrapper>
-            ) : (
-              <Element />
-            )
-          }
-        />
-      );
-    });
+  const renderRouteElement = (route: RouteConfig) => (
+    route.private ? (
+      <PrivateRoute>
+        <Suspense fallback={<div>Carregando...</div>}>
+          <route.element />
+        </Suspense>
+      </PrivateRoute>
+    ) : (
+      <Suspense fallback={<div>Carregando...</div>}>
+        <route.element />
+      </Suspense>
+    )
+  );
 
   return (
-    <Suspense fallback={fallback}>
-      <Routes>
-        {renderRoutes()}
-        <Route path={notFoundRoute.path} element={<notFoundRoute.element />} />
-      </Routes>
-    </Suspense>
+    <Routes>
+      {renderRoutes()}
+      <Route path={notFoundRoute.path} element={<notFoundRoute.element />} />
+    </Routes>
   );
 };
 

@@ -3,26 +3,44 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../redux/store';
 import { setUser } from '../redux/slices/userSlice';
 import useAuth from '../hooks/useAuth';
-import { updateUserProfile } from '../services/userService'; 
+import { updateUserProfile } from '../services/userService';
 
+/**
+ * Componente que exibe o perfil do usuário e permite a edição das informações.
+ */
 const Profile: React.FC = () => {
   const dispatch = useDispatch();
-  const { user } = useAuth(); // Dados do usuário autenticado
+  const { user } = useAuth();
+
+  // Estado para controlar os dados do formulário
   const [formData, setFormData] = useState({
     name: user?.name || '',
     email: user?.email || '',
   });
-  const [isEditing, setIsEditing] = useState(false); // Estado de edição
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const userName = useSelector((state: RootState) => state.user.name);
 
+  // Estado para controlar o modo de edição
+  const [isEditing, setIsEditing] = useState(false);
+
+  // Estado para controlar o carregamento durante a atualização do perfil
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Estado para exibir mensagens de erro
+  const [error, setError] = useState<string | null>(null);
+
+  // Obtém o nome de usuário do estado global do Redux
+  const userName = useSelector((state: RootState) => state.user.username);
+
+  // Atualiza o estado local com os dados do usuário quando o usuário é atualizado
   useEffect(() => {
     if (user) {
       setFormData({ name: userName, email: user.email });
     }
-  }, [user]);
+  }, [user, userName]);
 
+  /**
+   * Manipula as mudanças nos campos de entrada do formulário.
+   * @param e Evento de mudança do input.
+   */
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
       ...formData,
@@ -30,16 +48,21 @@ const Profile: React.FC = () => {
     });
   };
 
+  /**
+   * Manipula o envio do formulário de perfil.
+   * Envia a requisição para atualizar o perfil do usuário e lida com a resposta.
+   * @param e Evento de submit do formulário.
+   */
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
     setIsLoading(true);
 
     try {
-      const updatedUser = await updateUserProfile(user.id ?? '', formData); // Chamada à API
-      dispatch(setUser(updatedUser)); // Atualiza Redux com os dados atualizados
-      setIsEditing(false); // Sai do modo de edição
-    } catch (error) {
+      const updatedUser = await updateUserProfile(user.id ?? '', formData);
+      dispatch(setUser(updatedUser));
+      setIsEditing(false);
+    } catch (error: unknown) { 
       console.error('Erro ao atualizar perfil:', error);
       setError('Não foi possível atualizar o perfil. Tente novamente.');
     } finally {
@@ -53,6 +76,7 @@ const Profile: React.FC = () => {
       {error && <p className="text-red-500 text-center">{error}</p>}
 
       <form onSubmit={handleSubmit} className="bg-white p-6 shadow rounded">
+        {/* Campo de nome */}
         <div className="mb-4">
           <label htmlFor="name" className="block text-gray-700 font-medium">
             Nome
@@ -70,6 +94,7 @@ const Profile: React.FC = () => {
           />
         </div>
 
+        {/* Campo de email */}
         <div className="mb-4">
           <label htmlFor="email" className="block text-gray-700 font-medium">
             Email
@@ -87,8 +112,10 @@ const Profile: React.FC = () => {
           />
         </div>
 
+        {/* Botões de ação */}
         {isEditing ? (
           <div className="flex justify-between">
+            {/* Botão Cancelar */}
             <button
               type="button"
               onClick={() => setIsEditing(false)}
@@ -97,6 +124,8 @@ const Profile: React.FC = () => {
             >
               Cancelar
             </button>
+
+            {/* Botão Salvar */}
             <button
               type="submit"
               className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
@@ -106,6 +135,7 @@ const Profile: React.FC = () => {
             </button>
           </div>
         ) : (
+          // Botão Editar Perfil
           <button
             type="button"
             onClick={() => setIsEditing(true)}

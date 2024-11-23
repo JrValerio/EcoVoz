@@ -1,6 +1,6 @@
 // Formatador de datas
-export const formatDate = (date: Date): string => {
-  return new Intl.DateTimeFormat('en-US', {
+export const formatDate = (date: Date, locale = 'en-US'): string => {
+  return new Intl.DateTimeFormat(locale, {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -8,8 +8,8 @@ export const formatDate = (date: Date): string => {
 };
 
 // Formatador de números (ex.: moeda)
-export const formatCurrency = (value: number, currency = 'USD'): string => {
-  return new Intl.NumberFormat('en-US', {
+export const formatCurrency = (value: number, currency = 'USD', locale = 'en-US'): string => {
+  return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency,
   }).format(value);

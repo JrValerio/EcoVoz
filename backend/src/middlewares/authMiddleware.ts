@@ -1,51 +1,44 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt, { JwtPayload } from 'jsonwebtoken';
-import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
 
-dotenv.config();
+/**
+ * Middleware de autenticação JWT. 
+ * Verifica a presença e validade do token JWT no cabeçalho Authorization.
+ * Se o token for válido, decodifica o token e define o objeto decodificado na propriedade `user` da requisição.
+ * Se o token não for fornecido ou for inválido, retorna uma resposta de erro 401 (não autorizado).
+ */
+const authMiddleware = (req: Request & { user?: unknown }, res: Response, next: NextFunction): void => {
+  const authHeader = req.headers.authorization;
 
-interface AuthenticatedRequest extends Request {
-  userId?: string; // Adiciona `userId` ao objeto da requisição para uso posterior
-}
-
-const authMiddleware = (
-  req: AuthenticatedRequest,
-  res: Response,
-  next: NextFunction
-): void => {
-  const authHeader = req.headers.authorization; // Lê o cabeçalho Authorization
-
+  // Verifica se o cabeçalho Authorization está presente
   if (!authHeader) {
-    console.warn('Tentativa de acesso sem token.');
-    res.status(401).json({ error: 'Acesso negado. Token não fornecido.' });
+    res.status(401).json({ message: 'Token não fornecido.' });
     return;
   }
 
-  // Extrai o token do cabeçalho no formato "Bearer <token>"
-  const token = authHeader?.replace('Bearer ', '');
-  console.log('Token recebido no middleware:', token);
+  // Verifica se o cabeçalho Authorization começa com 'Bearer '
+  if (!authHeader.startsWith('Bearer ')) {
+    res.status(401).json({ message: 'Token inválido.' });
+    return;
+  }
 
-if (!token) {
-  console.warn('Token ausente ou inválido:', authHeader);
-  res.status(401).json({ error: 'Token inválido ou ausente.' });
-  return;
-}
-
+  // Extrai o token do cabeçalho
+  const token = authHeader.split(' ')[1];
 
   try {
-    // Verifica o token JWT
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'default_secret') as JwtPayload;
+    // Tenta decodificar o token usando a chave secreta JWT
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'default_secret');
 
-    // Garante que o token contém o campo `userId`
-    if (typeof decoded !== 'object' || !decoded.userId) {
-      throw new Error('Payload do token inválido.');
-    }
+    // Define o objeto decodificado na propriedade user da requisição
+    req.user = decoded;
 
-    req.userId = decoded.userId; // Adiciona o `userId` ao objeto da requisição
-    next(); // Passa para o próximo middleware ou controlador
-  } catch (error: unknown) {
-    console.error('Erro ao verificar token:', error instanceof Error ? error.message : String(error));
-    res.status(401).json({ error: 'Token inválido ou expirado.' });
+    // Chama o próximo middleware na cadeia
+    next();
+  } catch (error) {
+    // Em caso de erro na verificação do token, registra o erro no console e retorna uma resposta de erro
+    console.error('[ERROR] Erro ao verificar o token:', error);
+    res.status(401).json({ message: 'Token inválido ou expirado.' });
   }
 };
+
 export default authMiddleware;

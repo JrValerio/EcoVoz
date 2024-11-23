@@ -1,5 +1,18 @@
 {
-  
+  "common": {
+    "welcome": "Welcome",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "home": {
+    "welcome": "Welcome to EcoVoz",
+    "description": "Your platform for accessibility and communication. Empowering individuals to connect and thrive with innovative tools designed for inclusivity.",
+    "welcomeBack": "Welcome back",
+    "goToDashboard": "Go to Dashboard",
+    "login": "Login to your account",
+    "learnMore": "Learn More About Us",
+    "voiceNavigation": "Looking for help? Use the voice button to navigate the platform."
+  },
   "about": {
     "title": "About EcoVoz",
     "description": "EcoVoz is an innovative initiative created by Team 12 during the Hackathon Autism Tech 2024. Our goal is to provide a technological solution that enables people with speech or language disabilities to communicate effectively and inclusively, using artificial intelligence and assistive technology.",
@@ -13,40 +26,31 @@
     "team": "This project was developed with passion and dedication by Team 12 at the Hackathon Autism Tech 2024, an event that celebrates creativity and the positive impact of technology on social inclusion.",
     "imageAlt": "Illustration about EcoVoz"
   },
-  "home": {
-  "welcome": "Welcome to EcoVoz",
-  "description": "Your platform for accessibility and communication. Empowering individuals to connect and thrive with innovative tools designed for inclusivity.",
-  "welcomeBack": "Welcome back",
-  "goToDashboard": "Go to Dashboard",
-  "login": "Login to your account",
-  "learnMore": "Learn More About Us",
-  "voiceNavigation": "Looking for help? Use the voice button to navigate the platform."
-},
-  "AuthButton": {
-    "Welcome": "Welcome",
-    "Login": "Login",
-    "Logout": "Logout"
+  "authButton": {
+    "welcome": "Welcome",
+    "login": "Login",
+    "logout": "Logout"
   },
-  "Navigation": {
-    "Home": "Home",
-    "About": "About",
-    "Contact": "Contact",
-    "Login": "Login",
-    "Dashboard": "Dashboard"
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "login": "Login",
+    "dashboard": "Dashboard"
   },
   "voiceInput": {
-  "browserNotSupported": "Your browser does not support speech recognition.",
-  "start": "Start Speaking",
-  "stop": "Stop Speaking",
-  "youSaid": "You said",
-  "noSpeechDetected": "No speech detected.",
-  "clear": "Clear Transcript"
-},
-  "Header": {
+    "browserNotSupported": "Your browser does not support speech recognition.",
+    "start": "Start Speaking",
+    "stop": "Stop Speaking",
+    "youSaid": "You said",
+    "noSpeechDetected": "No speech detected.",
+    "clear": "Clear Transcript"
+  },
+  "header": {
     "ecoVoz": "EcoVoz",
-"ecoVozLogo": "EcoVoz Logo",
-"welcome": "Welcome",
-"login": "Login",
-"logout": "Logout"
+    "ecoVozLogo": "EcoVoz Logo",
+    "welcome": "Welcome",
+    "login": "Login",
+    "logout": "Logout"
   }
 }

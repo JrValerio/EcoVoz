@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { FaArrowLeft } from 'react-icons/fa';
 
+/**
+ * Componente que renderiza a página "Não Encontrado" (404).
+ */
 const NotFound: React.FC = () => {
   const { t } = useTranslation();
 
@@ -20,10 +23,7 @@ const NotFound: React.FC = () => {
       </h1>
 
       {/* Mensagem de erro */}
-      <p
-        className="text-lg text-gray-700 mt-4 max-w-lg"
-        role="alert"
-      >
+      <p className="text-lg text-gray-700 mt-4 max-w-lg" role="alert">
         {t('notFound.message', 'Oops! A página que você está procurando não existe.')}
       </p>
 
@@ -33,7 +33,7 @@ const NotFound: React.FC = () => {
         className="mt-6 bg-blue-600 text-white px-6 py-3 rounded-full flex items-center gap-2 hover:bg-blue-700 transition duration-300"
         aria-label={t('notFound.goBack', 'Voltar para a página inicial')}
       >
-        <FaArrowLeft aria-hidden="true" />
+        <FaArrowLeft aria-hidden="true" /> {/* Ícone de seta para a esquerda */}
         {t('notFound.goBack', 'Voltar para a página inicial')}
       </Link>
     </div>

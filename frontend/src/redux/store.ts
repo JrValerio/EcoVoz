@@ -1,22 +1,25 @@
 import { configureStore } from '@reduxjs/toolkit';
 import userReducer from './slices/userSlice';
 
-// Configuração do store Redux
+/**
+ * Configuração da store Redux.
+ * Inclui o reducer para o estado do usuário e middlewares para serialização e Redux DevTools.
+ */
 const store = configureStore({
   reducer: {
-    user: userReducer, // Reducer para gerenciar o estado do usuário
+    user: userReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
-        ignoredActions: ['user/loginSuccess'], // Exemplo de ações ignoradas
-        ignoredPaths: ['user.token'], // Ignorar caminhos específicos no estado
+        ignoredActions: ['user/loginSuccess'],
+        ignoredPaths: ['user.token'],
       },
     }),
-  devTools: process.env.NODE_ENV !== 'production', // Ativar Redux DevTools em desenvolvimento
+  devTools: process.env.NODE_ENV !== 'production',
 });
 
-// Tipos globais do Redux
+// Inferência de tipos para RootState e AppDispatch
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
 
