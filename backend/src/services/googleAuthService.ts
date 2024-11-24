@@ -100,15 +100,22 @@ export const googleLogin = async (req: Request, res: Response): Promise<void> =>
 
       // Gera o token JWT
       const token = jwt.sign(
-        { userId: user.id },
+        { userId: user._id },
         process.env.JWT_SECRET || 'default_secret',
         { expiresIn: '1h' },
       );
 
+      // Configuração do cookie HttpOnly com o token JWT
+      res.cookie('authToken', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 3600 * 1000, // 1 hora
+      });
+
       console.log('[SUCCESS] Usuário autenticado com sucesso:', { user, token });
 
-      // Retorna os dados do usuário e o token
-      res.status(200).json({ token, user });
+      // Retorna os dados do usuário
+      res.status(200).json({ user }); // Remove o token da resposta JSON, pois ele está no cookie
     } catch (error: unknown) {
       // Tratamento de erros específicos do Mongoose
       if (error instanceof Error && 'errors' in error) {

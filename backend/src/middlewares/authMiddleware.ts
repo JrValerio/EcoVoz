@@ -1,5 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
+
+// Interface para o objeto decodificado do token JWT
+interface CustomJwtPayload extends JwtPayload {
+  id: string;
+  email: string;
+  userId: string;
+  // Adicione outras propriedades conforme necessário
+}
 
 /**
  * Middleware de autenticação JWT. 
@@ -27,17 +35,31 @@ const authMiddleware = (req: Request & { user?: unknown }, res: Response, next: 
 
   try {
     // Tenta decodificar o token usando a chave secreta JWT
-    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'default_secret');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'default_secret') as CustomJwtPayload; // Usa a interface CustomJwtPayload
+
+    // Validação adicional no payload do token
+    if (!decoded.userId) {
+      console.warn('[WARN] Payload inválido: ID do usuário ausente.');
+      res.status(401).json({ error: 'Payload inválido.' });
+      return;
+    }
 
     // Define o objeto decodificado na propriedade user da requisição
     req.user = decoded;
 
     // Chama o próximo middleware na cadeia
     next();
-  } catch (error) {
-    // Em caso de erro na verificação do token, registra o erro no console e retorna uma resposta de erro
-    console.error('[ERROR] Erro ao verificar o token:', error);
-    res.status(401).json({ message: 'Token inválido ou expirado.' });
+  } catch (error: any) {
+    if (error.name === 'TokenExpiredError') {
+      console.error('[ERROR] Token expirado:', error);
+      res.status(401).json({ error: 'Token expirado.' });
+    } else if (error.name === 'JsonWebTokenError') {
+      console.error('[ERROR] Token inválido:', error);
+      res.status(401).json({ error: 'Token inválido.' });
+    } else {
+      console.error('[ERROR] Erro ao verificar o token:', error);
+      res.status(500).json({ error: 'Falha na autenticação.' });
+    }
   }
 };
 

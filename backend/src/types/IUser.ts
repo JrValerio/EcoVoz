@@ -21,6 +21,12 @@ export interface IUser extends Document {
   /** Data e hora da última atualização do documento. */
   updatedAt: Date;
   /**
+   * Método para verificar se a senha fornecida corresponde ao hash armazenado no banco de dados.
+   * @param password A senha a ser verificada.
+   * @returns Promise que resolve com true se as senhas corresponderem, false caso contrário.
+   */
+  isValidPassword(password: string): Promise<boolean>;
+  /**
    * Método para comparar uma senha fornecida com a senha armazenada no banco de dados (opcional).
    * @param password A senha a ser comparada.
    * @returns Promise que resolve com true se as senhas corresponderem, false caso contrário.

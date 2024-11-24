@@ -1,6 +1,19 @@
 {
-  
-    "about": {
+  "common": {
+    "welcome": "Welcome",
+    "login": "Login",
+    "logout": "Logout"
+  },
+  "home": {
+    "welcome": "Welcome to EcoVoz",
+    "description": "Your platform for accessibility and communication. Empowering individuals to connect and thrive with innovative tools designed for inclusivity.",
+    "welcomeBack": "Welcome back",
+    "goToDashboard": "Go to Dashboard",
+    "login": "Login to your account",
+    "learnMore": "Learn More About Us",
+    "voiceNavigation": "Looking for help? Use the voice button to navigate the platform."
+  },
+  "about": {
     "title": "About EcoVoz",
     "description": "EcoVoz is an innovative initiative created by Team 12 during the Hackathon Autism Tech 2024. Our goal is to provide a technological solution that enables people with speech or language disabilities to communicate effectively and inclusively, using artificial intelligence and assistive technology.",
     "features": "Key Features",
@@ -15,26 +28,17 @@
     "team": "This project was developed with passion and dedication by Team 12 at the Hackathon Autism Tech 2024, an event that celebrates creativity and the positive impact of technology on social inclusion.",
     "imageAlt": "Illustration about EcoVoz"
   },
-    "home": {
-    "welcome": "Welcome to EcoVoz",
-    "description": "Your platform for accessibility and communication. Empowering individuals to connect and thrive with innovative tools designed for inclusivity.",
-    "welcomeBack": "Welcome back",
-    "goToDashboard": "Go to Dashboard",
-    "login": "Login to your account",
-    "learnMore": "Learn More About Us",
-    "voiceNavigation": "Looking for help? Use the voice button to navigate the platform."
+  "authButton": {
+    "welcome": "Welcome",
+    "login": "Login",
+    "logout": "Logout"
   },
-    "AuthButton": {
-      "Welcome": "Welcome",
-      "Login": "Login",
-      "Logout": "Logout"
-    },
-    "navigation": {
+  "navigation": {
     "home": "Home",
     "about": "About",
     "contact": "Contact"
   },
-    "voiceInput": {
+  "voiceInput": {
     "start": "Start Speaking",
     "stop": "Stop Speaking",
     "youSaid": "You said",
@@ -45,14 +49,18 @@
     "manualResponsePlaceholder": "Type your response here...",
     "manualResponseLabel": "Manual response"
   },
-    "Header": {
-      "ecoVoz": "EcoVoz",
-  "ecoVozLogo": "EcoVoz Logo",
-  "welcome": "Welcome",
-  "login": "Login",
-  "logout": "Logout"
-    },
-    "contact": {
+  "header": {
+    "ecoVoz": "EcoVoz",
+    "ecoVozLogo": "EcoVoz Logo",
+    "welcome": "Welcome",
+    "login": "Login",
+    "logout": "Logout",
+    "profile": "Profile",
+    "help": "Help",
+    "darkMode": "Dark Mode",
+    "lightMode": "Light Mode"
+  },
+  "contact": {
     "title": "Contact Us",
     "name": "Name",
     "namePlaceholder": "Enter your name",
@@ -75,8 +83,6 @@
     "usernamePlaceholder": "Enter your username",
     "email": "Email",
     "emailPlaceholder": "Enter your email",
-    "phone": "Contact (Phone)",
-    "phonePlaceholder": "Enter your phone number (optional)",
     "password": "Password",
     "passwordPlaceholder": "Enter your password",
     "confirmPassword": "Confirm Password",
@@ -86,10 +92,11 @@
     "allFieldsRequired": "All fields are required.",
     "emailInvalid": "Please enter a valid email.",
     "passwordMismatch": "Passwords do not match.",
+    "passwordTooShort": "Password must be at least 6 characters.",
     "successMessage": "Registration successful!",
     "errorMessage": "Error during registration.",
     "unknownError": "Unknown error. Please try again later."
-  }, 
+  },
   "login": {
     "title": "Log in to your account",
     "email": "Email",
@@ -104,29 +111,20 @@
     "unknownError": "An error occurred. Please try again later.",
     "noAccount": "Don't have an account?",
     "registerLink": "Sign up here",
-    "googleLogin": "Login with Google"
+    "googleError": "Error logging in with Google."
   },
-    "header": {
-      "ecoVoz": "EcoVoz",
-      "welcome": "Welcome",
-      "login": "Login",
-      "logout": "Logout",
-      "profile": "Profile",
-      "help": "Help",
-      "darkMode": "Dark Mode",
-      "lightMode": "Light Mode"
-    },
-    "help": {
-      "title": "Help and Support",
-      "faq": "Frequently Asked Questions (FAQ)",
-      "contact": "Contact Us",
-      "resources": "Useful Resources",
-      "emailSupport": "Email Support",
-      "phoneSupport": "Phone Support",
-      "docs": "Application Documentation",
-      "tutorials": "Tutorials and Guides"
-    }
+  "help": {
+    "title": "Help and Support",
+    "faq": "Frequently Asked Questions (FAQ)",
+    "contact": "Contact Us",
+    "resources": "Useful Resources",
+    "emailSupport": "Email Support",
+    "phoneSupport": "Phone Support",
+    "docs": "Application Documentation",
+    "tutorials": "Tutorials and Guides"
+  },
+  "notFound": {
+    "message": "Oops! The page you are looking for does not exist.",
+    "goBack": "Go back to the home page"
   }
-  
-  
-  
+}

@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse, AxiosRequestConfig, CancelTokenSource } from 'axios';
+import axios, { AxiosInstance, AxiosRequestConfig, CancelTokenSource } from 'axios';
 import { getAuthHeader } from '../utils/auth';
 
 /**
@@ -29,18 +29,6 @@ const errorMessages = {
   default: 'Ocorreu um erro inesperado. Por favor, tente novamente.',
 };
 
-/**
- * Adiciona o token de autenticação ao cabeçalho da requisição, se disponível.
- * @param config A configuração da requisição.
- * @returns A configuração da requisição com o token de autenticação, se disponível.
- */
-const addAuthToken = (config: AxiosRequestConfig): AxiosRequestConfig => {
-  const token = localStorage.getItem('authToken');
-  if (token && config.headers) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-};
 
 /**
  * Tenta realizar a requisição novamente em caso de falha, 
@@ -51,7 +39,7 @@ const addAuthToken = (config: AxiosRequestConfig): AxiosRequestConfig => {
  */
 const retryRequest = async (config: AxiosRequestConfig, retries = 3): Promise<any> => {
   try {
-    return await api(addAuthToken(config));
+    return await api(config); // Removeu a chamada addAuthToken(config)
   } catch (error: any) {
     if (retries > 0 && (error.code === 'ECONNABORTED' || error.message.includes('Network Error'))) {
       console.warn(`Tentativa ${4 - retries} de ${3} falhou. Tentando novamente em 2 segundos...`);

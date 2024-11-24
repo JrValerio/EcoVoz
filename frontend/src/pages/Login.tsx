@@ -3,29 +3,32 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
 import { toast } from 'react-toastify';
 import { useTranslation } from 'react-i18next';
-
 import Alert from '../components/Alert';
-import useAuth from '../hooks/useAuth';
-import { handleGoogleLogin } from '../utils/googleAuth';
+import GoogleAuthProvider from '../providers/GoogleAuthProvider';
 import { isValidEmail } from '../utils/validators';
+import { useAuthHandlers } from '../hooks/useAuthHandlers';
+import useAuth from '../hooks/useAuth';
 
 /**
  * Componente que renderiza a página de login.
  * Permite que o usuário faça login com email e senha ou com o Google.
  */
 const Login: React.FC = () => {
+  const { t } = useTranslation();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { handleGoogleLoginSuccess, handleSubmit } = useAuthHandlers();
+
   // Estados para controlar os valores dos campos do formulário, exibir alertas e indicar o estado de carregamento
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [alert, setAlert] = useState<{ type: 'success' | 'error'; message: string } | null>(null);
+  const [alert, setAlert] = useState<{
+    type: 'success' | 'error';
+    message: string;
+  } | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [googleLoading, setGoogleLoading] = useState(false);
-
-  // Hooks para tradução, autenticação, navegação e localização
-  const { t } = useTranslation();
-  const { isAuthenticated, login } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
 
   // Redireciona o usuário para o dashboard se estiver autenticado
   useEffect(() => {
@@ -35,49 +38,11 @@ const Login: React.FC = () => {
   }, [isAuthenticated, navigate]);
 
   /**
-   * Manipula o sucesso do login com o Google.
-   * Obtém as credenciais do Google, envia para o backend, 
-   * salva o token e o usuário no localStorage e redireciona para o dashboard.
-   * @param response Resposta da API do Google.
-   */
-  const handleGoogleLoginSuccess = async (response: CredentialResponse): Promise<void> => {
-    setGoogleLoading(true);
-    try {
-      const { credential } = response;
-
-      if (!credential) {
-        console.error('[ERROR] Credencial não fornecida');
-        toast.error(t('login.googleError'));
-        return;
-      }
-
-      console.log('[INFO] Resposta do Google:', response);
-      const backendResponse = await handleGoogleLogin(credential);
-      console.log('[INFO] Dados recebidos do backend:', backendResponse);
-
-      const { token, user } = backendResponse;
-      localStorage.setItem('authToken', token);
-      localStorage.setItem('user', JSON.stringify(user));
-
-      toast.success(t('login.success'));
-      navigate('/dashboard');
-    } catch (error: unknown) {
-      console.error('[ERROR] Erro ao realizar login com Google:', error);
-      toast.error(
-        (error as { message: string }).message || t('login.googleError'),
-      );
-    } finally {
-      setGoogleLoading(false);
-    }
-  };
-
-  /**
    * Manipula o envio do formulário de login.
-   * Realiza a autenticação do usuário com email e senha.
-   * Redireciona para o dashboard ou para a URL especificada na query string em caso de sucesso.
-   * @param e Evento de submit do formulário.
+   * Verifica campos obrigatórios, valida email e realiza o login.
+   * @param e Evento de envio do formulário.
    */
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setAlert(null);
 
@@ -91,19 +56,35 @@ const Login: React.FC = () => {
       return;
     }
 
-    setIsLoading(true);
-
     try {
-      await login(email, password);
-      setAlert({ type: 'success', message: t('login.success') });
-
-      const redirectPath = new URLSearchParams(location.search).get('redirect') || '/dashboard';
+      await handleSubmit(email, password, setIsLoading);
+      toast.success(t('login.success'));
+      const redirectPath =
+        new URLSearchParams(location.search).get('redirect') || '/dashboard';
       navigate(redirectPath);
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : t('login.unknownError');
-      setAlert({ type: 'error', message: errorMessage });
-    } finally {
-      setIsLoading(false);
+    } catch (error) {
+      console.error(error);
+      setAlert({ type: 'error', message: t('login.unknownError') });
+    }
+  };
+
+  /**
+   * Manipula o sucesso do login com o Google.
+   * Recebe as credenciais do Google e executa a autenticação.
+   * @param response Resposta da API do Google.
+   */
+  const handleGoogleSuccess = async (response: CredentialResponse) => {
+    setGoogleLoading(true);
+    try {
+      const credential = response.credential;
+      if (!credential) {
+        throw new Error('Credencial do Google não fornecida.');
+      }
+      await handleGoogleLoginSuccess(credential, setGoogleLoading);
+      toast.success(t('login.success'));
+    } catch (error) {
+      console.error('Google login error:', error);
+      setAlert({ type: 'error', message: t('login.googleError') });
     }
   };
 
@@ -114,7 +95,7 @@ const Login: React.FC = () => {
     >
       {/* Formulário de login */}
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleFormSubmit}
         className="bg-white dark:bg-gray-800 p-8 shadow-lg rounded w-full max-w-md border border-gray-300 dark:border-gray-700"
         aria-busy={isLoading}
       >
@@ -159,7 +140,7 @@ const Login: React.FC = () => {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="mt-1 p-2 border 1  border-gray-300 dark:border-gray-600 rounded w-full focus:ring focus:ring-blue-200 dark:focus:ring-blue-800 focus:border-blue-400 dark:focus:border-blue-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-200"
+            className="mt-1 p-2 border border-gray-300 dark:border-gray-600 rounded w-full focus:ring focus:ring-blue-200 dark:focus:ring-blue-800 focus:border-blue-400 dark:focus:border-blue-600 bg-gray-50 dark:bg-gray-700 text-gray-900 dark:text-gray-200"
             placeholder={t('login.passwordPlaceholder')}
             required
           />
@@ -187,11 +168,14 @@ const Login: React.FC = () => {
 
         {/* Botão de login com o Google */}
         <div className="mt-4 text-center">
-          <GoogleLogin
-            onSuccess={handleGoogleLoginSuccess}
-            onError={() => setAlert({ type: 'error', message: t('login.googleError') })}
-            useOneTap
-          />
+          <GoogleAuthProvider>
+            <GoogleLogin
+              onSuccess={handleGoogleSuccess}
+              onError={() =>
+                setAlert({ type: 'error', message: t('login.googleError') })
+              }
+            />
+          </GoogleAuthProvider>
         </div>
       </form>
     </main>

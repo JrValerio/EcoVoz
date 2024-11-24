@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken';
 import User from '../models/User';
 import authMiddleware from '../middlewares/authMiddleware';
 import { googleLogin } from '../services/googleAuthService';
+import { login } from '../services/authService';
 
 // Define a interface para requisições autenticadas
 interface AuthenticatedRequest extends Request {
@@ -14,6 +15,20 @@ const router = express.Router();
 
 // Rota para login via Google
 router.post('/google', googleLogin);
+
+/**
+ * Rota para realizar o login do usuário com email e senha.
+ * @param req A requisição HTTP.
+ * @param res A resposta HTTP.
+ * @param next Função para chamar o próximo middleware em caso de erro.
+ */
+router.post('/login', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    await login(req, res, next);
+  } catch (error) {
+    next(error);
+  }
+});
 
 /**
  * Rota para registrar um novo usuário.
@@ -49,53 +64,6 @@ router.post('/register', async (req: Request, res: Response): Promise<void> => {
   }
 });
 
-/**
- * Rota para realizar o login do usuário.
- * 
- * @param req A requisição HTTP.
- * @param res A resposta HTTP.
- */
-router.post('/login', async (req: Request, res: Response): Promise<void> => {
-  const { email, password } = req.body;
-
-  try {
-    const user = await User.findOne({ email });
-    if (!user) {
-      res.status(401).json({ message: 'Credenciais inválidas.' });
-      return;
-    }
-
-    const isPasswordValid = await user.comparePassword(password);
-    if (!isPasswordValid) {
-      res.status(401).json({ message: 'Credenciais inválidas.' });
-      return;
-    }
-
-    const jwtSecret = process.env.JWT_SECRET || 'default_secret';
-    const token = jwt.sign({ userId: user._id }, jwtSecret, {
-      expiresIn: '1h',
-    });
-
-    // Configuração do cookie HttpOnly com o token JWT
-    res.cookie('authToken', token, { 
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production', 
-      maxAge: 3600 * 1000, // 1 hora
-    });
-
-    res.status(200).json({
-      message: 'Login realizado com sucesso.',
-      user: {
-        id: user._id,
-        username: user.username,
-        email: user.email,
-      },
-    }); // Remove o token da resposta JSON
-  } catch (error) {
-    console.error('[ERROR] Erro ao fazer login:', error);
-    res.status(500).json({ message: 'Erro interno no servidor.' });
-  }
-});
 
 /**
  * Rota para validar o token JWT.

@@ -8,31 +8,35 @@ import HttpBackend from 'i18next-http-backend';
  * Carrega as traduções, detecta o idioma do usuário e integra com o React.
  */
 i18n
-  .use(HttpBackend)
-  .use(LanguageDetector)
-  .use(initReactI18next)
+  .use(HttpBackend) // Usa o HttpBackend para carregar traduções de um servidor
+  .use(LanguageDetector) // Detecta o idioma do usuário (navegador, localStorage)
+  .use(initReactI18next) // Inicializa o i18next para React
   .init({
-    // Define o idioma padrão e os idiomas suportados
-    fallbackLng: 'en',
-    supportedLngs: ['en', 'pt'],
+    // Define o idioma padrão caso o idioma do usuário não seja suportado
+    fallbackLng: 'en', 
+    // Define os idiomas suportados pela aplicação
+    supportedLngs: ['en', 'pt'], 
 
-    // Habilita logs de debug em ambiente de desenvolvimento
-    debug: process.env.NODE_ENV === 'development',
+    // Habilita logs de debug em modo de desenvolvimento
+    debug: process.env.NODE_ENV === 'development', 
 
     // Configuração do backend para carregar as traduções
     backend: {
-      loadPath: '/locales/{{lng}}/translation.json',
+      // Define o caminho para os arquivos de tradução no servidor
+      loadPath: '/locales/{{lng}}/translation.json', 
     },
 
-    // Desativa o escape de valores, pois o React já faz a sanitização
+    // Desativa o escape de valores HTML nas traduções (React já faz isso)
     interpolation: {
-      escapeValue: false,
+      escapeValue: false, 
     },
 
     // Define a ordem de detecção de idioma e onde armazenar o idioma detectado
     detection: {
-      order: ['querystring', 'localStorage', 'navigator'],
-      caches: ['localStorage'],
+      // Ordem de detecção: querystring, localStorage, navegador
+      order: ['querystring', 'localStorage', 'navigator'], 
+      // Armazena o idioma detectado no localStorage
+      caches: ['localStorage'], 
     },
   });
 
