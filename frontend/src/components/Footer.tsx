@@ -32,6 +32,13 @@ const Footer: React.FC = () => {
             </Link>
           </li>
 
+          {/* Link para a página de Links de Recursos */}
+          <li>
+            <Link to="/links" className="hover:underline">
+              Recursos
+            </Link>
+          </li>
+
           {/* Link para o LinkedIn */}
           <li>
             <a

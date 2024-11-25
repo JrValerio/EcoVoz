@@ -36,7 +36,8 @@
   "navigation": {
     "home": "Home",
     "about": "About",
-    "contact": "Contact"
+    "contact": "Contact",
+    "gestureRecognition": "Gesture Recognition"
   },
   "voiceInput": {
     "start": "Start Speaking",
@@ -126,5 +127,47 @@
   "notFound": {
     "message": "Oops! The page you are looking for does not exist.",
     "goBack": "Go back to the home page"
+  },
+  "gestureRecognition": {
+    "title": "Gesture Recognition",
+    "startVideo": "Start Video",
+    "pauseVideo": "Pause Video",
+    "stopVideo": "Stop Video",
+    "waiting": "Waiting for gesture recognition...",
+    "connected": "Connected to WebSocket",
+    "disconnected": "Disconnected from WebSocket",
+    "websocketMessage": "Message received from WebSocket:",
+    "websocketConnected": "Connected to WebSocket.",
+    "websocketDisconnected": "WebSocket connection closed.",
+    "websocketError": "WebSocket error:",
+    "cameraError": "Error accessing the camera:",
+    "gestureInput": "Gesture Input"
+  },
+  "linksPage": {
+    "title": "Support Resources",
+    "subtitle": "Explore useful resources for people with different types of disabilities.",
+    "auditoryImpairment": "Resources for Auditory Impairment",
+    "surdosAssociacao": "Association of the Deaf of Brazil",
+    "surdosAssociacaoDescription": "An organization providing support and resources for individuals with hearing impairments.",
+    "centralInterpretes": "Central of Libras Interpreters",
+    "centralInterpretesDescription": "Interpretation service for hearing-impaired and deaf individuals.",
+    "visualImpairment": "Resources for Visual Impairment",
+    "brailleLibrary": "Braille Library of Brazil",
+    "brailleLibraryDescription": "Access to books in Braille and audio for visually impaired individuals.",
+    "visualHelpCenter": "Visual Help Center",
+    "visualHelpCenterDescription": "Support services for people with visual impairments.",
+    "physicalImpairment": "Resources for Physical Impairment",
+    "wheelchairAssociation": "Wheelchair Users Association",
+    "wheelchairAssociationDescription": "Support and resources for wheelchair users.",
+    "assistiveTechCenter": "Assistive Technology Center",
+    "assistiveTechCenterDescription": "Services and devices to enhance mobility.",
+    "intellectualImpairment": "Resources for Intellectual Impairment",
+    "apae": "APAE Brazil",
+    "apaeDescription": "Support for people with intellectual and multiple disabilities.",
+    "intellectualSupportCenter": "Intellectual Support Center",
+    "intellectualSupportCenterDescription": "Educational resources and support for people with intellectual disabilities.",
+    "visitWebsite": "Visit Website",
+    "callNow": "Call Now",
+    "disclaimer": "The resources mentioned are provided to assist and support people with disabilities. We are not responsible for services provided by third parties."
   }
 }

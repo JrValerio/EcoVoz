@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
+import { FaBars, FaTimes } from 'react-icons/fa';
 
 import Button from './Button';
 import Navigation from './Navigation';
@@ -20,7 +21,8 @@ const Header: React.FC = () => {
   const { user, isAuthenticated, logout } = useAuth();
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
-  const userName = useSelector((state: RootState) => state.user.name); // Obtém o nome de usuário do estado global do Redux
+  const userName = useSelector((state: RootState) => state.user.name);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   /**
    * Renderiza a seção de autenticação, exibindo o botão de login ou logout,
@@ -56,38 +58,54 @@ const Header: React.FC = () => {
     );
 
   return (
-    <header className="bg-blue-600 dark:bg-gray-800 text-white flex flex-col md:flex-row md:justify-between items-center px-6 py-4 shadow-md">
-      {/* Logo e título */}
-      <div className="flex items-center space-x-4">
-        <img
-          src={logo}
-          alt={t('header.ecoVozLogo')}
-          className="h-12 w-auto"
-          aria-hidden="true"
-        />
-        <h1 className="text-2xl font-bold">{t('header.ecoVoz')}</h1>
+    <header className="bg-blue-600 dark:bg-gray-800 text-white px-6 py-4 shadow-md">
+      {/* Topo com logo e botão de menu hamburguer */}
+      <div className="flex justify-between items-center">
+        <div className="flex items-center space-x-4">
+          <img
+            src={logo}
+            alt={t('header.ecoVozLogo')}
+            className="h-12 w-auto"
+            aria-hidden="true"
+          />
+          <h1 className="text-2xl font-bold">{t('header.ecoVoz')}</h1>
+        </div>
+        <div className="md:hidden">
+          <button
+            onClick={() => setMenuOpen(!menuOpen)}
+            className="text-white focus:outline-none"
+            aria-label="Toggle navigation menu"
+          >
+            {menuOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
+          </button>
+        </div>
       </div>
 
-      {/* Navegação principal */}
-      <Navigation />
+      {/* Menu principal - Visível para telas maiores ou quando o menu hamburguer estiver aberto */}
+      <div
+        className={`${
+          menuOpen ? 'block' : 'hidden'
+        } md:flex md:items-center md:justify-between mt-4 md:mt-0`}
+      >
+        {/* Navegação principal */}
+        <Navigation />
 
-      {/* Menu adicional com links e botões */}
-      <nav className="flex items-center space-x-6 mt-4 md:mt-0">
-        <LanguageSwitcher />
+        {/* Menu adicional com links e botões */}
+        <div className="flex flex-col md:flex-row items-center md:space-x-6 space-y-4 md:space-y-0">
+          <LanguageSwitcher />
 
-        {/* Botão para alternar o tema */}
-        <Button
-          onClick={toggleTheme}
-          variant="secondary"
-          className="ml-4"
-          aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-        >
-          {theme === 'light' ? t('header.darkMode') : t('header.lightMode')}
-        </Button>
+          {/* Botão para alternar o tema */}
+          <Button
+            onClick={toggleTheme}
+            variant="secondary"
+            className="ml-4"
+            aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
+          >
+            {theme === 'light' ? t('header.darkMode') : t('header.lightMode')}
+          </Button>
 
-        {/* Links para perfil e ajuda, condicional para usuários autenticados */}
-        {isAuthenticated && (
-          <>
+          {/* Links para perfil e ajuda, condicional para usuários autenticados */}
+          {isAuthenticated && (
             <Button
               onClick={() => navigate('/profile')}
               variant="secondary"
@@ -95,19 +113,19 @@ const Header: React.FC = () => {
             >
               {t('header.profile')}
             </Button>
-          </>
-        )}
-        <Button
-          onClick={() => navigate('/help')}
-          variant="secondary"
-          aria-label={t('header.help')}
-        >
-          {t('header.help')}
-        </Button>
-      </nav>
+          )}
+          <Button
+            onClick={() => navigate('/help')}
+            variant="secondary"
+            aria-label={t('header.help')}
+          >
+            {t('header.help')}
+          </Button>
+        </div>
 
-      {/* Seção de autenticação (login/logout) */}
-      <div>{renderAuthSection()}</div>
+        {/* Seção de autenticação (login/logout) */}
+        <div className="mt-4 md:mt-0">{renderAuthSection()}</div>
+      </div>
     </header>
   );
 };

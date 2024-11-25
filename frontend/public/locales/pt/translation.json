@@ -36,7 +36,8 @@
   "navigation": {
     "home": "Início",
     "about": "Sobre",
-    "contact": "Contato"
+    "contact": "Contato",
+    "gestureRecognition": "Reconhecimento de Gestos"
   },
   "voiceInput": {
     "start": "Iniciar fala",
@@ -126,5 +127,47 @@
   "notFound": {
     "message": "Oops! A página que você está procurando não existe.",
     "goBack": "Voltar para a página inicial"
+  },
+  "gestureRecognition": {
+    "title": "Reconhecimento de Gestos",
+    "startVideo": "Iniciar Vídeo",
+    "pauseVideo": "Pausar Vídeo",
+    "stopVideo": "Parar Vídeo",
+    "waiting": "Aguardando reconhecimento de gestos...",
+    "connected": "Conectado ao WebSocket",
+    "disconnected": "Desconectado do WebSocket",
+    "websocketMessage": "Mensagem recebida do WebSocket:",
+    "websocketConnected": "Conectado ao WebSocket.",
+    "websocketDisconnected": "Conexão do WebSocket foi fechada.",
+    "websocketError": "Erro no WebSocket:",
+    "cameraError": "Erro ao acessar a câmera:",
+    "gestureInput": "Entrada de Gestos"
+  },
+  "linksPage": {
+    "title": "Recursos de Apoio",
+    "subtitle": "Explore recursos úteis para pessoas com diferentes tipos de deficiência.",
+    "auditoryImpairment": "Recursos para Deficiência Auditiva",
+    "surdosAssociacao": "Associação dos Surdos do Brasil",
+    "surdosAssociacaoDescription": "Uma organização que oferece apoio e recursos para indivíduos com deficiência auditiva.",
+    "centralInterpretes": "Central de Intérpretes de Libras",
+    "centralInterpretesDescription": "Serviço de interpretação para deficientes auditivos e surdos.",
+    "visualImpairment": "Recursos para Deficiência Visual",
+    "brailleLibrary": "Biblioteca Braille do Brasil",
+    "brailleLibraryDescription": "Acesso a livros em Braille e áudio para deficientes visuais.",
+    "visualHelpCenter": "Centro de Ajuda Visual",
+    "visualHelpCenterDescription": "Serviços de suporte para pessoas com deficiência visual.",
+    "physicalImpairment": "Recursos para Deficiência Física",
+    "wheelchairAssociation": "Associação dos Usuários de Cadeira de Rodas",
+    "wheelchairAssociationDescription": "Apoio e recursos para usuários de cadeiras de rodas.",
+    "assistiveTechCenter": "Centro de Tecnologia Assistiva",
+    "assistiveTechCenterDescription": "Serviços e dispositivos para melhorar a mobilidade.",
+    "intellectualImpairment": "Recursos para Deficiência Intelectual",
+    "apae": "APAE Brasil",
+    "apaeDescription": "Apoio para pessoas com deficiência intelectual e múltipla.",
+    "intellectualSupportCenter": "Centro de Apoio Intelectual",
+    "intellectualSupportCenterDescription": "Recursos educacionais e suporte para deficientes intelectuais.",
+    "visitWebsite": "Visitar Website",
+    "callNow": "Ligar Agora",
+    "disclaimer": "Os recursos mencionados são fornecidos para ajudar e apoiar pessoas com deficiência. Não somos responsáveis pelos serviços fornecidos por terceiros."
   }
 }

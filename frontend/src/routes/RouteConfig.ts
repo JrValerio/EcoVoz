@@ -1,18 +1,12 @@
-// RouteConfig.ts
-
 import React, { lazy } from 'react';
 
 /**
  * Interface para definir a configuração de uma rota.
  */
 export interface RouteConfig {
-  /** Caminho da rota. */
   path: string;
-  /** Componente a ser renderizado para a rota. */
   element: React.LazyExoticComponent<React.ComponentType>;
-  /** Indica se a rota é privada (requer autenticação). */
   private: boolean;
-  /** Rotas filhas (opcional, para rotas aninhadas). */
   children?: RouteConfig[];
 }
 
@@ -50,6 +44,16 @@ export const publicRoutes: RouteConfig[] = [
     element: lazy(() => import('../pages/Help')), 
     private: false 
   },
+  {
+    path: '/gesture-recognition',
+    element: lazy(() => import('../pages/GestureRecognition')),
+    private: false,
+  },
+  {
+    path: '/links',  
+    element: lazy(() => import('../pages/LinksPage')),
+    private: false,
+  },
 ];
 
 /**
@@ -59,7 +63,7 @@ export const privateRoutes: RouteConfig[] = [
   { 
     path: '/dashboard', 
     element: lazy(() => import('../pages/Dashboard')), 
-    private: false,
+    private: true,  // Corrigido para tornar a rota privada
     children: [
       { 
         path: 'profile', 
