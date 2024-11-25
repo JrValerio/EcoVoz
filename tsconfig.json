@@ -14,7 +14,7 @@
       "@/backend/*": ["backend/src/*"]
     },
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "jest", "@testing-library/jest-dom"],
+    "types": ["node"],
     "resolveJsonModule": true,
     "noEmit": true,
     "useUnknownInCatchVariables": true

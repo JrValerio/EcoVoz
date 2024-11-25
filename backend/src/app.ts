@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 import { handle } from 'i18next-http-middleware';
 import WebSocket from 'ws'; // Importar WebSocket para se conectar ao backend Python
 
-import i18n from './i18n'; // Configuração da internacionalização
+import i18n from './i18n.js'; // Configuração da internacionalização
 import connectDB from './config/database'; // Função para conectar ao banco de dados
 import authRoutes from './routes/authRoutes'; // Rotas de autenticação
 import userRoutes from './routes/userRoutes'; // Rotas de usuário
@@ -95,7 +95,7 @@ app.post('/api/gestures', (req, res) => {
 });
 
 // Configuração para servir arquivos estáticos do frontend
-const frontendPath = path.join(__dirname, 'frontend/dist'); // Caminho para a pasta 'dist' do frontend
+const frontendPath = path.join(__dirname, '../frontend/dist'); // Caminho para a pasta 'dist' do frontend
 
 // Verifica se a pasta 'dist' do frontend existe
 if (fs.existsSync(frontendPath)) {
