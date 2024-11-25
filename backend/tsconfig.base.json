@@ -1,23 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ES2020", // Padrão moderno, suporta async/await no Node.js e navegadores
-    "module": "ESNext", // Permite usar módulos ECMAScript
-    "moduleResolution": "Node", // Resolve módulos ao estilo Node.js
-    "baseUrl": "./", // Base para caminhos relativos
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "baseUrl": "./",
     "paths": {
-      "@backend/*": ["backend/src/*"], // Alias para o backend
-      "@frontend/*": ["frontend/src/*"], // Alias para o frontend
-      "@shared/*": ["shared/*"] // Alias opcional para recursos compartilhados
+      "@backend/*": ["backend/src/*"],
+      "@frontend/*": ["frontend/src/*"],
+      "@shared/*": ["shared/*"]
     },
-    "forceConsistentCasingInFileNames": true, // Evita problemas com maiúsculas/minúsculas
-    "strict": true, // Habilita verificações estritas
-    "esModuleInterop": true, // Facilita a importação de módulos CommonJS
-    "skipLibCheck": true // Ignora verificações de tipos em bibliotecas externas
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
   },
   "include": [
     "backend/src/**/*",
     "frontend/src/**/*",
-    "shared/**/*" // Inclui recursos compartilhados
+    "shared/**/*"
   ],
-  "exclude": ["node_modules", "dist"] // Evita arquivos desnecessários
+  "exclude": ["node_modules", "dist"]
 }

@@ -1,14 +1,16 @@
 // src/controllers/gestureController.ts
 import { Request, Response } from 'express';
+import WebSocket from 'ws';
 import { createWebSocketConnection } from '../services/websocketService';
 
 // Função para lidar com gestos recebidos via dados JSON
 export const processGesture = (req: Request, res: Response) => {
-  const ws = createWebSocketConnection('ws://127.0.0.1:8000/ws/gestures');
+  const ws: WebSocket = createWebSocketConnection('ws://127.0.0.1:8000/ws/gestures');
+
 
   ws.on('message', (data) => {
     res.json({ response: data.toString() });
-    ws.close();
+    console.log(ws);
   });
 
   ws.on('error', (err) => {
@@ -30,7 +32,7 @@ export const processVideoGesture = async (req: Request, res: Response): Promise<
 
   ws.on('message', (data) => {
     res.json({ response: data.toString() });
-    ws.close();
+    console.log(ws);
   });
 
   ws.on('error', (err) => {

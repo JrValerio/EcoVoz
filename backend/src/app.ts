@@ -28,6 +28,9 @@ app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+console.log('Arquivo:', __filename);
+console.log('Diretório:', __dirname);
+
 // Conecta ao banco de dados
 connectDB();
 
@@ -78,14 +81,14 @@ app.post('/api/gestures', (req, res) => {
   });
 
   // Quando receber uma mensagem do WebSocket Python
-  ws.on('message', (data) => {
+  ws.on('message', (data: Buffer) => {
     // Enviar a resposta recebida do backend Python para o cliente original
-    res.json({ response: data });
-    ws.close(); // Fechar a conexão depois de receber a resposta
+    res.json({ response: data.toString() });
+    console.log(ws); // Fechar a conexão depois de receber a resposta
   });
 
   // Lidar com erros de WebSocket
-  ws.on('error', (err) => {
+  ws.on('error', (err: Error) => {
     console.error('Erro no WebSocket:', err);
     res.status(500).json({ error: 'Erro ao conectar ao backend Python' });
   });
