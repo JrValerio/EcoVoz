@@ -169,5 +169,12 @@
     "visitWebsite": "Visit Website",
     "callNow": "Call Now",
     "disclaimer": "The resources mentioned are provided to assist and support people with disabilities. We are not responsible for services provided by third parties."
+  },
+  "footer": {
+    "copyright": "All rights reserved.",
+    "about": "About",
+    "contact": "Contact",
+    "resources": "Resources",
+    "linkedin": "LinkedIn"
   }
 }

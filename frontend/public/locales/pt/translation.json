@@ -169,5 +169,12 @@
     "visitWebsite": "Visitar Website",
     "callNow": "Ligar Agora",
     "disclaimer": "Os recursos mencionados são fornecidos para ajudar e apoiar pessoas com deficiência. Não somos responsáveis pelos serviços fornecidos por terceiros."
+  },
+  "footer": {
+    "copyright": "Todos os direitos reservados.",
+    "about": "Sobre",
+    "contact": "Contato",
+    "resources": "Recursos",
+    "linkedin": "LinkedIn"
   }
 }
