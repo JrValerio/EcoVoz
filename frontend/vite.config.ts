@@ -7,6 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Configuração do Vite
 export default defineConfig({
+  root: './', // Define o diretório raiz do projeto
   plugins: [react()],
   resolve: {
     alias: {
@@ -30,9 +31,7 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
-      manualChunks: {
-        react: ['react', 'react-dom'],
-      },
-    } as any,
+      input: path.resolve(__dirname, './index.html'), // Caminho para o arquivo index.html
+    },
   },
 });
