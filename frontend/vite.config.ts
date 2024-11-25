@@ -7,7 +7,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Configuração do Vite
 export default defineConfig({
-  root: './', // Define o diretório raiz do projeto
+  base: './', // Define o diretório raiz do projeto
   plugins: [react()],
   resolve: {
     alias: {
