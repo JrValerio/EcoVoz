@@ -54,3 +54,4 @@ docker-compose.override.yml
 # Lint and formatting
 eslintcache
 .prettiercache
+.vercel
