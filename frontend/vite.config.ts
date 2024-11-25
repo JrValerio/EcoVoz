@@ -32,7 +32,8 @@ export default defineConfig({
     sourcemap: true,
     rollupOptions: {
       input: path.resolve(__dirname, './index.html'), 
-      external: ['@reduxjs/toolkit', 'react-toastify', 'react-i18next'],
+      external: ['@reduxjs/toolkit', 'react-toastify', 'react-i18next', 
+        '@vitejs/plugin-react', 'react-dom'],
       
     },
   },
