@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import { config } from './config';
+
+import { config } from './config.js';
 
 /**
  * Função para conectar ao banco de dados MongoDB.

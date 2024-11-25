@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import User, { IUser } from '../models/User';
+
+import User, { IUser } from '../models/User.js';
 
 /**
  * Classe que fornece serviços relacionados ao usuário.

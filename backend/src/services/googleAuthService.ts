@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import { OAuth2Client, TokenPayload } from 'google-auth-library';
 
-import User from '../models/User';
+import User from '../models/User.js';
 
 // Configuração do cliente OAuth2 do Google
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);

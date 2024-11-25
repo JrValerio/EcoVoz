@@ -1,7 +1,8 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
-import User from '../models/User'; 
-import { IUser } from 'src/types/IUser';
+
+import User from '../models/User.js'; 
+import { IUser } from 'src/types/IUser.js';
 
 /**
  * Gera um access token JWT.

@@ -1,7 +1,8 @@
 // src/routes/gestureRoutes.ts
 import express from 'express';
-import { processGesture, processVideoGesture } from '../controllers/gestureController';
-import upload from '../middlewares/multerConfig';
+
+import { processGesture, processVideoGesture } from '../controllers/gestureController.js';
+import upload from '../middlewares/multerConfig.js';
 
 const router = express.Router();
 

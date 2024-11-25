@@ -1,10 +1,10 @@
 import express, { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-import User from '../models/User';
-import authMiddleware from '../middlewares/authMiddleware';
-import { googleLogin } from '../services/googleAuthService';
-import { login } from '../services/authService';
+import User from '../models/User.js';
+import authMiddleware from '../middlewares/authMiddleware.js';
+import { googleLogin } from '../services/googleAuthService.js';
+import { login } from '../services/authService.js';
 
 // Define a interface para requisições autenticadas
 interface AuthenticatedRequest extends Request {

@@ -1,7 +1,8 @@
 // src/controllers/gestureController.ts
 import { Request, Response } from 'express';
 import WebSocket from 'ws';
-import { createWebSocketConnection } from '../services/websocketService';
+
+import { createWebSocketConnection } from '../services/websocketService.js';
 
 // Função para lidar com gestos recebidos via dados JSON
 export const processGesture = (req: Request, res: Response) => {

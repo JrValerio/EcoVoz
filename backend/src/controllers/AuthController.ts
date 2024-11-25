@@ -4,9 +4,9 @@ import jwt from 'jsonwebtoken';
 import mongoose from 'mongoose';
 import { MongoServerError } from 'mongodb';
 
-import UserService from '../services/UserService';
-import { verifyGoogleToken } from '../services/googleAuthService';
-import User from '../models/User';
+import UserService from '../services/UserService.js';
+import { verifyGoogleToken } from '../services/googleAuthService.js';
+import User from '../models/User.js';
 
 // Interface para erros de validação do Mongoose
 interface MongooseValidationError extends Error {
