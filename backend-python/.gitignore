@@ -1,12 +1,11 @@
-# Node.js
-node_modules/
-.env
-
-# Python
+# Ambiente virtual
 .venv/
-__pycache__/
-*.pyc
 
-# Docker
+# Arquivos Python
+*.pyc
+__pycache__/
+
+# Outros arquivos desnecessários
+.DS_Store
+.env
 *.log
-docker-compose.override.yml
