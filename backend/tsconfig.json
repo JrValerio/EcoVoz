@@ -12,10 +12,9 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
     "paths": {
-      "@backend/*": ["backend/src/*"],
-      "@frontend/*": ["frontend/src/*"]
+      "@backend/*": ["src/*"],
     },
-    "outDir": "dist",
+    "outDir": "./dist",
     "rootDir": "src"
   },
   "include": [

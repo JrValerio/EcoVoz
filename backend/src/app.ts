@@ -46,7 +46,6 @@ app.use(cors({
   credentials: true,
 })); // Habilita CORS
 
-app.use(express.json()); // Permite o parsing de JSON no corpo das requisições
 app.use(handle(i18n)); // Middleware para internacionalização
 
 // Rotas da API
