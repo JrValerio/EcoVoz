@@ -7,7 +7,6 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Configuração do Vite
 export default defineConfig({
-  base: './', // Define o diretório raiz do projeto
   plugins: [react()],
   resolve: {
     alias: {
@@ -15,6 +14,7 @@ export default defineConfig({
       '@shared': path.resolve(__dirname, '../shared'),
     },
   },
+  base: './', // Define o diretório raiz do projeto
   server: {
     port: 3000,
     open: true,
