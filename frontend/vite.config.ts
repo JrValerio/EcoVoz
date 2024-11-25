@@ -31,7 +31,9 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
-      input: path.resolve(__dirname, './index.html'), // Caminho para o arquivo index.html
+      input: path.resolve(__dirname, './index.html'), 
+      external: ['@reduxjs/toolkit', 'react-toastify', 'react-i18next'],
+      
     },
   },
 });
