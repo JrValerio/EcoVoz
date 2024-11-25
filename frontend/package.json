@@ -12,8 +12,7 @@
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "format": "prettier --write .",
-    "test": "vitest",
-    "postinstall": "npm install"
+    "test": "vitest"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.1.1",
