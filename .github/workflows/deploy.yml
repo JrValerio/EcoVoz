@@ -11,6 +11,9 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        part: [backend, frontend]
 
     steps:
       - name: Checkout code
@@ -25,50 +28,33 @@ jobs:
         uses: actions/cache@v3
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ matrix.part }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-node-${{ matrix.part }}-
 
-      - name: Install Backend Dependencies
-        working-directory: backend
+      - name: Install Dependencies
+        working-directory: ${{ matrix.part }}
         run: npm install
 
-      - name: Install Frontend Dependencies
-        working-directory: frontend
-        run: npm install
+      - name: Lint Code
+        working-directory: ${{ matrix.part }}
+        run: npm run lint || exit 1
 
-      - name: Lint Backend
-        working-directory: backend
-        run: npm run lint || echo "Lint skipped"
+      - name: Test Code
+        working-directory: ${{ matrix.part }}
+        run: npm run test || exit 1
 
-      - name: Lint Frontend
-        working-directory: frontend
-        run: npm run lint || echo "Lint skipped"
-
-      - name: Test Backend
-        working-directory: backend
-        run: npm run test || echo "Tests skipped"
-
-      - name: Test Frontend
-        working-directory: frontend
-        run: npm run test || echo "Tests skipped"
-
-      - name: Build Backend
-        working-directory: backend
-        run: npm run build
-
-      - name: Build Frontend
-        working-directory: frontend
+      - name: Build Code
+        working-directory: ${{ matrix.part }}
         run: npm run build
 
       - name: Verify Build Output
         run: |
-          echo "Backend Build Output:"
+          echo "Backend Build Files:"
           ls backend/dist
-          echo "Frontend Build Output:"
+          echo "Frontend Build Files:"
           ls frontend/dist
 
-      - name: Verify Tailwind CSS Installation
-        working-directory: frontend
-        run: npm list tailwindcss
-            
+      - name: Deploy to Vercel
+        if: success()
+        run: npx vercel --prod --token ${ secrets.VERCEL_TOKEN }
