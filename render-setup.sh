@@ -1,12 +1,11 @@
 #!/bin/bash
 
-# Verifica se está no diretório correto antes de começar
 echo "Iniciando o setup no diretório: $(pwd)"
 
-# Instalação de dependências críticas
-npm install tailwindcss autoprefixer postcss redux react-redux react-router-dom core-js regenerator-runtime i18next -D
+# Instalação de dependências específicas (incluindo plugins do TailwindCSS)
+npm install tailwindcss autoprefixer postcss @tailwindcss/forms @tailwindcss/typography redux react-redux react-router-dom core-js regenerator-runtime i18next -D
 
-# Reinstalação de dependências e devDependencies completas
+# Reinstalação de dependências gerais
 npm install
 
 # Confirmação da versão do Node.js
