@@ -55,3 +55,5 @@ docker-compose.override.yml
 eslintcache
 .prettiercache
 .vercel
+frontend/render.pub
+frontend/render
