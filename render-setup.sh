@@ -2,7 +2,7 @@
 
 echo "Iniciando o setup no diretório: $(pwd)"
 
-# Instalar dependências específicas (incluindo dependências relacionadas a i18n e TailwindCSS)
+# Instala dependências específicas (incluindo i18next e plugins)
 npm install \
   tailwindcss \
   autoprefixer \
@@ -19,7 +19,7 @@ npm install \
   i18next-browser-languagedetector \
   react-i18next -D
 
-# Reinstalação de dependências gerais
+# Reinstalação completa para garantir que as dependências estejam no lugar
 npm install
 
 # Confirmação da versão do Node.js
