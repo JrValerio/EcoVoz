@@ -24,6 +24,17 @@ const app = express();
 // Middleware para lidar com JSON
 app.use(express.json());
 
+// Conecta ao MongoDB
+(async () => {
+  try {
+    await connectDB(); // Conexão com o MongoDB
+    console.log(`[${new Date().toISOString()}] 🚀 Conexão com o banco estabelecida!`);
+  } catch (err) {
+    console.error(`[${new Date().toISOString()}] ❌ O servidor não será iniciado devido a um erro na conexão com o banco.`);
+    process.exit(1); // Encerra o processo se a conexão falhar
+  }
+})();
+
 // Obtém o caminho do arquivo atual e o diretório atual
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

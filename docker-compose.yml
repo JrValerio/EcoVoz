@@ -1,3 +1,5 @@
+version: '3.8'
+
 services:
   frontend:
     build:
@@ -10,10 +12,15 @@ services:
     networks:
       - ecovoz_network
     healthcheck:
-      test: ["CMD-SHELL", "wget --spider -q http://localhost:3000 || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   backend:
     build:
@@ -25,19 +32,26 @@ services:
     env_file:
       - .env
     environment:
-      - MONGO_URI=mongodb://${MONGO_INITDB_ROOT_USERNAME}:${MONGO_INITDB_ROOT_PASSWORD}@mongo:27017/ecovoz?authSource=admin
+      - MONGO_URI=${MONGO_URI}
       - JWT_SECRET=${JWT_SECRET}
-      - JWT_EXPIRES_IN=${JWT_EXPIRES_IN}
-      - REACT_APP_API_URL=http://backend:4000
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
+      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
+      - FRONTEND_URL=${FRONTEND_URL}
     depends_on:
-      - mongo
+      mongo:
+        condition: service_healthy
     networks:
       - ecovoz_network
     healthcheck:
-      test: ["CMD-SHELL", "wget --spider -q http://localhost:4000 || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost:4000 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
   mongo:
     image: mongo
@@ -51,14 +65,19 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - mongo_data:/data/db
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+      - ./backend/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - ecovoz_network
     healthcheck:
-      test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongo localhost:27017/admin --quiet || exit 1"]
+      test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongo --username ${MONGO_INITDB_ROOT_USERNAME} --password ${MONGO_INITDB_ROOT_PASSWORD} --authenticationDatabase admin localhost:27017/admin --quiet || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   mongo_data:
