@@ -4,7 +4,9 @@ services:
     env: node
     plan: free
     region: oregon
-    buildCommand: ./render-setup.sh
+    buildCommand: |
+      chmod +x render-setup.sh
+      ./render-setup.sh
     startCommand: node dist/server.js
     envVars:
       - key: NODE_ENV
