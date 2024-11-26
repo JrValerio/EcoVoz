@@ -48,3 +48,7 @@ Thumbs.db
 *.sln
 *.sw?
 .vercel
+
+# Ignorar chaves SSH
+frontend/render
+frontend/render.pub
