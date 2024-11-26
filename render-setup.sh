@@ -3,7 +3,10 @@
 echo "==> Iniciando o setup no diretório: $(pwd)"
 
 # Dependências essenciais de produção
-npm install tailwindcss autoprefixer postcss redux react-redux react-router-dom core-js regenerator-runtime i18next @tailwindcss/forms @tailwindcss/typography -D
+npm install react react-dom react-router-dom redux react-redux @vitejs/plugin-react vite -D
+
+# Dependências de desenvolvimento e build
+npm install @tailwindcss/forms @tailwindcss/typography postcss autoprefixer -D
 
 # Garantir que tudo no projeto esteja instalado
 npm install

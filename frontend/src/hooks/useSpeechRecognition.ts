@@ -43,7 +43,7 @@ const useSpeechRecognition = () => {
   const startListening = (language = 'pt-BR') => {
     setError(null);
     try {
-      SpeechRecognition.startListening({ continuous: true, language });
+      SpeechRecognition.startListening({ continuous: true, lang: language });
     } catch (err) {
       console.error('[ERROR] Erro ao iniciar o reconhecimento de voz:', err);
       setError(t('voiceInput.startError'));

@@ -27,6 +27,9 @@ export default defineConfig({
       },
     },
   },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'react-router-dom', 'redux', 'react-redux'],
+  },
   build: {
     target: 'es2015',
     outDir: 'dist',
@@ -37,5 +40,6 @@ export default defineConfig({
         '@vitejs/plugin-react', 'react-dom', 'react-redux'],
       
     },
+    
   },
 });

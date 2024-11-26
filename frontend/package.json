@@ -12,7 +12,9 @@
     "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
     "format": "prettier --write .",
-    "test": "vitest"
+    "test": "vitest",
+    "docker:build": "docker build -t ecovoz-frontend .",
+    "docker:run": "docker run -p 3000:80 ecovoz-frontend"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.2.0",

@@ -1,204 +1,177 @@
-Segue o README atualizado com a **Tabela de Conteúdos** adicionada:
+# **EcoVoz**
 
-````markdown
-# EcoVoz Project
+![Logo do EcoVoz](https://github.com/JrValerio/EcoVoz/blob/6d2d3e35459c877d1de0e0a6b7436505d03e0e02/frontend/src/assets/images/Logo.jpg)
 
-## Table of Contents
+**EcoVoz** é uma aplicação inclusiva desenvolvida para facilitar a comunicação e acessibilidade de pessoas com deficiências de fala, linguagem, auditiva ou motora. Utilizando tecnologias avançadas, o projeto integra recursos como reconhecimento de fala, gestos e texto para oferecer soluções práticas e inovadoras.
 
-- [Sobre o Projeto](#sobre-o-projeto)
-- [O que o Projeto Já Possui](#o-que-o-projeto-já-possui)
-- [Como Clonar o Repositório e Iniciar o Projeto](#como-clonar-o-repositório-e-iniciar-o-projeto)
-  - [1. Clonando o Repositório](#1-clonando-o-repositório)
-  - [2. Instalação das Dependências](#2-instalação-das-dependências)
-  - [3. Executando o Projeto](#3-executando-o-projeto)
-- [Estrutura do Projeto](#estrutura-do-projeto)
-- [Regras de Commits](#regras-de-commits)
-- [Fluxo de Trabalho para Contribuir](#fluxo-de-trabalho-para-contribuir)
-- [Roadmap](#roadmap)
+---
 
-## Sobre o Projeto
+## **Índice**
+1. [Visão Geral](#visão-geral)
+2. [Funcionalidades](#funcionalidades)
+3. [Demonstração Visual](#demonstração-visual)
+4. [Estrutura do Projeto](#estrutura-do-projeto)
+5. [Tecnologias Utilizadas](#tecnologias-utilizadas)
+6. [Configuração e Execução](#configuração-e-execução)
+7. [Roadmap](#roadmap)
+8. [Contribuindo](#contribuindo)
+9. [Licença](#licença)
+10. [Contato](#contato)
 
-**EcoVoz** é uma aplicação desenvolvida para auxiliar na acessibilidade e comunicação de pessoas com deficiência. O projeto faz parte do Hackathon Autismo Tech 2024 e visa criar uma solução inclusiva e eficiente.
+---
 
-## O que o Projeto Já Possui
+## **Visão Geral**
+O **EcoVoz** foi criado durante o **Hackathon Autismo Tech 2024** e utiliza um conjunto de APIs externas, inteligência artificial e design inclusivo para promover acessibilidade digital. O projeto visa atender pessoas que enfrentam barreiras de comunicação, oferecendo suporte para interações diárias e inclusão social.
 
-Até o momento, o projeto EcoVoz inclui:
+---
 
-1. **Configuração do Frontend**:
+## **Funcionalidades**
+- **Tradução de Áudio para Texto:** Integração com Google Speech-to-Text ou Whisper para transcrever fala.
+- **Reconhecimento de Gestos:** Processamento de vídeos com IA usando TensorFlow e OpenCV.
+- **Interface de Comunicação Assistida:** Mensagens criadas por voz ou texto.
+- **Design Inclusivo:** Aplicação responsiva e acessível, pensada para todos os dispositivos.
+- **Autenticação com Google OAuth:** Para uma experiência de login segura e prática.
+- **Gerenciamento de Dados:** Backend robusto com MongoDB para armazenamento.
 
-   - Estrutura inicial do React com TypeScript.
-   - Configuração do Vite como ferramenta de build.
-   - Integração com Redux para gerenciamento de estado global.
-   - Configuração inicial para suporte a responsividade e acessibilidade.
+---
 
-2. **Configuração do Backend**:
+## **Demonstração Visual**
 
-   - Estrutura básica para o servidor utilizando Node.js com Express.
-   - Configuração inicial do TypeScript para maior segurança no desenvolvimento.
-   - Conexão com MongoDB para armazenamento de dados.
-   - Rotas de autenticação com suporte a JWT (JSON Web Tokens).
-   - Configuração de middlewares de segurança e validação.
+### **Página Inicial**
+![Página Inicial](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/Home.png)
 
-3. **Ferramentas de Linting e Formatação**:
+### **Sobre**
+![Página Sobre](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/About.png)
 
-   - **ESLint** para manter a qualidade do código.
-   - **Prettier** para formatação consistente.
-   - **Husky** e **lint-staged** para verificação automática antes dos commits.
+### **Login**
+![Tela de Login](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/Login.png)
 
-4. **Estrutura Inicial de Componentes e Estado**:
+### **Cadastro**
+![Tela de Cadastro](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/Register.png)
 
-   - Exemplo de componente `Header` com integração de login e logout usando Redux.
-   - Configuração básica para adicionar mais componentes e lógica de estado.
+### **Ajuda**
+![Página de Ajuda](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/Help.png)
 
-5. **Automação e Configuração de Ambientes**:
-   - Suporte a Docker e Docker Compose para unificar o ambiente de desenvolvimento.
-   - Configuração inicial para pipelines de CI/CD usando GitHub Actions.
+### **Links Úteis**
+![Página de Links](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/LinksPage.png)
 
-## Como Clonar o Repositório e Iniciar o Projeto
+### **Reconhecimento de Gestos**
+![Reconhecimento de Gestos](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/GestureRecognition.png)
 
-### 1. Clonando o Repositório
+### **Resultado do Reconhecimento de Gestos**
+![Resultado do Reconhecimento de Gestos](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/GestureRecognition_UP.png)
 
-Primeiro, faça o clone do repositório para sua máquina local:
+---
 
-```bash
-git clone https://github.com/JrValerio/EcoVoz.git
-cd EcoVoz
+## **Estrutura do Projeto**
 ```
-````
-
-### 2. Instalação das Dependências
-
-Após clonar o repositório, você precisa instalar as dependências para o frontend e o backend separadamente.
-
-- **Instalando Dependências do Frontend**:
-
-  ```bash
-  cd frontend
-  npm install
-  ```
-
-- **Instalando Dependências do Backend**:
-
-  ```bash
-  cd ../backend
-  npm install
-  ```
-
-### 3. Executando o Projeto
-
-Para rodar o projeto localmente, siga as instruções abaixo:
-
-- **Iniciar o Frontend**:
-
-  ```bash
-  cd frontend
-  npm run dev
-  ```
-
-- **Iniciar o Backend**:
-
-  ```bash
-  cd ../backend
-  npm run dev
-  ```
-
-- **Usando Docker Compose** (opcional):
-
-  ```bash
-  docker-compose up --build
-  ```
-
-## Estrutura do Projeto
-
-- `frontend/`: Contém o código do frontend (React).
-- `backend/`: Contém o código do backend (Express).
-- `shared/`: Código compartilhado entre frontend e backend (ex.: tipos, constantes, utilitários).
-- `.husky/`: Configurações para hooks de commits.
-- `.eslintrc.js`, `.prettierrc`, `.editorconfig`: Arquivos de configuração para formatação e linting.
-- `docker-compose.yml`: Configuração para ambientes de desenvolvimento usando Docker.
-
-## Regras de Commits
-
-Para mantermos o histórico do projeto organizado e consistente, vamos utilizar **commits semânticos em inglês**. Seguindo essas diretrizes, todos no grupo poderão entender rapidamente o que cada commit altera ou adiciona ao projeto.
-
-### Estrutura do Commit
-
-Cada mensagem de commit deve seguir o seguinte formato:
-
-```
-<type>(<scope>): <description>
+EcoVoz/
+├── backend-node/           # Backend principal em Node.js
+├── backend-python/         # Backend para processamento avançado em Python
+├── frontend/               # Aplicação frontend em React
+├── .gitignore              # Arquivo para ignorar arquivos no Git
+├── docker-compose.yml      # Orquestração do Docker para o projeto completo
+└── README.md               # Documentação do projeto
 ```
 
-- **`<type>`**: Define o tipo de alteração feita.
-- **`<scope>`**: Indica a área ou componente afetado (ex.: `frontend`, `backend`, `redux`, `styles`, `auth`).
-- **`<description>`**: Uma breve descrição da mudança, em inglês, começando com letra minúscula.
+---
 
-### Tipos de Commit
+## **Tecnologias Utilizadas**
+### **Frontend**
+- React.js
+- Tailwind CSS
+- Axios
+- WebSocket
 
-Aqui estão os tipos de commit que iremos utilizar:
+### **Backend Node.js**
+- Express.js
+- Mongoose (ODM para MongoDB)
+- WebSocket
+- Multer (upload de arquivos)
 
-- **feat**: Adiciona uma nova funcionalidade ao projeto.
-  - Exemplo: `feat(frontend): add login button`
-- **fix**: Corrige um bug.
-  - Exemplo: `fix(backend): correct API route for user login`
-- **chore**: Mudanças de configuração, como instalação de pacotes ou setup de ferramentas.
-  - Exemplo: `chore: install eslint and prettier`
-- **docs**: Alterações na documentação (ex.: README, comentários).
-  - Exemplo: `docs: update README with commit rules`
-- **style**: Mudanças de formatação que não afetam o código (espaços, ponto e vírgula, etc.).
-  - Exemplo: `style(frontend): apply consistent spacing in App.tsx`
-- **refactor**: Refatoração de código, como melhoria de legibilidade ou desempenho, sem alterar a funcionalidade.
-  - Exemplo: `refactor(redux): simplify user reducer logic`
-- **test**: Adição ou modificação de testes.
-  - Exemplo: `test(frontend): add tests for login component`
-- **perf**: Alterações que melhoram o desempenho.
-  - Exemplo: `perf(backend): optimize database queries`
-- **build**: Alterações que afetam o sistema de build ou dependências externas.
-  - Exemplo: `build: update npm scripts for deployment`
+### **Backend Python**
+- Flask
+- TensorFlow / PyTorch
+- OpenCV
 
-## Fluxo de Trabalho para Contribuir
+### **Banco de Dados**
+- MongoDB: Gerenciamento de dados do usuário, sessões e configurações.
 
-1. **Clone o Repositório e Crie uma Nova Branch**:
+---
 
-   - Sempre que for adicionar uma nova funcionalidade ou corrigir um bug, crie uma nova branch a partir da `main`.
+## **Configuração e Execução**
 
+### **Pré-requisitos**
+- **Node.js:** v18+
+- **Python:** v3.10+
+- **Docker:** v20.10+
+- **Docker Compose:** v2.0+
+- **MongoDB:** v6.0+ (local ou em um serviço como MongoDB Atlas)
+
+### **Passo a Passo**
+1. **Clone o repositório:**
    ```bash
-   git checkout -b <nome-da-branch>
+   git clone https://github.com/JrValerio/EcoVoz.git
+   cd EcoVoz
    ```
 
-2. **Faça as Alterações e Commits**:
-
-   - Após fazer as alterações, siga as regras de commit acima.
-
-3. **Sincronize com a `main`** (Opcional):
-
-   - Antes de abrir um pull request, traga as mudanças mais recentes da `main` para evitar conflitos.
-
-   ```bash
-   git checkout main
-   git pull origin main
-   git checkout <nome-da-branch>
-   git merge main
+2. **Configure o arquivo `.env`:**
+   Crie um arquivo `.env` na raiz do projeto com as variáveis de ambiente necessárias:
+   ```env
+   MONGO_URI=mongodb://localhost:27017/ecovoz
+   REACT_APP_API_URL=http://localhost:5000
    ```
 
-4. **Abra um Pull Request**:
-   - Após finalizar suas alterações e commits, abra um pull request para que as mudanças sejam revisadas e integradas.
+3. **Suba o ambiente com Docker Compose:**
+   Certifique-se de que o Docker está instalado e execute:
+   ```bash
+   docker-compose up --build
+   ```
 
-## Roadmap
+4. **Acesse a aplicação:**
+   - **Frontend:** `http://localhost:3000`
+   - **Backend Node.js:** `http://localhost:5000`
 
-### Versão 1.0
+---
 
-- [x] Configuração inicial do frontend e backend.
-- [x] Implementação de rotas básicas de autenticação.
-- [ ] Adicionar testes unitários ao backend.
-- [ ] Configurar integração contínua (CI/CD).
+## **Roadmap**
+- [x] Autenticação com Google OAuth
+- [x] Reconhecimento de gestos com backend Python
+- [ ] Integração com Libras (Língua Brasileira de Sinais)
+- [ ] Melhorias na interface do usuário
+- [ ] Suporte para múltiplos idiomas
+- [ ] Implementação de notificações em tempo real
 
-### Versão 2.0
+---
 
-- [ ] Suporte a temas claro e escuro no frontend.
-- [ ] Tradução para múltiplos idiomas.
-- [ ] Integração com APIs externas para reconhecimento de voz.
+## **Contribuindo**
+1. **Faça um fork do projeto:**
+   ```bash
+   git fork https://github.com/JrValerio/EcoVoz.git
+   ```
+2. **Crie uma nova branch:**
+   ```bash
+   git checkout -b minha-feature
+   ```
+3. **Commit suas alterações:**
+   ```bash
+   git commit -m "Descrição da minha feature"
+   ```
+4. **Envie a branch:**
+   ```bash
+   git push origin minha-feature
+   ```
+5. **Abra um Pull Request.**
 
-```
+---
 
-```
+## **Licença**
+Este projeto está licenciado sob a **MIT License**. Para mais detalhes, veja o arquivo [LICENSE](./LICENSE).
+
+---
+
+## **Contato**
+Criado por **Amaro Júnior**.  
+📧 E-mail: [amaro.junior@email.com](mailto:amaro.junior@email.com)  
+🔗 LinkedIn: [Amaro Júnior](https://www.linkedin.com/in/jrvalerio/)  
+

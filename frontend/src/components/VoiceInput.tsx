@@ -41,7 +41,7 @@ const VoiceInput = () => {
       resetTranscript();
       SpeechRecognition.startListening({
         continuous: true,
-        language: 'pt-BR',
+        lang: 'pt-BR',
       });
     } catch (error) {
       console.error('Erro ao iniciar o reconhecimento de fala:', error);

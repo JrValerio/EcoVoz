@@ -49,10 +49,13 @@ const LoginForm: React.FC = () => {
 
     try {
       // Substitua pela URL correta da sua API de login
-      const response = await axios.post('http://localhost:4000/api/auth/login', {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        'http://localhost:4000/api/auth/login',
+        {
+          email,
+          password,
+        },
+      );
 
       const { token } = response.data;
 
@@ -66,7 +69,7 @@ const LoginForm: React.FC = () => {
       setError(
         err instanceof Error
           ? err.message
-          : 'Ocorreu um erro. Tente novamente mais tarde.'
+          : 'Ocorreu um erro. Tente novamente mais tarde.',
       );
     } finally {
       setIsLoading(false);

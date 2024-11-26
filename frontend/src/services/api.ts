@@ -1,5 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, CancelTokenSource } from 'axios';
 import { getAuthHeader } from '../utils/auth';
+import { API_URL } from "../config";
 
 /**
  * Cria uma instância do Axios com configurações padrão para a aplicação.
@@ -137,6 +138,15 @@ export const post = async <T>(url: string, data?: any, options?: AxiosRequestCon
     return handleApiResponseError(error);
   } finally {
     // Esconder loading aqui (ex: setIsLoading(false))
+  }
+};
+
+const fetchData = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/endpoint`);
+    console.log(response.data);
+  } catch (error) {
+    console.error("Erro ao buscar dados:", error);
   }
 };
 
