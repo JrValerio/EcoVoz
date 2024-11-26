@@ -77,6 +77,7 @@ EcoVoz/
 ---
 
 ## **Tecnologias Utilizadas**
+
 ### **Frontend**
 - React.js
 - Tailwind CSS
@@ -90,9 +91,10 @@ EcoVoz/
 - Multer (upload de arquivos)
 
 ### **Backend Python**
-- Flask
-- TensorFlow / PyTorch
-- OpenCV
+- **FastAPI** e **Flask**: Para criar APIs REST e serviços backend.
+- **MediaPipe**: Para rastreamento de mãos e reconhecimento de gestos.
+- **PyTorch e TorchVision**: Para treinamento e execução de modelos de aprendizado profundo que interpretam os dados de gestos detectados.
+- **OpenCV**: Para processamento de vídeo e imagens em tempo real.
 
 ### **Banco de Dados**
 - MongoDB: Gerenciamento de dados do usuário, sessões e configurações.
@@ -135,8 +137,8 @@ EcoVoz/
 ---
 
 ## **Roadmap**
-- [x] Autenticação com Google OAuth
-- [x] Reconhecimento de gestos com backend Python
+- [ ] Autenticação com Google OAuth
+- [ ] Reconhecimento de gestos com backend Python
 - [ ] Integração com Libras (Língua Brasileira de Sinais)
 - [ ] Melhorias na interface do usuário
 - [ ] Suporte para múltiplos idiomas
