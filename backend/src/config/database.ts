@@ -8,11 +8,10 @@ import { config } from './config.js';
 const connectDB = async (): Promise<void> => {
   try {
     // Verifica se a URI do MongoDB está configurada
-    if (!config.mongoUri) {
-      throw new Error(
-        `❌ A variável de ambiente MONGO_URI não está configurada ou é inválida. Valor atual: ${config.mongoUri}`,
-      );
-    }
+    const mongoUri =
+      process.env.NODE_ENV === 'development'
+        ? 'mongodb://localhost:27017/ecovoz' // Local
+        : process.env.MONGO_URI || 'mongodb://mongo:27017/ecovoz'; // Docker ou produção
 
     // Configura as opções de conexão
     const options: mongoose.ConnectOptions = {
