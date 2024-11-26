@@ -10,6 +10,7 @@ export const getAuthHeader = (): Record<string, string> => {
 
     // Verifica se o token está presente
     if (token) {
+      console.log('Token vazio ou ausente:', token);
       // Validação opcional do formato do token (ex.: JWT deve conter 3 partes separadas por '.')
       if (token.split('.').length === 3) {
         return { Authorization: `Bearer ${token}` };

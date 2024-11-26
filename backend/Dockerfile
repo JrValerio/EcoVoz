@@ -19,20 +19,19 @@ RUN npm run build
 # Etapa 2: Imagem final para produção
 FROM node:18-slim
 
-# Diretório de trabalho para a imagem final
+# Configuração do diretório de trabalho
 WORKDIR /app
 
-# Copiar os arquivos gerados pelo build
+# Copie os arquivos da build para a imagem final
 COPY --from=builder /app/dist ./dist
-
-# Copiar o arquivo de configuração package.json
 COPY --from=builder /app/package*.json ./
 
-# Instalar apenas dependências de produção
+# Instale dependências de produção
 RUN npm install --production
 
-# Expor a porta utilizada pelo backend
+# Exponha a porta do servidor
 EXPOSE 4000
 
-# Comando para iniciar o backend
-CMD ["node", "dist/index.js"]
+# Comando para iniciar o servidor
+CMD ["npm", "start", "dist/index.js"]
+
