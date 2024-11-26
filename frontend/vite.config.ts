@@ -33,7 +33,7 @@ export default defineConfig({
     rollupOptions: {
       input: path.resolve(__dirname, './index.html'), 
       external: ['@reduxjs/toolkit', 'react-toastify', 'react-i18next', 
-        '@vitejs/plugin-react', 'react-dom'],
+        '@vitejs/plugin-react', 'react-dom', 'react-redux'],
       
     },
   },
