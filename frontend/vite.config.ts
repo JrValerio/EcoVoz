@@ -5,7 +5,6 @@ import { defineConfig } from 'vite';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-// Configuração do Vite
 export default defineConfig({
   plugins: [react()],
   resolve: {
@@ -14,10 +13,10 @@ export default defineConfig({
       'react-dom': 'react-dom',
       '@': path.resolve(__dirname, './src'),
       '@shared': path.resolve(__dirname, '../shared'),
-      'i18next-browser-languagedetector': 'i18next-browser-languagedetector',      
+      'i18next-browser-languagedetector': 'i18next-browser-languagedetector',
     },
   },
-  base: './', // Define o diretório raiz do projeto
+  base: './', // Ajuste conforme o ambiente de deploy
   server: {
     port: 5173,
     open: true,
@@ -25,9 +24,9 @@ export default defineConfig({
       '/api/auth': {
         target: 'https://ecovoz-d2hi.onrender.com',
         changeOrigin: true,
-        secure: false,
       },
     },
+    cors: true, // Habilita o CORS para chamadas de API
   },
   optimizeDeps: {
     include: ['react', 'react-dom', 'react-router-dom', 'redux', 'react-redux'],
@@ -37,11 +36,8 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true,
     rollupOptions: {
-      input: path.resolve(__dirname, './index.html'), 
-      external: ['@reduxjs/toolkit', 'react-toastify', 'react-i18next', 
-        '@vitejs/plugin-react', 'react-dom', 'react-redux'],
-      
+      input: path.resolve(__dirname, './index.html'),
+      external: ['@reduxjs/toolkit'], // Inclua aqui apenas o que não será empacotado
     },
-    
   },
 });
