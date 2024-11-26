@@ -60,6 +60,11 @@ app.use(cors({
   credentials: true,
 })); // Habilita CORS
 
+app.use(cors({
+  origin: 'https://ecovoz-d2hi.onrender.com',
+}));
+
+
 app.use(handle(i18n)); // Middleware para internacionalização
 
 // Rotas da API
