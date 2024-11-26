@@ -15,6 +15,7 @@
     "dev:backend": "cross-env NODE_ENV=development npm --prefix backend run dev",
     "dev:frontend": "cross-env NODE_ENV=development npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build",
+    "postinstall": "npm install --prefix frontend",
     "build:frontend": "npm --prefix frontend run build",
     "build:backend": "npm --prefix backend run build",
     "start:frontend": "npm --prefix frontend run start",
@@ -56,7 +57,7 @@
     "vite": "^5.4.11"
   },
   "engines": {
-    "node": ">=16.0.0 <19.0.0"
+    "node": ">=16.0.0 <21.0.0"
   },
   "config": {
     "commitizen": {

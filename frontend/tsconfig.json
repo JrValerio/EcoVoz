@@ -12,9 +12,10 @@
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./",
     "paths": {
-      "@frontend/*": ["*"],
-      "@/*": ["src/*"]
-    }
+  "@/*": ["src/*"],
+  "@shared/*": ["../shared/*"]
+} 
+
   },
   "include": [
   "src/**/*",

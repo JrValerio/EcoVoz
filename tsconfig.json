@@ -27,10 +27,5 @@
     "*.tsx",
     "*.eslint.config.js"
   ],
-  "exclude": [
-    "node_modules",
-    "dist",
-    "frontend/dist",
-    "backend/dist"
-  ]
+  "exclude": ["node_modules", "dist", "frontend/dist", "backend/dist", "tests"]
 }
