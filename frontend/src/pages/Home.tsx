@@ -27,7 +27,7 @@ const Home: React.FC = () => {
 
   return (
     <main
-      className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-800 text-center overflow-hidden"
+      className="flex flex-col items-center justify-center h-screen bg-gray-100 dark:bg-gray-800 text-center overflow-auto"
       role="main"
     >
       {/* Seção com o título e a descrição da página */}
