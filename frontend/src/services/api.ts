@@ -8,6 +8,7 @@ import { API_URL } from "../config";
 const api: AxiosInstance = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_URL || 'https://ecovoz-d2hi.onrender.com',
   headers: {
+    ...getAuthHeader(),
     'Content-Type': 'application/json',
   },
   timeout: Number(import.meta.env.VITE_API_TIMEOUT) || 10000,
