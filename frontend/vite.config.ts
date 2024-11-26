@@ -10,6 +10,8 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
+      react: 'react',
+      'react-dom': 'react-dom',
       '@': path.resolve(__dirname, './src'),
       '@shared': path.resolve(__dirname, '../shared'),
       'i18next-browser-languagedetector': 'i18next-browser-languagedetector',      

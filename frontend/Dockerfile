@@ -5,13 +5,7 @@ FROM node:18-slim AS builder
 WORKDIR /app
 
 # Copia os arquivos de dependências
-COPY package*.json ./           
-COPY tsconfig.json ./           
-COPY tsconfig.base.json ./     
-COPY tailwind.config.js ./     
-COPY postcss.config.cjs ./      
-COPY vite.config.ts ./          
-COPY index.html ./              
+COPY package*.json ./         
 
 # Copia os diretórios de código
 COPY src ./src                  
@@ -42,7 +36,7 @@ COPY --from=builder /app/package*.json ./package.json
 RUN npm install --production
 
 # Expõe a porta padrão do servidor
-EXPOSE 3000
+EXPOSE 5173
 
 # Comando para iniciar o servidor
 CMD ["npx", "serve", "-s", "dist", "-l", "3000"]
