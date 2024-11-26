@@ -2,28 +2,20 @@
 
 echo "==> Iniciando o setup no diretório: $(pwd)"
 
-# Instalar dependências essenciais e plugins necessários
-echo "==> Instalando dependências..."
+# Instalar dependências essenciais
+echo "==> Instalando dependências essenciais e plugins..."
 npm install --save-dev \
   tailwindcss \
   autoprefixer \
   postcss \
-  redux \
-  react-redux \
-  react-router-dom \
-  core-js \
-  regenerator-runtime \
-  i18next \
-  i18next-http-backend \
-  i18next-browser-languagedetector \
-  react-i18next \
   @tailwindcss/forms \
   @tailwindcss/typography
 
-# Instalar todas as dependências
+# Instalar dependências do projeto
+echo "==> Instalando dependências do projeto..."
 npm install
 
-# Exibir versão do Node.js e NPM
+# Exibir versão do Node.js e npm
 echo "==> Versão do Node.js:"
 node -v
 echo "==> Versão do npm:"
