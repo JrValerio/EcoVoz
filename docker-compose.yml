@@ -1,13 +1,11 @@
-version: '3.8'
-
 services:
   frontend:
     build:
       context: ./frontend
-      container_name: ecovoz-frontend
       dockerfile: Dockerfile
+    container_name: ecovoz_frontend
     ports:
-      - '3000:3000' 
+      - '3000:3000'
     depends_on:
       - backend
     networks:
@@ -26,8 +24,8 @@ services:
   backend:
     build:
       context: ./backend
-      container_name: ecovoz-backend
       dockerfile: Dockerfile
+    container_name: ecovoz_backend
     command: ["npm", "run", "start"]
     ports:
       - '4000:4000'
