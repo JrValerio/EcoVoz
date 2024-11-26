@@ -24,13 +24,23 @@ const VoiceInput = () => {
 
   const [manualResponse, setManualResponse] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isSupported, setIsSupported] = useState(true);
 
   // Verifica se o navegador suporta reconhecimento de voz
   useEffect(() => {
     if (!browserSupportsSpeechRecognition) {
       console.error(t('voiceInput.browserNotSupported'));
+      setIsSupported(false);
     }
   }, [browserSupportsSpeechRecognition, t]);
+  
+  if (!isSupported) {
+    return (
+      <div className="text-red-500">
+        {t('voiceInput.browserNotSupportedMessage')}
+      </div>
+    );
+  }
 
   /**
    * Inicia o reconhecimento de voz.
@@ -93,7 +103,7 @@ const VoiceInput = () => {
         aria-live="polite"
       >
         <strong>{t('voiceInput.youSaid')}:</strong>{' '}
-        {transcript || t('voiceInput.noSpeechDetected')}
+        {transcript?.length > 0 ? transcript : t('voiceInput.noSpeechDetected')}
       </p>
 
       {/* Campo de entrada para edição manual */}
