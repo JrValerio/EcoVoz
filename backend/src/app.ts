@@ -117,6 +117,13 @@ if (fs.existsSync(frontendPath)) {
   });
 }
 
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
+});
+
+
 // Middleware de tratamento de erros (deve ser o último middleware)
 app.use(errorMiddleware);
 

@@ -1,0 +1,42 @@
+services:
+  - type: web
+    name: ecovoz-backend
+    env: node
+    plan: free
+    region: oregon 
+    buildCommand: |
+      npm install
+      npm run build
+    startCommand: node dist/server.js
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        sync: false 
+      - key: JWT_SECRET
+        sync: false
+      - key: NODE_VERSION
+        value: 20 
+    autoDeploy: true 
+    healthCheckPath: /health 
+    disk:
+      name: persistent-data
+      sizeGB: 1 
+    timeoutSeconds: 120
+
+  - type: web
+    name: ecovoz-frontend
+    env: static
+    plan: free
+    buildCommand: |
+      cd frontend
+      npm install
+      npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: NODE_ENV
+        value: production
+    routes:
+      - type: rewrite
+        source: /api/(.*)
+        destination: https://ecovoz-backend.onrender.com/api/$1 

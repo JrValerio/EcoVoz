@@ -7,7 +7,7 @@ import { FaBars, FaTimes } from 'react-icons/fa';
 import Button from './Button';
 import Navigation from './Navigation';
 import LanguageSwitcher from './LanguageSwitcher';
-import logo from '@/assets/images/Logo.jpg';
+import Logo from '@/assets/images/Logo.jpg';
 import useAuth from '../hooks/useAuth';
 import { useTheme } from '../context/ThemeContext';
 import { RootState } from '../redux/store';
@@ -63,7 +63,7 @@ const Header: React.FC = () => {
       <div className="flex justify-between items-center">
         <div className="flex items-center space-x-4">
           <img
-            src={logo}
+            src={Logo}
             alt={t('header.ecoVozLogo')}
             className="h-12 w-auto"
             aria-hidden="true"

@@ -4,13 +4,24 @@ FROM node:18-slim AS builder
 # Diretório de trabalho
 WORKDIR /app
 
-# Copia todos os arquivos necessários para instalar dependências e realizar o build
-COPY ./frontend/package*.json ./frontend/tailwind.config.js ./frontend/postcss.config.cjs ./frontend/tsconfig.json ./frontend/vite.config.ts ./frontend/src ./frontend/public ./
+# Copia os arquivos necessários para o build
+COPY package*.json ./           
+COPY tsconfig.json ./           
+COPY tsconfig.base.json ./     
+COPY tailwind.config.js ./     
+COPY postcss.config.cjs ./      
+COPY vite.config.ts ./          
+COPY index.html ./              
+COPY src ./src                  
+COPY public ./public           
+
+# Debug: Exibe o conteúdo do diretório de trabalho
+RUN ls -R /app
 
 # Instala dependências
 RUN npm install
 
-# Gera o build de produção com o Tailwind configurado no Vite
+# Gera o build de produção
 RUN npm run build
 
 # ----------------------------------------------
