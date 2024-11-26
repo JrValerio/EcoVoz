@@ -50,5 +50,5 @@ Thumbs.db
 .vercel
 
 # Ignorar chaves SSH
-frontend/render
-frontend/render.pub
+render
+render.pub
