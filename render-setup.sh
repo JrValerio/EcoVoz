@@ -11,15 +11,19 @@ npm install --save-dev \
   @tailwindcss/forms \
   @tailwindcss/typography
 
-# Instalar dependências do projeto
-echo "==> Instalando dependências do projeto..."
-npm install
+# Instalar dependências do projeto, incluindo o i18next-http-backend
+npm install \
+  redux \
+  react-redux \
+  react-router-dom \
+  core-js \
+  regenerator-runtime \
+  i18next \
+  i18next-http-backend
 
-# Exibir versão do Node.js e npm
-echo "==> Versão do Node.js:"
-node -v
-echo "==> Versão do npm:"
-npm -v
+# Instalar dependências gerais do projeto
+echo "==> Instalando dependências gerais do projeto..."
+npm install
 
 # Realizar o build
 echo "==> Realizando o build do projeto..."
