@@ -107,26 +107,24 @@ app.post('/api/gestures', (req, res) => {
 
 // Configuração para servir arquivos estáticos do frontend
 const frontendPath = path.join(__dirname, '../frontend/dist'); // Caminho para a pasta 'dist' do frontend
+const isProduction = fs.existsSync(frontendPath); // Verifica se a pasta 'dist' existe
 
-// Verifica se a pasta 'dist' do frontend existe
-if (fs.existsSync(frontendPath)) {
+if (isProduction) {
   // Em produção, serve os arquivos estáticos do frontend
+  console.log(`[INFO] Servindo arquivos estáticos do frontend a partir de: ${frontendPath}`);
   app.use(express.static(frontendPath));
-
-  // Redireciona todas as rotas para o index.html para que o React Router funcione corretamente
   app.get('*', (req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'));
   });
 } else {
-  // Em desenvolvimento, redireciona para o servidor de desenvolvimento do frontend
-  const frontendDevServer = 'http://localhost:5173'; // URL do servidor de desenvolvimento
+  // Em desenvolvimento, redireciona para o servidor do Vite
+  const frontendDevServer = 'http://localhost:5173';
   console.log(`[INFO] Redirecionando para o servidor de desenvolvimento do frontend: ${frontendDevServer}`);
-
-  // Redireciona todas as rotas para o servidor de desenvolvimento do frontend
   app.get('*', (req, res) => {
     res.redirect(frontendDevServer + req.originalUrl);
   });
 }
+
 
 app.use(express.static(path.join(__dirname, 'frontend/dist')));
 

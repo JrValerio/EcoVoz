@@ -16,7 +16,7 @@ export default defineConfig({
   },
   base: './', // Define o diretório raiz do projeto
   server: {
-    port: 3000,
+    port: 5173,
     open: true,
     proxy: {
       '/api/auth': {
