@@ -23,7 +23,7 @@ export default defineConfig({
     open: true,
     proxy: {
       '/api/auth': {
-        target: 'http://localhost:4000',
+        target: 'https://ecovoz-d2hi.onrender.com',
         changeOrigin: true,
         secure: false,
       },

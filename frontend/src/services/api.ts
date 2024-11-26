@@ -6,7 +6,7 @@ import { API_URL } from "../config";
  * Cria uma instância do Axios com configurações padrão para a aplicação.
  */
 const api: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000',
+  baseURL: import.meta.env.VITE_BACKEND_URL || 'https://ecovoz-d2hi.onrender.com',
   headers: {
     'Content-Type': 'application/json',
   },
