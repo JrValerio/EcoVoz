@@ -4,7 +4,7 @@ FROM node:18-slim AS builder
 # Diretório de trabalho
 WORKDIR /app
 
-# Copia os arquivos necessários para o build
+# Copia os arquivos de dependências
 COPY package*.json ./           
 COPY tsconfig.json ./           
 COPY tsconfig.base.json ./     
@@ -12,14 +12,16 @@ COPY tailwind.config.js ./
 COPY postcss.config.cjs ./      
 COPY vite.config.ts ./          
 COPY index.html ./              
-COPY src ./src                  
-COPY public ./public           
 
-# Debug: Exibe o conteúdo do diretório de trabalho
-RUN ls -R /app
+# Copia os diretórios de código
+COPY src ./src                  
+COPY public ./public            
 
 # Instala dependências
 RUN npm install
+
+# Debug: Verifica as versões instaladas
+RUN npm list --depth=0
 
 # Gera o build de produção
 RUN npm run build
