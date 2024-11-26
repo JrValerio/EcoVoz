@@ -4,6 +4,7 @@ services:
   frontend:
     build:
       context: ./frontend
+      container_name: ecovoz-frontend
       dockerfile: Dockerfile
     ports:
       - '3000:3000' 
@@ -25,6 +26,7 @@ services:
   backend:
     build:
       context: ./backend
+      container_name: ecovoz-backend
       dockerfile: Dockerfile
     command: ["npm", "run", "start"]
     ports:
