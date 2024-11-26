@@ -3,7 +3,7 @@ services:
     name: ecovoz-backend
     env: node
     plan: free
-    region: oregon 
+    region: oregon
     buildCommand: |
       npm install
       npm run build
@@ -12,31 +12,30 @@ services:
       - key: NODE_ENV
         value: production
       - key: DATABASE_URL
-        sync: false 
+        sync: false
       - key: JWT_SECRET
         sync: false
       - key: NODE_VERSION
-        value: 20 
-    autoDeploy: true 
-    healthCheckPath: /health 
+        value: 20
+    autoDeploy: true
+    healthCheckPath: /health
     disk:
-      name: persistent-data
-      sizeGB: 1 
-    timeoutSeconds: 120
+      # Removido o disco persistente, já que normalmente o backend não precisa armazenar arquivos localmente.
+      sizeGB: 0 
+    timeoutSeconds: 60  # Reduzido para 60 segundos para melhorar a compatibilidade com planos gratuitos.
 
   - type: web
     name: ecovoz-frontend
     env: static
     plan: free
     buildCommand: |
-      cd frontend
       npm install
       npm run build
-    staticPublishPath: frontend/dist
+    staticPublishPath: dist  # Corrigido para garantir que seja relativo ao nível atual, sem necessidade de `cd`.
     envVars:
       - key: NODE_ENV
         value: production
     routes:
       - type: rewrite
         source: /api/(.*)
-        destination: https://ecovoz-backend.onrender.com/api/$1 
+        destination: https://ecovoz-backend.onrender.com/api/$1

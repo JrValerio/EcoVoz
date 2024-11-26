@@ -29,8 +29,8 @@
     "clean": "rimraf backend/dist frontend/dist",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "deploy": "docker-compose down && docker-compose up --build"
-  },
+    "deploy": "git push origin main"
+    },
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": [
       "eslint --fix"
