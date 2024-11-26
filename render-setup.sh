@@ -1,14 +1,13 @@
 #!/bin/bash
 
-echo "Iniciando o setup no diretório: $(pwd)"
+echo "==> Iniciando o setup no diretório: $(pwd)"
 
-# Instala dependências específicas (incluindo i18next e plugins)
-npm install \
+# Instalar dependências essenciais e plugins necessários
+echo "==> Instalando dependências..."
+npm install --save-dev \
   tailwindcss \
   autoprefixer \
   postcss \
-  @tailwindcss/forms \
-  @tailwindcss/typography \
   redux \
   react-redux \
   react-router-dom \
@@ -17,17 +16,21 @@ npm install \
   i18next \
   i18next-http-backend \
   i18next-browser-languagedetector \
-  react-i18next -D
+  react-i18next \
+  @tailwindcss/forms \
+  @tailwindcss/typography
 
-# Reinstalação completa para garantir que as dependências estejam no lugar
+# Instalar todas as dependências
 npm install
 
-# Confirmação da versão do Node.js
-echo "Versão do Node.js em uso:"
+# Exibir versão do Node.js e NPM
+echo "==> Versão do Node.js:"
 node -v
+echo "==> Versão do npm:"
+npm -v
 
-# Realização do build do projeto
-echo "Executando o build do projeto..."
+# Realizar o build
+echo "==> Realizando o build do projeto..."
 npm run build
 
-echo "Setup concluído com sucesso!"
+echo "==> Setup concluído com sucesso!"

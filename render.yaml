@@ -17,18 +17,13 @@ services:
         value: 20
     autoDeploy: true
     healthCheckPath: /health
-    disk:
-      sizeGB: 0  # Mantido em 0 para evitar custo extra em planos gratuitos.
-    timeoutSeconds: 60
 
   - type: web
     name: ecovoz-frontend
     env: static
     plan: free
-    buildCommand: |
-      npm install
-      npm run build
-    staticPublishPath: dist  # Certifique-se que este é o caminho correto da pasta de build do frontend.
+    buildCommand: ./render-setup.sh
+    staticPublishPath: dist
     envVars:
       - key: NODE_ENV
         value: production
