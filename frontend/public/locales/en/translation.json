@@ -15,18 +15,31 @@
   },
   "about": {
     "title": "About EcoVoz",
-    "description": "EcoVoz is an innovative initiative created by Team 12 during the Hackathon Autism Tech 2024. Our goal is to provide a technological solution that enables people with speech or language disabilities to communicate effectively and inclusively, using artificial intelligence and assistive technology.",
+    "description": "EcoVoz is an innovative initiative created by Team 12 during the Autism Tech Hackathon 2024. Our goal is to provide a technological solution that enables people with speech or language disabilities to communicate effectively and inclusively, using artificial intelligence and assistive technology.",
     "features": "Key Features",
     "feature1": "Advanced voice recognition for people with speech disabilities.",
     "feature2": "Real-time translation into over 100 languages.",
     "feature3": "Integration with assistive devices for alternative communication.",
     "feature4": "Mobile app for accessibility anywhere.",
-    "feature5": "Voice database for training and continuous improvement.",
-    "missionTitle": "Our Mission",
-    "mission": "Our mission is to promote inclusion, increase independence, and improve the quality of life for people with speech disabilities by leveraging cutting-edge technology and strategic partnerships with organizations, companies, and health institutions.",
-    "teamTitle": "Team",
-    "team": "This project was developed with passion and dedication by Team 12 at the Hackathon Autism Tech 2024, an event that celebrates creativity and the positive impact of technology on social inclusion.",
-    "imageAlt": "Illustration about EcoVoz"
+    "feature5": "Voice database for continuous training and improvement.",
+    "videoTitle": "See how EcoVoz works!",
+    "videoAlt": "EcoVoz app demonstration",
+    "videoFallback": "Your browser does not support videos.",
+    "testimonials": {
+      "title": "Testimonials",
+      "testimony1": {
+        "text": "EcoVoz transformed how I interact!",
+        "name": "Joana"
+      },
+      "testimony2": {
+        "text": "The real-time translation is fantastic!",
+        "name": "Carlos"
+      },
+      "testimony3": {
+        "text": "The integration with my assistive device is perfect!",
+        "name": "Ana"
+      }
+    }
   },
   "authButton": {
     "welcome": "Welcome",
@@ -115,14 +128,27 @@
     "googleError": "Error logging in with Google."
   },
   "help": {
-    "title": "Help and Support",
-    "faq": "Frequently Asked Questions (FAQ)",
-    "contact": "Contact Us",
-    "resources": "Useful Resources",
-    "emailSupport": "Email Support",
-    "phoneSupport": "Phone Support",
-    "docs": "Application Documentation",
-    "tutorials": "Tutorials and Guides"
+    "title": "Help & Support",
+    "faq": {
+      "title": "Frequently Asked Questions (FAQ)",
+      "q1": "How do I recover my password?",
+      "a1": "You can recover your password by clicking on the 'Forgot your password?' link on the login page. Enter your registered email and follow the instructions sent to your email.",
+      "q2": "Where can I edit my personal information?",
+      "a2": "You can edit your personal information by accessing the profile page. Click on your name in the top menu and select 'Profile'.",
+      "q3": "How can I contact technical support?",
+      "a3": "You can contact us directly through the form on this page or via the support email listed below."
+    },
+    "contact": {
+      "title": "Contact Us",
+      "description": "Need more help? Get in touch with us through the channels below.",
+      "email": "support@ecovoz.com",
+      "phone": "+55 11 99999-9999"
+    },
+    "resources": {
+      "title": "Useful Resources",
+      "docs": "Application Documentation",
+      "tutorials": "Tutorials and Guides"
+    }
   },
   "notFound": {
     "message": "Oops! The page you are looking for does not exist.",
@@ -144,37 +170,43 @@
     "gestureInput": "Gesture Input"
   },
   "linksPage": {
-    "title": "Support Resources",
-    "subtitle": "Explore useful resources for people with different types of disabilities.",
+    "title": "Resource Links",
+    "subtitle": "Find useful resources, support groups, and contact information for accessibility services.",
     "auditoryImpairment": "Resources for Auditory Impairment",
-    "surdosAssociacao": "Association of the Deaf of Brazil",
-    "surdosAssociacaoDescription": "An organization providing support and resources for individuals with hearing impairments.",
-    "centralInterpretes": "Central of Libras Interpreters",
-    "centralInterpretesDescription": "Interpretation service for hearing-impaired and deaf individuals.",
-    "visualImpairment": "Resources for Visual Impairment",
-    "brailleLibrary": "Braille Library of Brazil",
-    "brailleLibraryDescription": "Access to books in Braille and audio for visually impaired individuals.",
-    "visualHelpCenter": "Visual Help Center",
-    "visualHelpCenterDescription": "Support services for people with visual impairments.",
-    "physicalImpairment": "Resources for Physical Impairment",
-    "wheelchairAssociation": "Wheelchair Users Association",
-    "wheelchairAssociationDescription": "Support and resources for wheelchair users.",
-    "assistiveTechCenter": "Assistive Technology Center",
-    "assistiveTechCenterDescription": "Services and devices to enhance mobility.",
-    "intellectualImpairment": "Resources for Intellectual Impairment",
-    "apae": "APAE Brazil",
-    "apaeDescription": "Support for people with intellectual and multiple disabilities.",
-    "intellectualSupportCenter": "Intellectual Support Center",
-    "intellectualSupportCenterDescription": "Educational resources and support for people with intellectual disabilities.",
+    "surdosAssociaçao": "National Association of the Deaf (Feneis)",
+    "surdosAssociaçaoDescription": "Organization dedicated to promoting the rights of deaf individuals in Brazil.",
+    "centralInterpretes": "Sign Language Interpreter Center",
+    "centralInterpretesDescription": "Service connecting individuals with professional interpreters for Libras.",
+    "handTalkDescription": "Application that translates texts and audios into Libras, assisting communication.",
+    "surdosOnlineDescription": "Portal with educational materials and news for the deaf community.",
     "visitWebsite": "Visit Website",
     "callNow": "Call Now",
-    "disclaimer": "The resources mentioned are provided to assist and support people with disabilities. We are not responsible for services provided by third parties."
+    "visualImpairment": "Resources for Visual Impairment",
+    "brailleLibrary": "Braille Library",
+    "brailleLibraryDescription": "Organization providing Braille books, audiobooks, and accessible technologies.",
+    "beMyEyesDescription": "An app connecting blind individuals with volunteers for daily assistance via video calls.",
+    "dorinaNowillDescription": "Foundation offering books in Braille, audiobooks, and other support for visually impaired individuals.",
+    "physicalImpairment": "Resources for Physical Impairment",
+    "wheelchairAssociation": "Wheelchair Association",
+    "wheelchairAssociationDescription": "Association offering support and activities for individuals with mobility impairments.",
+    "movimentoLivreDescription": "Organization promoting sports and inclusive activities for people with disabilities.",
+    "rodrigoMendesDescription": "Promotes inclusive education and supports educators in fostering accessibility.",
+    "intellectualImpairment": "Resources for Intellectual Impairment",
+    "apae": "APAE Brazil",
+    "apaeDescription": "An organization that works to promote inclusion for individuals with intellectual disabilities.",
+    "inclusaoBrasilDescription": "Portal providing information, rights, and news for individuals with intellectual disabilities and their families.",
+    "disclaimer": "The resources listed here are external to EcoVoz and are provided for informational purposes only.",
+    "footer": {
+      "rightsReserved": "All rights reserved."
+    }
   },
   "footer": {
     "copyright": "All rights reserved.",
-    "about": "About",
-    "contact": "Contact",
-    "resources": "Resources",
-    "linkedin": "LinkedIn"
+    "nav": {
+      "about": "About",
+      "contact": "Contact",
+      "resources": "Resources",
+      "linkedin": "LinkedIn"
+    }
   }
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 
 /**
  * Componente que renderiza o rodapé da aplicação.
@@ -7,12 +8,15 @@ import { Link } from 'react-router-dom';
  */
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
+  const { t } = useTranslation();
 
   return (
     <footer className="bg-gray-800 dark:bg-gray-900 text-white text-center py-4 border-t border-gray-700">
       {/* Seção de copyright */}
       <section>
-        <p>&copy; {currentYear} EcoVoz. Todos os direitos reservados.</p>
+        <p>
+          &copy; {currentYear} EcoVoz. {t('footer.copyright')}
+        </p>
       </section>
 
       {/* Seção de navegação */}
@@ -21,33 +25,33 @@ const Footer: React.FC = () => {
           {/* Link para a página Sobre */}
           <li>
             <Link to="/about" className="hover:underline">
-              Sobre
+              {t('footer.nav.about')}
             </Link>
           </li>
 
           {/* Link para a página de Contato */}
           <li>
             <Link to="/contact" className="hover:underline">
-              Contato
+              {t('footer.nav.contact')}
             </Link>
           </li>
 
           {/* Link para a página de Links de Recursos */}
           <li>
             <Link to="/links" className="hover:underline">
-              Recursos
+              {t('footer.nav.resources')}
             </Link>
           </li>
 
           {/* Link para o LinkedIn */}
           <li>
             <a
-              href="https://www.linkedin.com/in/sua-pagina"
+              href="https://www.linkedin.com/company/ecovoz-inclusiva"
               target="_blank"
               rel="noopener noreferrer"
               className="hover:underline"
             >
-              LinkedIn
+              {t('footer.nav.linkedin')}
             </a>
           </li>
         </ul>

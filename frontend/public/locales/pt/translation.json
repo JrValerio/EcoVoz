@@ -16,17 +16,30 @@
   "about": {
     "title": "Sobre o EcoVoz",
     "description": "O EcoVoz é uma iniciativa inovadora criada pela equipe 12 durante o Hackathon Autismo Tech 2024. Nosso objetivo é oferecer uma solução tecnológica que possibilite às pessoas com deficiência de fala ou linguagem se comunicarem de maneira eficaz e inclusiva, utilizando inteligência artificial e tecnologia assistiva.",
-    "features": "Principais Funcionalidades",
+    "features": "Principais funcionalidades",
     "feature1": "Reconhecimento de voz avançado para pessoas com deficiência de fala.",
     "feature2": "Tradução em tempo real para mais de 100 idiomas.",
     "feature3": "Integração com dispositivos assistivos para comunicação alternativa.",
     "feature4": "Aplicativo móvel para acessibilidade em qualquer lugar.",
     "feature5": "Banco de dados de vozes para treinamento e melhoria contínua.",
-    "missionTitle": "Nossa Missão",
-    "mission": "Nossa missão é promover a inclusão, aumentar a independência e melhorar a qualidade de vida das pessoas com deficiência de fala, utilizando tecnologia de ponta e parcerias estratégicas com organizações, empresas e instituições de saúde.",
-    "teamTitle": "Equipe",
-    "team": "Este projeto foi desenvolvido com paixão e dedicação pela equipe 12 no Hackathon Autismo Tech 2024, um evento que celebra a criatividade e o impacto positivo da tecnologia na inclusão social.",
-    "imageAlt": "Ilustração sobre o EcoVoz"
+    "videoTitle": "Veja como o EcoVoz funciona!",
+    "videoAlt": "Demonstração do aplicativo EcoVoz",
+    "videoFallback": "Seu navegador não suporta vídeos.",
+    "testimonials": {
+      "title": "Depoimentos",
+      "testimony1": {
+        "text": "EcoVoz transformou minha forma de interagir!",
+        "name": "Joana"
+      },
+      "testimony2": {
+        "text": "A tradução em tempo real é fantástica!",
+        "name": "Carlos"
+      },
+      "testimony3": {
+        "text": "A integração com meu dispositivo assistivo é perfeita!",
+        "name": "Ana"
+      }
+    }
   },
   "authButton": {
     "welcome": "Bem-vindo",
@@ -93,7 +106,7 @@
     "allFieldsRequired": "Todos os campos são obrigatórios.",
     "emailInvalid": "Por favor, insira um email válido.",
     "passwordMismatch": "As senhas não coincidem.",
-    "passwordTooShort": "A senha deve ter pelo menos 6 caracteres.", 
+    "passwordTooShort": "A senha deve ter pelo menos 6 caracteres.",
     "successMessage": "Cadastro realizado com sucesso!",
     "errorMessage": "Erro ao realizar o cadastro.",
     "unknownError": "Erro desconhecido. Por favor, tente novamente mais tarde."
@@ -116,13 +129,26 @@
   },
   "help": {
     "title": "Ajuda e Suporte",
-    "faq": "Perguntas Frequentes (FAQ)",
-    "contact": "Entre em Contato",
-    "resources": "Recursos Úteis",
-    "emailSupport": "Email para Suporte",
-    "phoneSupport": "Telefone para Suporte",
-    "docs": "Documentação da Aplicação",
-    "tutorials": "Tutoriais e Guias"
+    "faq": {
+      "title": "Perguntas Frequentes (FAQ)",
+      "q1": "Como faço para recuperar minha senha?",
+      "a1": "Você pode recuperar sua senha clicando no link 'Esqueceu sua senha?' na página de login. Insira seu email cadastrado e siga as instruções enviadas para o seu email.",
+      "q2": "Onde posso editar meus dados pessoais?",
+      "a2": "Você pode editar suas informações pessoais acessando a página de perfil. Clique no seu nome no menu superior e selecione 'Perfil'.",
+      "q3": "Como entro em contato com o suporte técnico?",
+      "a3": "Você pode nos contatar diretamente pelo formulário nesta página ou pelo email de suporte listado abaixo."
+    },
+    "contact": {
+      "title": "Entre em Contato",
+      "description": "Precisa de mais ajuda? Entre em contato conosco pelos canais abaixo.",
+      "email": "support@ecovoz.com",
+      "phone": "+55 11 99999-9999"
+    },
+    "resources": {
+      "title": "Recursos Úteis",
+      "docs": "Documentação da Aplicação",
+      "tutorials": "Tutoriais e Guias"
+    }
   },
   "notFound": {
     "message": "Oops! A página que você está procurando não existe.",
@@ -144,37 +170,43 @@
     "gestureInput": "Entrada de Gestos"
   },
   "linksPage": {
-    "title": "Recursos de Apoio",
-    "subtitle": "Explore recursos úteis para pessoas com diferentes tipos de deficiência.",
+    "title": "Links de Recursos",
+    "subtitle": "Encontre recursos úteis, grupos de apoio e informações de contato para serviços de acessibilidade.",
     "auditoryImpairment": "Recursos para Deficiência Auditiva",
-    "surdosAssociacao": "Associação dos Surdos do Brasil",
-    "surdosAssociacaoDescription": "Uma organização que oferece apoio e recursos para indivíduos com deficiência auditiva.",
+    "surdosAssociaçao": "Federação Nacional de Educação e Integração dos Surdos (Feneis)",
+    "surdosAssociaçaoDescription": "Organização dedicada à promoção dos direitos das pessoas surdas no Brasil.",
     "centralInterpretes": "Central de Intérpretes de Libras",
-    "centralInterpretesDescription": "Serviço de interpretação para deficientes auditivos e surdos.",
-    "visualImpairment": "Recursos para Deficiência Visual",
-    "brailleLibrary": "Biblioteca Braille do Brasil",
-    "brailleLibraryDescription": "Acesso a livros em Braille e áudio para deficientes visuais.",
-    "visualHelpCenter": "Centro de Ajuda Visual",
-    "visualHelpCenterDescription": "Serviços de suporte para pessoas com deficiência visual.",
-    "physicalImpairment": "Recursos para Deficiência Física",
-    "wheelchairAssociation": "Associação dos Usuários de Cadeira de Rodas",
-    "wheelchairAssociationDescription": "Apoio e recursos para usuários de cadeiras de rodas.",
-    "assistiveTechCenter": "Centro de Tecnologia Assistiva",
-    "assistiveTechCenterDescription": "Serviços e dispositivos para melhorar a mobilidade.",
-    "intellectualImpairment": "Recursos para Deficiência Intelectual",
-    "apae": "APAE Brasil",
-    "apaeDescription": "Apoio para pessoas com deficiência intelectual e múltipla.",
-    "intellectualSupportCenter": "Centro de Apoio Intelectual",
-    "intellectualSupportCenterDescription": "Recursos educacionais e suporte para deficientes intelectuais.",
+    "centralInterpretesDescription": "Serviço que conecta indivíduos a intérpretes profissionais de Libras.",
+    "handTalkDescription": "Aplicativo que traduz textos e áudios para Libras, auxiliando na comunicação.",
+    "surdosOnlineDescription": "Portal com materiais educativos e notícias voltadas à comunidade surda.",
     "visitWebsite": "Visitar Website",
     "callNow": "Ligar Agora",
-    "disclaimer": "Os recursos mencionados são fornecidos para ajudar e apoiar pessoas com deficiência. Não somos responsáveis pelos serviços fornecidos por terceiros."
+    "visualImpairment": "Recursos para Deficiência Visual",
+    "brailleLibrary": "Biblioteca Braille",
+    "brailleLibraryDescription": "Organização que oferece livros em Braille, audiolivros e tecnologias acessíveis.",
+    "beMyEyesDescription": "Aplicativo que conecta pessoas cegas a voluntários para assistência diária via chamadas de vídeo.",
+    "dorinaNowillDescription": "Fundação que oferece livros em Braille, audiolivros e suporte para pessoas com deficiência visual.",
+    "physicalImpairment": "Recursos para Deficiência Física",
+    "wheelchairAssociation": "Associação de Cadeirantes",
+    "wheelchairAssociationDescription": "Associação que oferece suporte e atividades para pessoas com mobilidade reduzida.",
+    "movimentoLivreDescription": "Organização que promove esportes e atividades inclusivas para pessoas com deficiência.",
+    "rodrigoMendesDescription": "Promove a educação inclusiva e apoia educadores na implementação de acessibilidade.",
+    "intellectualImpairment": "Recursos para Deficiência Intelectual",
+    "apae": "APAE Brasil",
+    "apaeDescription": "Uma organização que trabalha para promover a inclusão de pessoas com deficiência intelectual.",
+    "inclusaoBrasilDescription": "Portal que fornece informações, direitos e notícias para pessoas com deficiência intelectual e suas famílias.",
+    "disclaimer": "Os recursos listados aqui são externos ao EcoVoz e são fornecidos apenas para fins informativos.",
+    "footer": {
+      "rightsReserved": "Todos os direitos reservados."
+    }
   },
   "footer": {
     "copyright": "Todos os direitos reservados.",
-    "about": "Sobre",
-    "contact": "Contato",
-    "resources": "Recursos",
-    "linkedin": "LinkedIn"
+    "nav": {
+      "about": "Sobre",
+      "contact": "Contato",
+      "resources": "Recursos",
+      "linkedin": "LinkedIn"
+    }
   }
 }

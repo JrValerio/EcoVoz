@@ -4,14 +4,18 @@ import { useTheme } from '../context/ThemeContext';
 
 /**
  * Página de Links de Recursos
- * Esta página contém uma lista detalhada de recursos úteis, incluindo grupos de suporte, instituições e números de ajuda para pessoas com deficiência.
+ * Contém uma lista detalhada de recursos úteis para diferentes tipos de deficiência.
  */
 const LinksPage: React.FC = () => {
   const { t } = useTranslation();
   const { theme } = useTheme();
 
   return (
-    <div className={`min-h-screen px-6 py-8 ${theme === 'light' ? 'bg-white text-gray-800' : 'bg-gray-900 text-white'}`}>
+    <div
+      className={`min-h-screen px-6 py-8 ${
+        theme === 'light' ? 'bg-white text-gray-800' : 'bg-gray-900 text-white'
+      }`}
+    >
       <header className="mb-8">
         <h1 className="text-4xl font-bold text-center">{t('linksPage.title')}</h1>
         <p className="text-lg text-center mt-4">{t('linksPage.subtitle')}</p>
@@ -43,6 +47,30 @@ const LinksPage: React.FC = () => {
               {t('linksPage.callNow')}
             </a>
           </div>
+          <div className="bg-blue-100 dark:bg-gray-800 p-6 rounded-md shadow-md">
+            <h3 className="text-2xl font-bold">Hand Talk</h3>
+            <p>{t('linksPage.handTalkDescription')}</p>
+            <a
+              href="https://www.handtalk.me"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-blue-600 dark:text-blue-400 underline mt-2"
+            >
+              {t('linksPage.visitWebsite')}
+            </a>
+          </div>
+          <div className="bg-blue-100 dark:bg-gray-800 p-6 rounded-md shadow-md">
+            <h3 className="text-2xl font-bold">Surdos Online</h3>
+            <p>{t('linksPage.surdosOnlineDescription')}</p>
+            <a
+              href="https://www.surdosonline.com.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-blue-600 dark:text-blue-400 underline mt-2"
+            >
+              {t('linksPage.visitWebsite')}
+            </a>
+          </div>
         </div>
       </section>
 
@@ -63,13 +91,27 @@ const LinksPage: React.FC = () => {
             </a>
           </div>
           <div className="bg-yellow-100 dark:bg-gray-800 p-6 rounded-md shadow-md">
-            <h3 className="text-2xl font-bold">{t('linksPage.visualHelpCenter')}</h3>
-            <p>{t('linksPage.visualHelpCenterDescription')}</p>
+            <h3 className="text-2xl font-bold">Be My Eyes</h3>
+            <p>{t('linksPage.beMyEyesDescription')}</p>
             <a
-              href="tel:+5511998765432"
+              href="https://www.bemyeyes.com"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block text-blue-600 dark:text-blue-400 underline mt-2"
             >
-              {t('linksPage.callNow')}
+              {t('linksPage.visitWebsite')}
+            </a>
+          </div>
+          <div className="bg-yellow-100 dark:bg-gray-800 p-6 rounded-md shadow-md">
+            <h3 className="text-2xl font-bold">Dorina Nowill</h3>
+            <p>{t('linksPage.dorinaNowillDescription')}</p>
+            <a
+              href="https://www.fundacaodorina.org.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-blue-600 dark:text-blue-400 underline mt-2"
+            >
+              {t('linksPage.visitWebsite')}
             </a>
           </div>
         </div>
@@ -92,13 +134,27 @@ const LinksPage: React.FC = () => {
             </a>
           </div>
           <div className="bg-green-100 dark:bg-gray-800 p-6 rounded-md shadow-md">
-            <h3 className="text-2xl font-bold">{t('linksPage.assistiveTechCenter')}</h3>
-            <p>{t('linksPage.assistiveTechCenterDescription')}</p>
+            <h3 className="text-2xl font-bold">Movimento Livre</h3>
+            <p>{t('linksPage.movimentoLivreDescription')}</p>
             <a
-              href="tel:+5511988776655"
+              href="https://www.movimentolivre.org.br"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block text-blue-600 dark:text-blue-400 underline mt-2"
             >
-              {t('linksPage.callNow')}
+              {t('linksPage.visitWebsite')}
+            </a>
+          </div>
+          <div className="bg-green-100 dark:bg-gray-800 p-6 rounded-md shadow-md">
+            <h3 className="text-2xl font-bold">Instituto Rodrigo Mendes</h3>
+            <p>{t('linksPage.rodrigoMendesDescription')}</p>
+            <a
+              href="https://www.rodrigomendes.org.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-blue-600 dark:text-blue-400 underline mt-2"
+            >
+              {t('linksPage.visitWebsite')}
             </a>
           </div>
         </div>
@@ -121,19 +177,21 @@ const LinksPage: React.FC = () => {
             </a>
           </div>
           <div className="bg-purple-100 dark:bg-gray-800 p-6 rounded-md shadow-md">
-            <h3 className="text-2xl font-bold">{t('linksPage.intellectualSupportCenter')}</h3>
-            <p>{t('linksPage.intellectualSupportCenterDescription')}</p>
+            <h3 className="text-2xl font-bold">Portal Inclusão Brasil</h3>
+            <p>{t('linksPage.inclusaoBrasilDescription')}</p>
             <a
-              href="tel:+5511976543210"
+              href="https://www.inclusaobrasil.org.br"
+              target="_blank"
+              rel="noopener noreferrer"
               className="block text-blue-600 dark:text-blue-400 underline mt-2"
             >
-              {t('linksPage.callNow')}
+              {t('linksPage.visitWebsite')}
             </a>
           </div>
         </div>
       </section>
-      
-      {/* Footer com informações adicionais */}
+
+      {/* Footer */}
       <footer className="text-center mt-12">
         <p className="text-sm">
           {t('linksPage.disclaimer')} <br />
