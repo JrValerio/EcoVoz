@@ -40,6 +40,9 @@ O **EcoVoz** foi criado durante o **Hackathon Autismo Tech 2024** e utiliza um c
 ### **Página Inicial**
 ![Página Inicial](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/Home.png)
 
+### **Exemplo de Uso do Speech-to-Text**
+![Exemplo de Uso do Speech-to-Text](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/Home%20Speak.png)
+
 ### **Sobre**
 ![Página Sobre](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/About.png)
 
@@ -114,7 +117,7 @@ EcoVoz/
 1. **Clone o repositório:**
    ```bash
    git clone https://github.com/JrValerio/EcoVoz.git
-   cd EcoVoz
+   cd EcoVoz https://ecovoz-d2hi.onrender.com
    ```
 
 2. **Configure o arquivo `.env`:**
@@ -174,6 +177,6 @@ Este projeto está licenciado sob a **MIT License**. Para mais detalhes, veja o 
 
 ## **Contato**
 Criado por **Amaro Júnior**.  
-📧 E-mail: [amaro.junior@email.com](mailto:amaro.junior@email.com)  
+📧 E-mail: [amaro.junior@email.com](mailto:amarovsjr81r@email.com)  
 🔗 LinkedIn: [Amaro Júnior](https://www.linkedin.com/in/jrvalerio/)  
 
