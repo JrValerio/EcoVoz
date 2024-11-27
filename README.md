@@ -8,20 +8,38 @@
 
 ## **Índice**
 1. [Visão Geral](#visão-geral)
-2. [Funcionalidades](#funcionalidades)
-3. [Demonstração Visual](#demonstração-visual)
-4. [Estrutura do Projeto](#estrutura-do-projeto)
-5. [Tecnologias Utilizadas](#tecnologias-utilizadas)
-6. [Configuração e Execução](#configuração-e-execução)
-7. [Roadmap](#roadmap)
-8. [Contribuindo](#contribuindo)
-9. [Licença](#licença)
-10. [Contato](#contato)
+2. [Agradecimentos](#Agradecimentos)
+3. [Funcionalidades](#funcionalidades)
+4. [Demonstração Visual](#demonstração-visual)
+5. [Estrutura do Projeto](#estrutura-do-projeto)
+6. [Tecnologias Utilizadas](#tecnologias-utilizadas)
+7. [Configuração e Execução](#configuração-e-execução)
+8. [Roadmap](#roadmap)
+9. [Contribuindo](#contribuindo)
+10. [Licença](#licença)
+11. [Contato](#contato)
 
 ---
 
 ## **Visão Geral**
-O **EcoVoz** foi criado durante o **Hackathon Autismo Tech 2024** e utiliza um conjunto de APIs externas, inteligência artificial e design inclusivo para promover acessibilidade digital. O projeto visa atender pessoas que enfrentam barreiras de comunicação, oferecendo suporte para interações diárias e inclusão social.
+O **EcoVoz** foi criado durante o **Hackathon Autismo Tech 2024**, como parte do esforço da **Equipe 12** composta por Adriana Felix Lira, Amaro V S Junior, Daniel Moura, Keisy Stella, Leticia Fernandes e Natalia. 
+
+A aplicação é um reflexo do espírito colaborativo e inovador deste hackathon. Gostaríamos de expressar nossa gratidão à equipe organizadora, especialmente ao **Caio Bogos** ([LinkedIn](https://www.linkedin.com/in/caiobogos/)), por proporcionar uma experiência inesquecível e inspiradora.
+
+---
+## **Agradecimentos**
+
+Este projeto foi desenvolvido durante o **Hackathon Autismo Tech 2024**, organizado com excelência pela equipe do evento. Agradecemos especialmente ao **Caio Bogos** ([LinkedIn](https://www.linkedin.com/in/caiobogos/)) e a todos os envolvidos por promover um espaço de inclusão, inovação e aprendizado.
+
+Um agradecimento especial à **Equipe 12**, formada por:
+- Adriana Felix Lira  
+- Amaro V S Junior  
+- Daniel Moura  
+- Keisy Stella  
+- Leticia Fernandes  
+- Natalia  
+
+Obrigado por tornarem este projeto possível!
 
 ---
 
