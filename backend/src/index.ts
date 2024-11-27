@@ -12,6 +12,6 @@ const PORT = process.env.PORT || 4000;
  * Inicia o servidor na porta especificada.
  * Exibe uma mensagem no console informando a porta em que o servidor está rodando.
  */
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
+app.listen(process.env.PORT || 4000, () => {
+  console.log(`[INFO] Servidor rodando na porta ${process.env.PORT || 4000}`);
 });

@@ -1,39 +1,47 @@
-# Base leve com Python
-FROM python:3.12-slim AS base
+# Base leve baseada no Debian
+FROM python:3.12-bookworm
 
-# Atualizações e pacotes essenciais
 RUN apt-get update && apt-get install -y \
     build-essential \
+    libffi-dev \
+    libssl-dev \
+    gcc-12 \
+    libjpeg-dev \
+    zlib1g-dev \
+    bash \
+    git \
+    cmake \
+    g++ \
+    linux-headers-amd64 \
+    ffmpeg \
     libopencv-dev \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
+    python3-numpy \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Define o diretório de trabalho
+
+
+
+# Atualizar o pip
+RUN pip install --no-cache-dir --upgrade pip
+
+# Definir o diretório de trabalho
 WORKDIR /app
 
-# Copiar arquivos de dependências
-COPY requirements-minimal.txt requirements-full.txt ./
+# Copiar os arquivos de dependências
+COPY requirements*.txt ./
 
-# Instalar dependências mínimas (essenciais para rodar o backend básico)
+# Instalar dependências mínimas
 RUN pip install --no-cache-dir -r requirements-minimal.txt
 
-# -----------------------------------------------
-# Estágio completo para ambientes com dependências pesadas
-# -----------------------------------------------
-FROM base AS full
-
-# Instalar dependências completas (visão computacional e ML)
+# Instalar dependências completas
 RUN pip install --no-cache-dir -r requirements-full.txt
 
-# Copiar o restante do código para o contêiner
+# Copiar o código-fonte para o contêiner
 COPY . .
-
-# -----------------------------------------------
-# Ambiente final para produção
-# -----------------------------------------------
-FROM full AS production
 
 # Expor a porta do backend-python
 EXPOSE 5000
 
-# Comando para iniciar a aplicação
+# Comando para rodar o servidor
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "5000"]

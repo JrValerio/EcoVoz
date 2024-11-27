@@ -3,21 +3,3 @@
 
 # Visão computacional
 mediapipe==0.10.18
-opencv-contrib-python==4.10.0.84
-opencv-python==4.10.0.84
-
-# Aprendizado de máquina e cálculos numéricos
-numpy==1.26.4
-torch==2.5.1
-torchvision==0.20.1
-jax==0.4.35
-jaxlib==0.4.35
-scipy==1.14.1
-sympy==1.13.1
-
-# Som e processamento de áudio
-sounddevice==0.5.1
-
-# Segurança e compactação
-itsdangerous==2.2.0
-Werkzeug==3.1.3

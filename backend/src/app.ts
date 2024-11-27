@@ -42,11 +42,13 @@ const __dirname = path.dirname(__filename);
 console.log('Arquivo:', __filename);
 console.log('Diretório:', __dirname);
 
-// Conecta ao banco de dados
-connectDB();
-
 // Middlewares
-const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://localhost:5175']; // Adicione as URLs permitidas aqui
+const allowedOrigins = [
+  'http://127.0.0.1:3000',
+  'http://localhost:3000',
+  'http://localhost:5175',
+  'https://ecovoz-backend.onrender.com'
+];
 
 // Configuração do CORS
 app.use(cors({
@@ -54,6 +56,7 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.error(`[CORS] Bloqueado: ${origin}`);
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -83,48 +86,48 @@ app.get('/health', (req, res) => {
 
 // Nova rota para enviar dados para o backend Python via WebSocket
 app.post('/api/gestures', (req, res) => {
-  // Conectar ao WebSocket do backend Python
   const ws = new WebSocket('ws://127.0.0.1:8000/ws/gestures');
 
-  // Quando a conexão for aberta
   ws.on('open', () => {
-    // Enviar dados para o WebSocket Python (pode ser qualquer dado necessário)
-    ws.send(JSON.stringify(req.body));
+    console.log('[WebSocket] Conexão aberta com o backend Python');
+    ws.send(JSON.stringify(req.body)); // Enviar os dados recebidos para o backend Python
   });
 
-  // Quando receber uma mensagem do WebSocket Python
-  ws.on('message', (data: Buffer) => {
-    // Enviar a resposta recebida do backend Python para o cliente original
+  ws.on('message', (data) => {
+    console.log('[WebSocket] Resposta recebida do backend Python:', data.toString());
     res.json({ response: data.toString() });
-    console.log(ws); // Fechar a conexão depois de receber a resposta
+    (ws as any).close(); // Fechar a conexão após receber a resposta
   });
 
-  // Lidar com erros de WebSocket
-  ws.on('error', (err: Error) => {
-    console.error('Erro no WebSocket:', err);
+  ws.on('error', (err) => {
+    console.error('[WebSocket] Erro na conexão:', err.message);
     res.status(500).json({ error: 'Erro ao conectar ao backend Python' });
   });
+
+  ws.on('close', () => {
+    console.log('[WebSocket] Conexão fechada');
+  });
 });
+
 
 // Configuração para servir arquivos estáticos do frontend
 const frontendPath = path.join(__dirname, '../frontend/dist'); // Caminho para a pasta 'dist' do frontend
 const isProduction = fs.existsSync(frontendPath); // Verifica se a pasta 'dist' existe
 
 if (isProduction) {
-  // Em produção, serve os arquivos estáticos do frontend
   console.log(`[INFO] Servindo arquivos estáticos do frontend a partir de: ${frontendPath}`);
   app.use(express.static(frontendPath));
   app.get('*', (req, res) => {
     res.sendFile(path.join(frontendPath, 'index.html'));
   });
 } else {
-  // Em desenvolvimento, redireciona para o servidor do Vite
   const frontendDevServer = 'http://localhost:5173';
   console.log(`[INFO] Redirecionando para o servidor de desenvolvimento do frontend: ${frontendDevServer}`);
-  app.get('*', (req, res) => {
+  app.use('*', (req, res) => {
     res.redirect(frontendDevServer + req.originalUrl);
   });
 }
+
 
 
 app.use(express.static(path.join(__dirname, 'frontend/dist'))); // Serve os arquivos estáticos do frontend

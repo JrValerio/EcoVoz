@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-import bcrypt from 'bcrypt';
+const bcrypt = require('bcryptjs');
 
 /**
  * Interface que define as propriedades do documento do usuário.
