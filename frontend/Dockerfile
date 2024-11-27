@@ -1,5 +1,5 @@
 # Base image para build
-FROM node:18-slim AS builder
+FROM node:20-slim AS builder
 
 # Diretório de trabalho
 WORKDIR /app
@@ -23,7 +23,7 @@ RUN npm run build
 # ----------------------------------------------
 # Imagem final para servir o frontend
 # ----------------------------------------------
-FROM node:18-slim
+FROM node:20-slim
 
 # Diretório de trabalho
 WORKDIR /app

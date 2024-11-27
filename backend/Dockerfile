@@ -1,37 +1,33 @@
-# Etapa 1: Build
-FROM node:18-slim AS builder
+# Base image para build
+FROM node:20-slim AS builder
 
-# Diretório de trabalho para a etapa de build
+# Diretório de trabalho
 WORKDIR /app
 
-# Copiar apenas os arquivos necessários para instalar as dependências
-COPY package*.json tsconfig.json tsconfig.base.json ./
-
-# Instalar dependências
+# Copia os arquivos de dependências
+COPY package*.json ./         
 RUN npm install
 
-# Copiar o restante dos arquivos do backend
-COPY ./src ./src
-
-# Gerar o build de produção
+# Copia os demais arquivos e gera o build
+COPY . .
 RUN npm run build
 
-# Etapa 2: Imagem final para produção
-FROM node:18-slim
+# ----------------------------------------------
+# Imagem final para servir o frontend
+# ----------------------------------------------
+FROM nginx:stable-alpine
 
-# Configuração do diretório de trabalho
-WORKDIR /app
+# Remove configuração padrão do NGINX
+RUN rm -rf /usr/share/nginx/html/*
 
-# Copie os arquivos da build para a imagem final
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package*.json ./
+# Copia o build do frontend para o NGINX
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Instale dependências de produção
-RUN npm install --production
+# Copia o arquivo customizado de configuração (opcional)
+# COPY nginx.conf /etc/nginx/nginx.conf
 
-# Exponha a porta do servidor
-EXPOSE 4000
+# Expõe a porta 80
+EXPOSE 80
 
-# Comando para iniciar o servidor
-CMD ["npm", "start", "dist/index.js"]
-
+# Comando padrão do NGINX
+CMD ["nginx", "-g", "daemon off;"]

@@ -15,6 +15,8 @@ services:
       interval: 30s
       timeout: 10s
       retries: 5
+    environment:
+      - VITE_API_BASE_URL=http://backend:4000
     logging:
       driver: "json-file"
       options:
@@ -31,12 +33,6 @@ services:
       - '4001:4000'
     env_file:
       - .env
-    environment:
-      - MONGO_URI=${MONGO_URI}
-      - JWT_SECRET=${JWT_SECRET}
-      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET}
-      - GOOGLE_REDIRECT_URI=${GOOGLE_REDIRECT_URI}
-      - FRONTEND_URL=${FRONTEND_URL}
     depends_on:
       mongo:
         condition: service_healthy
@@ -60,16 +56,13 @@ services:
       - '27017:27017'
     env_file:
       - .env
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
-      - mongo_data:/data/db
+      - ecovoz_mongo_data:/data/db
       - ./backend/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - ecovoz_network
     healthcheck:
-      test: ["CMD-SHELL", "echo 'db.runCommand({ ping: 1 })' | mongo --username ${MONGO_INITDB_ROOT_USERNAME} --password ${MONGO_INITDB_ROOT_PASSWORD} --authenticationDatabase admin localhost:27017/admin --quiet || exit 1"]
+      test: ["CMD-SHELL", "mongo --eval 'db.adminCommand({ping: 1})' localhost:27017 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -80,7 +73,7 @@ services:
         max-file: "3"
 
 volumes:
-  mongo_data:
+  ecovoz_mongo_data:
 
 networks:
   ecovoz_network:

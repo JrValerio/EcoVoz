@@ -46,11 +46,10 @@ console.log('Diretório:', __dirname);
 connectDB();
 
 // Middlewares
-const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000'];
+const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://localhost:5175']; // Adicione as URLs permitidas aqui
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Permite qualquer uma das URLs especificadas ou requisições sem origem (ex.: Postman)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
@@ -58,11 +57,11 @@ app.use(cors({
     }
   },
   credentials: true,
-})); // Habilita CORS
+})); 
 
-app.use(cors({
-  origin: 'https://ecovoz-d2hi.onrender.com',
-}));
+// app.use(cors({
+//   origin: 'https://ecovoz-d2hi.onrender.com',
+// }));
 
 
 app.use(handle(i18n)); // Middleware para internacionalização

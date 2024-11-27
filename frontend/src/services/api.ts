@@ -1,12 +1,12 @@
 import axios, { AxiosInstance, AxiosRequestConfig, CancelTokenSource } from 'axios';
 import { getAuthHeader } from '../utils/auth';
-import { API_URL } from "../config";
+import { API_URL } from '../config';
 
 /**
- * Cria uma instância do Axios com configurações padrão para a aplicação.
+ * Configurações globais da instância Axios, incluindo URL base, headers, timeout e autenticação.
  */
 const api: AxiosInstance = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL || 'https://ecovoz-d2hi.onrender.com',
+  baseURL: import.meta.env.VITE_BACKEND_URL,
   headers: {
     ...getAuthHeader(),
     'Content-Type': 'application/json',
@@ -15,14 +15,16 @@ const api: AxiosInstance = axios.create({
 });
 
 /**
- * Intercepta as requisições para incluir o token de autenticação no cabeçalho.
+ * Intercepta requisições para adicionar autenticação automaticamente.
  */
 api.interceptors.request.use((config) => {
   config.headers = Object.assign({}, axios.defaults.headers.common, config.headers, getAuthHeader());
   return config;
 });
 
-// Mensagens de erro centralizadas
+/**
+ * Mensagens de erro mapeadas por status HTTP, com suporte a mensagens padrão.
+ */
 const errorMessages = {
   401: 'Token inválido ou expirado. Redirecionando para login.',
   403: 'Acesso negado. Você não tem permissão para esta ação.',
@@ -31,19 +33,21 @@ const errorMessages = {
   default: 'Ocorreu um erro inesperado. Por favor, tente novamente.',
 };
 
-
 /**
- * Tenta realizar a requisição novamente em caso de falha, 
- * com um número máximo de tentativas.
- * @param config A configuração da requisição.
- * @param retries O número de tentativas restantes.
+ * Tenta realizar a mesma requisição várias vezes em caso de falhas relacionadas à rede ou timeout.
+ * 
+ * @param config Configuração da requisição.
+ * @param retries Número máximo de tentativas permitidas (padrão: 3).
  * @returns A resposta da requisição, se bem-sucedida.
  */
 const retryRequest = async (config: AxiosRequestConfig, retries = 3): Promise<any> => {
   try {
-    return await api(config); // Removeu a chamada addAuthToken(config)
+    return await api(config);
   } catch (error: any) {
-    if (retries > 0 && (error.code === 'ECONNABORTED' || error.message.includes('Network Error'))) {
+    const status = error.response?.status;
+    const isRetryable = status === 500 || status === 503 || error.code === 'ECONNABORTED';
+
+    if (retries > 0 && isRetryable) {
       console.warn(`Tentativa ${4 - retries} de ${3} falhou. Tentando novamente em 2 segundos...`);
       await new Promise(resolve => setTimeout(resolve, 2000));
       return retryRequest(config, retries - 1);
@@ -53,17 +57,20 @@ const retryRequest = async (config: AxiosRequestConfig, retries = 3): Promise<an
 };
 
 /**
- * Trata erros da API, exibindo mensagens de erro apropriadas e 
- * realizando ações como redirecionamento em caso de erro de autenticação.
- * @param error O erro da API.
- * @returns Uma Promise rejeitada com a mensagem de erro.
+ * Trata os erros de respostas da API, exibindo mensagens apropriadas e
+ * redirecionando para login em caso de falha de autenticação.
+ * 
+ * @param error O erro capturado pela requisição.
+ * @returns Rejeição da promessa com o status e a mensagem de erro.
  */
 const handleApiResponseError = (error: any) => {
   const status = error.response?.status;
-  const message = (error.response?.data as { message?: string })?.message 
-    || (errorMessages as { [key: number]: string })[status] 
-    || errorMessages.default;
+  const message =
+    (error.response?.data as { message?: string })?.message ||
+    (errorMessages as { [key: number]: string })[status] ||
+    errorMessages.default;
 
+  // Tratamento de timeout
   if (error.code === 'ECONNABORTED') {
     console.error('A requisição excedeu o tempo limite.');
     return Promise.reject({ status: 408, message: errorMessages[408] });
@@ -71,6 +78,7 @@ const handleApiResponseError = (error: any) => {
 
   console.error('Erro na resposta da API:', error);
 
+  // Tratamento de erros específicos
   if (status === 401) {
     console.warn(errorMessages[401]);
     localStorage.removeItem('authToken');
@@ -87,10 +95,11 @@ const handleApiResponseError = (error: any) => {
 };
 
 /**
- * Realiza uma requisição GET com suporte a loading, retry e cancelamento.
- * @param url A URL da requisição.
- * @param options Opções da requisição Axios.
- * @returns Uma Promise que resolve com os dados da resposta ou rejeita com um erro.
+ * Realiza uma requisição GET com suporte a tentativas, cancelamento e tratamento de erros.
+ * 
+ * @param url URL do endpoint.
+ * @param options Opções adicionais da requisição Axios.
+ * @returns Dados da resposta, se bem-sucedida.
  */
 export const get = async <T>(url: string, options?: AxiosRequestConfig): Promise<T> => {
   const source: CancelTokenSource = axios.CancelToken.source();
@@ -102,23 +111,20 @@ export const get = async <T>(url: string, options?: AxiosRequestConfig): Promise
   };
 
   try {
-    // Exibir loading aqui (ex: setIsLoading(true))
     const response = await retryRequest(config);
-    // Esconder loading aqui (ex: setIsLoading(false))
     return response as T;
   } catch (error) {
     return handleApiResponseError(error);
-  } finally {
-    // Esconder loading aqui (ex: setIsLoading(false))
   }
 };
 
 /**
- * Realiza uma requisição POST com suporte a loading, retry e cancelamento.
- * @param url A URL da requisição.
- * @param data Os dados a serem enviados na requisição.
- * @param options Opções da requisição Axios.
- * @returns Uma Promise que resolve com os dados da resposta ou rejeita com um erro.
+ * Realiza uma requisição POST com suporte a tentativas, cancelamento e tratamento de erros.
+ * 
+ * @param url URL do endpoint.
+ * @param data Dados enviados no corpo da requisição.
+ * @param options Opções adicionais da requisição Axios.
+ * @returns Dados da resposta, se bem-sucedida.
  */
 export const post = async <T>(url: string, data?: any, options?: AxiosRequestConfig): Promise<T> => {
   const source: CancelTokenSource = axios.CancelToken.source();
@@ -131,26 +137,61 @@ export const post = async <T>(url: string, data?: any, options?: AxiosRequestCon
   };
 
   try {
-    // Exibir loading aqui (ex: setIsLoading(true))
     const response = await retryRequest(config);
-    // Esconder loading aqui (ex: setIsLoading(false))
     return response as T;
   } catch (error) {
     return handleApiResponseError(error);
-  } finally {
-    // Esconder loading aqui (ex: setIsLoading(false))
   }
 };
 
-const fetchData = async () => {
+/**
+ * Realiza uma requisição PUT com suporte a tentativas, cancelamento e tratamento de erros.
+ * 
+ * @param url URL do endpoint.
+ * @param data Dados enviados no corpo da requisição.
+ * @param options Opções adicionais da requisição Axios.
+ * @returns Dados da resposta, se bem-sucedida.
+ */
+export const put = async <T>(url: string, data?: any, options?: AxiosRequestConfig): Promise<T> => {
+  const source: CancelTokenSource = axios.CancelToken.source();
+  const config: AxiosRequestConfig = {
+    ...options,
+    method: 'PUT',
+    url,
+    data,
+    cancelToken: source.token,
+  };
+
   try {
-    const response = await axios.get(`${API_URL}/endpoint`);
-    console.log(response.data);
+    const response = await retryRequest(config);
+    return response as T;
   } catch (error) {
-    console.error("Erro ao buscar dados:", error);
+    return handleApiResponseError(error);
   }
 };
 
-// ... outras funções para PUT, DELETE, etc.
+/**
+ * Realiza uma requisição DELETE com suporte a tentativas, cancelamento e tratamento de erros.
+ * 
+ * @param url URL do endpoint.
+ * @param options Opções adicionais da requisição Axios.
+ * @returns Dados da resposta, se bem-sucedida.
+ */
+export const del = async <T>(url: string, options?: AxiosRequestConfig): Promise<T> => {
+  const source: CancelTokenSource = axios.CancelToken.source();
+  const config: AxiosRequestConfig = {
+    ...options,
+    method: 'DELETE',
+    url,
+    cancelToken: source.token,
+  };
+
+  try {
+    const response = await retryRequest(config);
+    return response as T;
+  } catch (error) {
+    return handleApiResponseError(error);
+  }
+};
 
 export default api;

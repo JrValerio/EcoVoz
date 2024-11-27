@@ -11,7 +11,7 @@ const connectDB = async (): Promise<void> => {
     const mongoUri =
       process.env.NODE_ENV === 'development'
         ? 'mongodb://localhost:27017/ecovoz' // Local
-        : process.env.MONGO_URI || 'mongodb://mongo:27017/ecovoz'; // Docker ou produção
+        : process.env.MONGO_URI; // Docker ou produção
 
     // Configura as opções de conexão
     const options: mongoose.ConnectOptions = {
