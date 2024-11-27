@@ -44,7 +44,7 @@ O **EcoVoz** foi criado durante o **Hackathon Autismo Tech 2024** e utiliza um c
 ![Exemplo de Uso do Speech-to-Text](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/Home%20Speak.png)
 
 ### **Sobre**
-![Página Sobre](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/About.png)
+![Página Sobre](https://github.com/JrValerio/EcoVoz/blob/053662fda91445ae12ed7b90c5273c49b64446b9/frontend/src/assets/images/About.png)
 
 ### **Login**
 ![Tela de Login](https://github.com/JrValerio/EcoVoz/blob/main/frontend/src/assets/images/Login.png)
