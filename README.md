@@ -195,6 +195,6 @@ Este projeto está licenciado sob a **MIT License**. Para mais detalhes, veja o 
 
 ## **Contato**
 Criado por **Amaro Júnior**.  
-📧 E-mail: [amaro.junior@email.com](mailto:amarovsjr81r@email.com)  
+📧 E-mail: [amarovsjr81r@email.com](mailto:amarovsjr81r@email.com)  
 🔗 LinkedIn: [Amaro Júnior](https://www.linkedin.com/in/jrvalerio/)  
 
