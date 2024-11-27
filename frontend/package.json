@@ -14,7 +14,8 @@
     "format": "prettier --write .",
     "test": "vitest",
     "docker:build": "docker build -t ecovoz-frontend .",
-    "docker:run": "docker run -p 3000:80 ecovoz-frontend"
+    "docker:run": "docker run -p 3000:80 ecovoz-frontend",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "@chakra-ui/react": "^3.2.0",

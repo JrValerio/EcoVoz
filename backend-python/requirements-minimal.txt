@@ -1,0 +1,17 @@
+# Framework principal para APIs
+fastapi==0.115.5
+uvicorn==0.32.1
+
+# Processamento de strings e arquivos
+python-multipart==0.0.17
+protobuf==4.25.5
+pydantic==2.10.1
+
+# Utilitários de rede e rotas
+h11==0.14.0
+idna==3.10
+starlette==0.41.3
+
+# Outros utilitários
+setuptools==75.6.0
+typing_extensions==4.12.2

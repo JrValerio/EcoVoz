@@ -22,7 +22,7 @@ export const config = {
   /**
    * URI de conexão com o MongoDB.
    */
-  mongoUri: process.env.MONGO_URI || 'mongodb://mongo:27017/ecovoz',
+  mongoUri: process.env.MONGO_URI || 'mongodb+srv://amarovsjr81:nbbjBsSO8xb9ZCMr@ecovoz.ypeem.mongodb.net/?retryWrites=true&w=majority&appName=EcoVoz',
 
   /**
    * URLs do backend e frontend para CORS e redirecionamentos.

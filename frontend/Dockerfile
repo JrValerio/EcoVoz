@@ -1,42 +1,37 @@
-# Base image para build
+# Etapa 1: Build do Frontend
 FROM node:20-slim AS builder
 
-# Diretório de trabalho
+# Diretório de trabalho dentro do contêiner
 WORKDIR /app
 
-# Copia os arquivos de dependências
-COPY package*.json ./         
+# Copiar apenas arquivos de dependências inicialmente (para cache otimizado)
+COPY package*.json ./
 
-# Copia os diretórios de código
-COPY src ./src                  
-COPY public ./public            
-
-# Instala dependências
+# Instalar dependências
 RUN npm install
 
-# Debug: Verifica as versões instaladas
-RUN npm list --depth=0
+# Copiar o restante do código-fonte para o contêiner
+COPY . .
 
 # Gera o build de produção
 RUN npm run build
 
 # ----------------------------------------------
-# Imagem final para servir o frontend
+# Etapa 2: Servir os Arquivos Estáticos
 # ----------------------------------------------
-FROM node:20-slim
+FROM nginx:stable-alpine
 
-# Diretório de trabalho
-WORKDIR /app
+# Remove arquivos padrão do Nginx
+RUN rm -rf /usr/share/nginx/html/*
 
-# Copia os arquivos do estágio de build
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/package*.json ./package.json
+# Copiar os arquivos do build para o diretório padrão do Nginx
+COPY --from=builder /app/dist /usr/share/nginx/html
 
-# Instala apenas dependências de produção
-RUN npm install --production
+# Copiar o arquivo customizado de configuração do Nginx
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expõe a porta padrão do servidor
-EXPOSE 5173
+# Expor a porta padrão do Nginx
+EXPOSE 80
 
-# Comando para iniciar o servidor
-CMD ["npx", "serve", "-s", "dist", "-l", "3000"]
+# Comando para iniciar o servidor Nginx
+CMD ["nginx", "-g", "daemon off;"]

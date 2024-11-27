@@ -1,3 +1,5 @@
+version: "3.9"
+
 services:
   frontend:
     build:
@@ -5,18 +7,18 @@ services:
       dockerfile: Dockerfile
     container_name: ecovoz_frontend
     ports:
-      - '3001:3000'
+      - "3001:80"
     depends_on:
       - backend
     networks:
       - ecovoz_network
     healthcheck:
-      test: ["CMD-SHELL", "curl -f http://localhost:3000 || exit 1"]
+      test: ["CMD-SHELL", "curl -f http://localhost || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
     environment:
-      - VITE_API_BASE_URL=http://backend:4000
+      VITE_API_BASE_URL: http://backend:4000
     logging:
       driver: "json-file"
       options:
@@ -30,10 +32,12 @@ services:
     container_name: ecovoz_backend
     command: ["npm", "run", "start"]
     ports:
-      - '4001:4000'
+      - "4001:4000"
     env_file:
       - .env
     depends_on:
+      backend-python:
+        condition: service_healthy
       mongo:
         condition: service_healthy
     networks:
@@ -49,11 +53,36 @@ services:
         max-size: "10m"
         max-file: "3"
 
+  backend-python:
+    build:
+      context: ./backend-python
+      dockerfile: Dockerfile
+    container_name: ecovoz_backend_python
+    ports:
+      - "5001:5000"
+    networks:
+      - ecovoz_network
+    depends_on:
+      mongo:
+        condition: service_healthy
+    environment:
+      MONGO_URI: mongodb://mongo:27017/ecovoz
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:5000 || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
   mongo:
     image: mongo
     container_name: ecovoz_mongo
     ports:
-      - '27017:27017'
+      - "27017:27017"
     env_file:
       - .env
     volumes:
@@ -62,7 +91,7 @@ services:
     networks:
       - ecovoz_network
     healthcheck:
-      test: ["CMD-SHELL", "mongo --eval 'db.adminCommand({ping: 1})' localhost:27017 || exit 1"]
+      test: ["CMD-SHELL", "echo 'db.adminCommand({ ping: 1 })' | mongo localhost:27017 || exit 1"]
       interval: 30s
       timeout: 10s
       retries: 5
@@ -73,8 +102,8 @@ services:
         max-file: "3"
 
 volumes:
-  ecovoz_mongo_data:
+  ecovoz_mongo_data: # Volume para persistência de dados do MongoDB
 
 networks:
   ecovoz_network:
-    driver: bridge
+    driver: bridge # Rede compartilhada entre os serviços

@@ -48,6 +48,7 @@ connectDB();
 // Middlewares
 const allowedOrigins = ['http://127.0.0.1:3000', 'http://localhost:3000', 'http://localhost:5175']; // Adicione as URLs permitidas aqui
 
+// Configuração do CORS
 app.use(cors({
   origin: function (origin, callback) {
     if (!origin || allowedOrigins.includes(origin)) {
@@ -57,13 +58,9 @@ app.use(cors({
     }
   },
   credentials: true,
-})); 
+}));  // Habilita credenciais (cookies)
 
-// app.use(cors({
-//   origin: 'https://ecovoz-d2hi.onrender.com',
-// }));
-
-
+// Middleware para servir arquivos estáticos
 app.use(handle(i18n)); // Middleware para internacionalização
 
 // Rotas da API
@@ -71,7 +68,7 @@ app.use('/api/auth', authRoutes); // Rotas de autenticação
 app.use('/api/users', userRoutes); // Rotas de usuário
 app.use('/api/status', statusRoutes); // Rotas de status
 app.use('/api/gestures', gestureRoutes); // Usar o roteador de gestos
-app.use('/api', gestureRoutes);
+app.use('/api', gestureRoutes); // Usar o roteador de gestos
 
 // Rota para exibir uma mensagem traduzida
 app.get('/api/message', (req, res) => {
@@ -130,10 +127,10 @@ if (isProduction) {
 }
 
 
-app.use(express.static(path.join(__dirname, 'frontend/dist')));
+app.use(express.static(path.join(__dirname, 'frontend/dist'))); // Serve os arquivos estáticos do frontend
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
+  res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));  // Envia o arquivo HTML para o cliente
 });
 
 

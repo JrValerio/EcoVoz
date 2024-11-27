@@ -7,12 +7,6 @@ import { config } from './config.js';
  */
 const connectDB = async (): Promise<void> => {
   try {
-    // Verifica se a URI do MongoDB está configurada
-    const mongoUri =
-      process.env.NODE_ENV === 'development'
-        ? 'mongodb://localhost:27017/ecovoz' // Local
-        : process.env.MONGO_URI; // Docker ou produção
-
     // Configura as opções de conexão
     const options: mongoose.ConnectOptions = {
       autoIndex: true, // Cria índices automaticamente
